@@ -70,10 +70,10 @@ public class HomeView extends VerticalLayout {
 
         formlayoutr2.add(dogs,cats,reptiles,birds,rabbits,small,big);
 
-        Select<String> sex = new Select<>();//combobox
-        sex.setItems("any", "male");
-        sex.setLabel("Sex");
-        sex.setPlaceholder("sex");
+        Select<String> gender = new Select<>();//combobox
+        gender.setItems("any", "male");
+        gender.setLabel("Gender");
+        gender.setPlaceholder("Gender");
 
         Select<String> age = new Select<>();
         age.setItems("any","puppy", "young");
@@ -85,7 +85,7 @@ public class HomeView extends VerticalLayout {
         size.setLabel("Size");
         size.setPlaceholder("any");
 
-        formlayoutr3.add(sex,age,size);
+        formlayoutr3.add(gender,age,size);
 
         Select<String> color= new Select<>();
         color.setItems("any", "white","white");

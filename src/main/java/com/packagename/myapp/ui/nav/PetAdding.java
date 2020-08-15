@@ -35,7 +35,7 @@ public class PetAdding extends VerticalLayout{
 
 
         TextField petName = new TextField(); //state
-        petName.setPlaceholder("inoue");
+        petName.setPlaceholder("");
 
         H4 petNameLabel=new H4("Pet name");
         petNameLabel.addClassName("titletext");

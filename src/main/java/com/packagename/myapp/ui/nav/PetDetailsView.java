@@ -13,10 +13,10 @@ import com.vaadin.flow.router.Route;
 @PageTitle("Pet details")
 public class PetDetailsView extends VerticalLayout {
 
-    String PET_NAME="inoue";
+    String PET_NAME="Hula";
     String GENDER="male";
     String AGE="6y";
-    String DESCRIPTION="Description A pet, or companion animal, is an animal kept primarily for a person's company or entertainment rather than as a working animal, livestock or a laboratory animal ..";
+    String DESCRIPTION= PET_NAME + "is a super smart amazing dog with so much love to give. Hula is well trained knows all commands sit, heal, go to your bed, stay on your bed, go to your crate, paw she knows it all. Hula is very protective and so loving g she needs a experienced owner who keeps her in check and loves her. She loves to play with toys she is a great fetcher and will be the most loyal dog you will ever know. We require that you meet with our trainer and that you take 15 training sessions with our trainer. You will love our trainer he has been training for 30 years. Give Hula a chance to be your forever best friend. She was abandoned and given up and hit in the face and she has come through it all.";
 
     public PetDetailsView(){
 
@@ -43,7 +43,7 @@ public class PetDetailsView extends VerticalLayout {
 
         VerticalLayout divLayout=new VerticalLayout();
 
-        H3 name=new H3("My name is"+PET_NAME);
+        H3 name=new H3("My name is "+PET_NAME);
         Span detail=new Span(DESCRIPTION);
 
         HorizontalLayout ageLine=new HorizontalLayout();

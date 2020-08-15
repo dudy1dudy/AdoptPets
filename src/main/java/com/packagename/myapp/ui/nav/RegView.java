@@ -39,14 +39,14 @@ public class RegView extends VerticalLayout{
 
             TextField firstName = new TextField(); //state
             //petName.setLabel("Pet name");
-            firstName.setPlaceholder("mitton");
+            firstName.setPlaceholder("First Name");
 
             H4 firstNameLabel=new H4("First name");
             firstNameLabel.addClassName("titletext");
 
             TextField lastName = new TextField(); //state
             //petName.setLabel("Pet name");
-            lastName.setPlaceholder("mitton");
+            lastName.setPlaceholder("Last Name");
 
             H4 lastNameLabel=new H4("Last name");
             lastNameLabel.addClassName("titletext");
@@ -66,7 +66,7 @@ public class RegView extends VerticalLayout{
 
             TextField street = new TextField(); //state
             //petName.setLabel("Pet name");
-            street.setPlaceholder("sea road");
+            street.setPlaceholder("Street name");
 
             H4 streetLabel=new H4("Street");
             streetLabel.addClassName("titletext");
@@ -90,7 +90,7 @@ public class RegView extends VerticalLayout{
             registerLayout.addFormItem(city,citiLabel);
             registerLayout.addFormItem(street,streetLabel);
             registerLayout.addFormItem(house,houseLabel);
-            registerLayout.addFormItem(email,emailLabel);;
+            registerLayout.addFormItem(email,emailLabel);
 
             VerticalLayout form=new VerticalLayout();
             form.setWidth("500px");

@@ -1,0 +1,67 @@
+/*
+   CSS styling examples for the Vaadin app.
+   Visit https://vaadin.com/docs/flow/theme/theming-overview.html and
+   https://vaadin.com/themes/lumo for more information.
+*/
+
+/* Example: CSS class name to center align the content . */
+.centered-content {
+  margin: 0 auto;
+  max-width: 250px;
+}
+
+/* Main layout */
+
+a[highlight] {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.header {
+    padding: 0 var(--lumo-space-m);
+}
+
+.header h1.logo {
+    font-size: 1em;
+    margin: var(--lumo-space-m);
+}
+
+.titletext{
+color:blue;
+margin: 0 auto;
+  max-width: 610px;
+}
+
+.workspace {
+
+	}
+	.card {
+		background-color: lightgrey;
+		flex-shrink: 0;
+		box-shadow: 2px 1px 5px 0px grey;
+	}
+
+.heart{
+ position: absolute;
+ color:DodgerBlue;
+   right: 10px;
+   padding: 5px;
+ }
+
+ .reg{
+  position: absolute;
+  color:DodgerBlue;
+    right: 50px;
+    padding: 5px;
+  }
+
+ .heartlike{
+ color:DodgerBlue;
+   right: 10px;
+   padding: 5px;
+ }
+
+.image{
+padding: 5px, 5px, 5px, 5px;
+}
+

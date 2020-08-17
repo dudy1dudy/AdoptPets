@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import group.utilities.UserType;
+
 /**
  * Entity implementation class for Entity: user
  *
@@ -15,7 +17,8 @@ import javax.validation.constraints.*;
 @NamedQueries({
 		@NamedQuery(name = "FindUser", query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password"),
 		@NamedQuery(name = "OwnersByUser", query = "SELECT o FROM User u JOIN u.owners o WHERE u.userId = :userId"),
-		@NamedQuery(name = "CheckUsername", query = "SELECT u FROM User u WHERE u.username = :username"), })
+		@NamedQuery(name = "CheckUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
+		@NamedQuery(name = "CheckAdmin", query = "SELECT u FROM User u WHERE u.username = :username AND u.type = :type") })
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -40,6 +43,10 @@ public class User implements Serializable {
 	@Size(max = 65)
 	@Column(name = "last_Name")
 	private String lastName;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "type", length = 10)
+	private  UserType type;
 
 	@Email
 	@Size(max = 100)
@@ -92,6 +99,14 @@ public class User implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public UserType getType() {
+		return type;
+	}
+
+	public void setType(UserType type) {
+		this.type = type;
 	}
 
 	public String getEmail() {

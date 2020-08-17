@@ -5,6 +5,7 @@ import java.lang.String;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import group.utilities.AdoptionStatus;
 import group.utilities.Category;
 import group.utilities.Gender;
 import group.utilities.PetSize;
@@ -45,6 +46,10 @@ public class Pet implements Serializable {
 	@Enumerated(EnumType.STRING)
     @Column(length = 10)
 	private Gender gender;
+	
+	@Enumerated(EnumType.STRING)
+    @Column(length = 10)
+	private AdoptionStatus adoptionStatus;
 	
 	@Column(name = "short_desc")
 	@Size(max = 150)
@@ -112,6 +117,14 @@ public class Pet implements Serializable {
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
+	}
+
+	public AdoptionStatus getAdoptionStatus() {
+		return adoptionStatus;
+	}
+
+	public void setAdoptionStatus(AdoptionStatus adoptionStatus) {
+		this.adoptionStatus = adoptionStatus;
 	}
 
 	public String getShortDescription() {

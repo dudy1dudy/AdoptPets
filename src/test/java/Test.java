@@ -6,10 +6,12 @@ import group.entities.User;
 import group.models.LikeModel;
 import group.models.PetModel;
 import group.models.UserModel;
+import group.utilities.AdoptionStatus;
 import group.utilities.Category;
 import group.utilities.ConvertPhoto;
 import group.utilities.Gender;
 import group.utilities.PetSize;
+import group.utilities.UserType;
 
 public class Test {
 
@@ -18,7 +20,7 @@ public class Test {
 		// 1. Create User
 		UserModel userModel = new UserModel();
 		try {
-			userModel.createNewUser("valeria", "Aa123456", "Valeria", "Yermaev", "valeria@gmail.com");
+			userModel.createNewUser("valeria", "Aa123456", "Valeria", "Yermaev", UserType.ADMIN, "valeria@gmail.com");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -42,17 +44,17 @@ public class Test {
 
 			int number = Integer.valueOf("0544458996");
 			petModel.createNewPet(user.getUserId(), Category.DOG, "Lucky", 5, PetSize.LARGE, Gender.MALE,
-					"הכלב הכי חמוד שיש", "הכלב הכי חמוד שיש.לא נושך ולא נובח", bytePhoto, "Valeria", "Yermaev", number,
-					"תל אביב", "רודשילד", 16);
+					AdoptionStatus.ADOPTED, "הכלב הכי חמוד שיש", "הכלב הכי חמוד שיש.לא נושך ולא נובח", bytePhoto,
+					"Valeria", "Yermaev", number, "תל אביב", "רודשילד", 16);
 			petModel.createNewPet(user.getUserId(), Category.DOG, "Moana", 1, PetSize.SMALL, Gender.FEMALE,
-					"הכלבה הכי חמודה שיש", "הכלבה הכי חמודה שיש.לא נושכת ולא נובחת", bytePhoto, "Valeria", "Yermaev",
-					number, "תל אביב", "רודשילד", 16);
+					AdoptionStatus.ADOPTABLE, "הכלבה הכי חמודה שיש", "הכלבה הכי חמודה שיש.לא נושכת ולא נובחת",
+					bytePhoto, "Valeria", "Yermaev", number, "תל אביב", "רודשילד", 16);
 			petModel.createNewPet(user.getUserId(), Category.CAT, "Misty", 3, PetSize.XLARGE, Gender.MALE,
-					"החתול הכי חמוד שיש", "החתול הכי חמוד שיש.לא נושך ולא נובח", null, "Valeria", "Yermaev", number,
-					"תל אביב", "רודשילד", 16);
+					AdoptionStatus.ADOPTABLE, "החתול הכי חמוד שיש", "החתול הכי חמוד שיש.", null, "Valeria", "Yermaev",
+					number, "תל אביב", "רודשילד", 16);
 			petModel.createNewPet(user.getUserId(), Category.CAT, "Chloe", 7, PetSize.SMALL, Gender.MALE,
-					"החתול הכי חמוד שיש", "החתול הכי חמוד שיש.לא נושך ולא נובח", null, "Valeria", "Yermaev", number,
-					"תל אביב", "רודשילד", 16);
+					AdoptionStatus.PENDING, "החתול הכי חמוד שיש", "החתול הכי חמוד שיש.", null, "Valeria", "Yermaev",
+					number, "תל אביב", "רודשילד", 16);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -66,7 +68,7 @@ public class Test {
 			User user = userModel.findUser("valeria", "Aa123456");
 
 			// Get created pets - Dogs
-			List<Pet> pets = petModel.getPetsByCriteria(Category.DOG, 0, null, null);
+			List<Pet> pets = petModel.getPetsByCriteria(Category.DOG, 0, null, null, AdoptionStatus.ADOPTABLE);
 
 			for (Pet currPet : pets) {
 				likeModel.createNewLike(user.getUserId(), currPet.getPetId());

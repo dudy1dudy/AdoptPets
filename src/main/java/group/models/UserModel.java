@@ -3,6 +3,7 @@ package group.models;
 import group.dataAccess.UserDAO;
 import group.entities.User;
 import group.exception.ErrorInProcessUser;
+import group.utilities.UserType;
 
 // Class that process logic for create/update/delete user data
 
@@ -18,7 +19,7 @@ public class UserModel {
 		return currentUser;
 	}
 
-	public void createNewUser(String username, String password, String firstName, String lastName, String email)
+	public void createNewUser(String username, String password, String firstName, String lastName, UserType userType, String email)
 			throws ErrorInProcessUser {
 
 		// Create new user
@@ -29,6 +30,7 @@ public class UserModel {
 		newUser.setPassword(password);
 		newUser.setFirstName(firstName);
 		newUser.setLastName(lastName);
+		newUser.setType(userType);
 		newUser.setEmail(email);
 
 		// Save new User to DB
@@ -115,4 +117,20 @@ public class UserModel {
 			throw e;
 		}
 	}
+	
+	// Check if username is admin
+		public boolean checkUserAdmin(String username) throws ErrorInProcessUser {
+
+			// Find user in DB
+			try {
+				User foundUser = this.userAccess.checkUserAdmin(username);
+
+				if (foundUser != null)
+					return true;
+				else
+					return false;
+			} catch (ErrorInProcessUser e) {
+				throw e;
+			}
+		}
 }

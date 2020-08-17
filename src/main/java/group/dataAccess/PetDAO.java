@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 import group.entities.Pet;
 import group.exception.ErrorInProcessPetData;
 import group.utilities.AccessToDb;
+import group.utilities.AdoptionStatus;
 import group.utilities.Category;
 import group.utilities.Gender;
 import group.utilities.PetSize;
@@ -107,8 +108,8 @@ public class PetDAO {
 	}
 
 	// Get pets by criteria
-	public List<Pet> getPetsByCriteria(Category petCategory, int petAge, PetSize petSize, Gender petGender)
-			throws ErrorInProcessPetData {
+	public List<Pet> getPetsByCriteria(Category petCategory, int petAge, PetSize petSize, Gender petGender,
+			AdoptionStatus adoptionStatus) throws ErrorInProcessPetData {
 		try {
 			// access to DB
 			EntityManager em = AccessToDb.createFactory();
@@ -136,6 +137,10 @@ public class PetDAO {
 			// Pet Gender
 			if (petGender != null)
 				predicates.add(cb.and(cb.equal(pet.get("gender"), petGender)));
+
+			// Adoption Status
+			if (adoptionStatus != null)
+				predicates.add(cb.and(cb.equal(pet.get("adoptionStatus"), adoptionStatus)));
 
 			// Set where
 			query.select(pet).where(cb.and(predicates.toArray(new Predicate[predicates.size()])));

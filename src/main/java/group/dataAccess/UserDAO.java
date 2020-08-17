@@ -8,6 +8,7 @@ import group.entities.User;
 import group.exception.ErrorInProcessPetOwner;
 import group.exception.ErrorInProcessUser;
 import group.utilities.AccessToDb;
+import group.utilities.UserType;
 
 public class UserDAO {
 	public UserDAO() {
@@ -132,6 +133,25 @@ public class UserDAO {
 					.getResultList();
 
 			return results;
+		} catch (Exception e) {
+			throw new ErrorInProcessUser("Error in process user data");
+		} finally {
+			AccessToDb.closeFactory();
+		}
+	}
+
+	// Get User by username - for checking if user is admin
+	public User checkUserAdmin(String username) throws ErrorInProcessUser {
+
+		try {
+			// access to DB
+			EntityManager em = AccessToDb.createFactory();
+
+			// Select User by username
+			User selectedUser = em.createNamedQuery("CheckAdmin", User.class).setParameter("username", username)
+					.setParameter("type", UserType.ADMIN).getSingleResult();
+
+			return selectedUser;
 		} catch (Exception e) {
 			throw new ErrorInProcessUser("Error in process user data");
 		} finally {

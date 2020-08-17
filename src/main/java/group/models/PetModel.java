@@ -8,6 +8,7 @@ import group.entities.User;
 import group.exception.ErrorInProcessPetData;
 import group.exception.ErrorInProcessPetOwner;
 import group.exception.ErrorInProcessUser;
+import group.utilities.AdoptionStatus;
 import group.utilities.Category;
 import group.utilities.Gender;
 import group.utilities.PetSize;
@@ -32,8 +33,9 @@ public class PetModel {
 
 	// Create new pet with new owner
 	public Pet createNewPet(int userId, Category petCategory, String petName, int petAge, PetSize petSize,
-			Gender petGender, String shortDescription, String detailDescription, byte[] petPhoto, String firstName,
-			String lastName, int ownerPhoneNumber, String ownerCity, String ownerStreet, int ownerHouseNumber)
+			Gender petGender, AdoptionStatus adoptionStatus, String shortDescription, String detailDescription,
+			byte[] petPhoto, String firstName, String lastName, int ownerPhoneNumber, String ownerCity,
+			String ownerStreet, int ownerHouseNumber)
 			throws ErrorInProcessPetOwner, ErrorInProcessUser, ErrorInProcessPetData {
 
 		// Get user by user id
@@ -64,6 +66,7 @@ public class PetModel {
 		newPet.setPetAge(petAge);
 		newPet.setPetSize(petSize);
 		newPet.setGender(petGender);
+		newPet.setAdoptionStatus(adoptionStatus);
 		newPet.setShortDescription(shortDescription);
 		newPet.setDetailDescription(detailDescription);
 		newPet.setPetPhoto(petPhoto);
@@ -86,9 +89,9 @@ public class PetModel {
 
 	// Update exist pet and owner
 	public Pet updatePet(int petId, Category petCategory, String petName, int petAge, PetSize petSize, Gender petGender,
-			String shortDescription, String detailDescription, byte[] petPhoto, String firstName, String lastName,
-			int ownerPhoneNumber, String ownerCity, String ownerStreet, int ownerHouseNumber)
-			throws ErrorInProcessPetOwner, ErrorInProcessPetData {
+			AdoptionStatus adoptionStatus, String shortDescription, String detailDescription, byte[] petPhoto,
+			String firstName, String lastName, int ownerPhoneNumber, String ownerCity, String ownerStreet,
+			int ownerHouseNumber) throws ErrorInProcessPetOwner, ErrorInProcessPetData {
 
 		// Get Pet using id
 		Pet currentPet = this.petAccess.getPet(petId);
@@ -110,6 +113,7 @@ public class PetModel {
 		currentPet.setPetAge(petAge);
 		currentPet.setPetSize(petSize);
 		currentPet.setGender(petGender);
+		currentPet.setAdoptionStatus(adoptionStatus);
 		currentPet.setShortDescription(shortDescription);
 		currentPet.setDetailDescription(detailDescription);
 		currentPet.setPetPhoto(petPhoto);
@@ -204,10 +208,10 @@ public class PetModel {
 	}
 
 	// Get pets by criterias
-	public List<Pet> getPetsByCriteria(Category petCategory, int petAge, PetSize petSize, Gender petGender)
-			throws ErrorInProcessPetData {
+	public List<Pet> getPetsByCriteria(Category petCategory, int petAge, PetSize petSize, Gender petGender,
+			AdoptionStatus adoptionStatus) throws ErrorInProcessPetData {
 		try {
-			return this.petAccess.getPetsByCriteria(petCategory, petAge, petSize, petGender);
+			return this.petAccess.getPetsByCriteria(petCategory, petAge, petSize, petGender, adoptionStatus);
 		} catch (ErrorInProcessPetData ePet) {
 			throw ePet;
 		}

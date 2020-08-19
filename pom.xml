@@ -4,10 +4,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.packagename.myapp</groupId>
-	<artifactId>my-starter-project</artifactId>
-	<name>My Starter Project</name>
-	<version>1.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<artifactId>AdoptPets</artifactId>
+	<name>AdoptPets</name>
+	<packaging>war</packaging>
 
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -142,11 +141,6 @@
 			<version>2.5.1</version>
 		</dependency>
 
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.19</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -268,4 +262,5 @@
 		</profile>
 
 	</profiles>
+	<version>1.0</version>
 </project>

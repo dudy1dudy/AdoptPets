@@ -3,6 +3,7 @@ package group.dataAccess;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -97,9 +98,13 @@ public class PetDAO {
 			// access to DB
 			EntityManager em = AccessToDb.createFactory();
 
-			List<Pet> results = em.createNamedQuery("AllPets", Pet.class).getResultList();
+			Query q = em.createNamedQuery("AllPets", Pet.class);
 
-			return results;
+			if (q.getFirstResult() != 0) {
+				List<Pet> results = (List<Pet>) q.getResultList();
+				return results;
+			} else
+				return null;
 		} catch (Exception e) {
 			throw new ErrorInProcessPetData("Error in process pet data");
 		} finally {

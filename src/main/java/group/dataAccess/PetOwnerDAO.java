@@ -1,6 +1,7 @@
 package group.dataAccess;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import group.entities.Pet;
 import group.entities.PetOwner;
@@ -86,10 +87,13 @@ public class PetOwnerDAO {
 			// access to DB
 			EntityManager em = AccessToDb.createFactory();
 
-			Pet pet = em.createNamedQuery("PetOfOwner", Pet.class).setParameter("petOwnerId", idPetOwner)
-					.getSingleResult();
+			Query q = em.createNamedQuery("PetOfOwner", Pet.class).setParameter("petOwnerId", idPetOwner);
 
-			return pet;
+			if (q.getFirstResult() != 0) {
+				Pet pet = (Pet) q.getSingleResult();
+				return pet;
+			} else
+				return null;
 		} catch (Exception e) {
 			throw new ErrorInProcessPetOwner("Error in process pet owner data");
 		} finally {

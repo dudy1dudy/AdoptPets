@@ -3,6 +3,8 @@ package group.dataAccess;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import group.entities.PetOwner;
 import group.entities.User;
 import group.exception.ErrorInProcessPetOwner;
@@ -91,11 +93,15 @@ public class UserDAO {
 			// access to DB
 			EntityManager em = AccessToDb.createFactory();
 
-			// Select User by username and password
-			User selectedUser = em.createNamedQuery("FindUser", User.class).setParameter("username", username)
-					.setParameter("password", password).getSingleResult();
+			Query q = em.createNamedQuery("FindUser", User.class).setParameter("username", username)
+					.setParameter("password", password);
 
-			return selectedUser;
+			// Select User by username and password
+			if (q.getFirstResult() != 0) {
+				User selectedUser = (User) q.getSingleResult();
+				return selectedUser;
+			} else
+				return null;
 		} catch (Exception e) {
 			throw new ErrorInProcessUser("Error in process user data");
 		} finally {
@@ -111,10 +117,13 @@ public class UserDAO {
 			EntityManager em = AccessToDb.createFactory();
 
 			// Select User by username
-			User selectedUser = em.createNamedQuery("CheckUsername", User.class).setParameter("username", username)
-					.getSingleResult();
+			Query q = em.createNamedQuery("CheckUsername", User.class).setParameter("username", username);
 
-			return selectedUser;
+			if (q.getFirstResult() != 0) {
+				User selectedUser = (User) q.getSingleResult();
+				return selectedUser;
+			} else
+				return null;
 		} catch (Exception e) {
 			throw new ErrorInProcessUser("Error in process user data");
 		} finally {
@@ -123,16 +132,21 @@ public class UserDAO {
 	}
 
 	// Get all pet owners of user
+	@SuppressWarnings("unchecked")
 	public List<PetOwner> getAllPetOwners(int idUser) throws ErrorInProcessUser {
 		try {
 			// access to DB
 			EntityManager em = AccessToDb.createFactory();
 
 			// Select Pet owners of user
-			List<PetOwner> results = em.createNamedQuery("OwnersByUser", PetOwner.class).setParameter("userId", idUser)
-					.getResultList();
+			Query q = em.createNamedQuery("OwnersByUser", PetOwner.class).setParameter("userId", idUser);
 
-			return results;
+			if (q.getFirstResult() != 0) {
+				List<PetOwner> results = (List<PetOwner>) q.getResultList();
+				return results;
+			} else
+				return null;
+
 		} catch (Exception e) {
 			throw new ErrorInProcessUser("Error in process user data");
 		} finally {
@@ -148,11 +162,17 @@ public class UserDAO {
 			EntityManager em = AccessToDb.createFactory();
 
 			// Select User by username
-			User selectedUser = em.createNamedQuery("CheckAdmin", User.class).setParameter("username", username)
-					.setParameter("type", UserType.ADMIN).getSingleResult();
+			Query q = em.createNamedQuery("CheckAdmin", User.class).setParameter("username", username)
+					.setParameter("type", UserType.ADMIN);
 
-			return selectedUser;
-		} catch (Exception e) {
+			if (q.getFirstResult() != 0) {
+				User selectedUser = (User) q.getSingleResult();
+				return selectedUser;
+			} else
+				return null;
+		} catch (
+
+		Exception e) {
 			throw new ErrorInProcessUser("Error in process user data");
 		} finally {
 			AccessToDb.closeFactory();

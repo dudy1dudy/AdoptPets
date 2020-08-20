@@ -53,6 +53,20 @@ public class User implements Serializable {
 	@Column(unique = true)
 	private String email;
 
+	@Column(name = "phone_number")
+	private int phoneNumber;
+
+	@Column(name = "city")
+	@Size(max = 60)
+	private String city;
+
+	@Column(name = "street")
+	@Size(max = 100)
+	private String street;
+
+	@Column(name = "house_number")
+	private int houseNumber;
+
 	// one to many relationship - To pet owner table
 	@OneToMany(mappedBy = "user")
 	private List<PetOwner> owners = new ArrayList<PetOwner>();
@@ -115,6 +129,38 @@ public class User implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(int phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public int getHouseNumber() {
+		return houseNumber;
+	}
+
+	public void setHouseNumber(int houseNumber) {
+		this.houseNumber = houseNumber;
 	}
 
 	public List<PetOwner> getOwners() {

@@ -9,17 +9,11 @@ import group.utilities.UserType;
 
 public class UserModel {
 
-	// User that sign in
-	private User currentUser;
-
 	// Access to User table in DB
 	private UserDAO userAccess = new UserDAO();
 
-	public User getCurrentUser() {
-		return currentUser;
-	}
-
-	public void createNewUser(String username, String password, String firstName, String lastName, UserType userType, String email)
+	public User createNewUser(String username, String password, String firstName, String lastName, UserType userType,
+			String email, int userPhoneNumber, String userCity, String userStreet, int userHouseNumber)
 			throws ErrorInProcessUser {
 
 		// Create new user
@@ -32,71 +26,78 @@ public class UserModel {
 		newUser.setLastName(lastName);
 		newUser.setType(userType);
 		newUser.setEmail(email);
+		newUser.setPhoneNumber(userPhoneNumber);
+		newUser.setCity(userCity);
+		newUser.setStreet(userStreet);
+		newUser.setHouseNumber(userHouseNumber);
 
 		// Save new User to DB
 		try {
 			this.userAccess.create(newUser);
 
-			// Set to current user
-			this.currentUser = newUser;
+			return newUser;
 		} catch (ErrorInProcessUser e) {
 			throw e;
 		}
 	}
 
-	public void updateUser(String username, String password, String firstName, String lastName, String email)
-			throws ErrorInProcessUser {
+	public User updateUser(String username, String password, String firstName, String lastName, String email,
+			int userPhoneNumber, String userCity, String userStreet, int userHouseNumber) throws ErrorInProcessUser {
+
+		// Get needed user
+		User currentUser = this.userAccess.findUserByData(username, password);
 
 		// Check current user is set - otherwise can't be update
-		if (this.currentUser != null) {
-
-			// Save current user for go back if update didn't work
-			User tempUser = this.currentUser;
+		if (currentUser != null) {
 
 			// Set updated data to current user
-			this.currentUser.setUsername(username);
-			this.currentUser.setPassword(password);
-			this.currentUser.setFirstName(firstName);
-			this.currentUser.setLastName(lastName);
-			this.currentUser.setEmail(email);
+			currentUser.setUsername(username);
+			currentUser.setPassword(password);
+			currentUser.setFirstName(firstName);
+			currentUser.setLastName(lastName);
+			currentUser.setEmail(email);
+			currentUser.setPhoneNumber(userPhoneNumber);
+			currentUser.setCity(userCity);
+			currentUser.setStreet(userStreet);
+			currentUser.setHouseNumber(userHouseNumber);
 
 			// Save updated User to DB
 			try {
-				this.userAccess.update(this.currentUser);
+				this.userAccess.update(currentUser);
+				return currentUser;
 			} catch (ErrorInProcessUser e) {
-				this.currentUser = tempUser;
 				throw e;
 			}
 		}
+		return null;
 	}
 
-	public void deleteUser() throws ErrorInProcessUser {
+	public void deleteUser(int idUser) throws ErrorInProcessUser {
+
+		// Get needed user
+		User currentUser = this.userAccess.getUser(idUser);
 
 		// Check current user is set - otherwise can't be delete
-		if (this.currentUser != null) {
-
-			// Save current user for go back if update didn't work
-			User tempUser = this.currentUser;
+		if (currentUser != null) {
 
 			// Save updated User to DB
 			try {
-				this.userAccess.remove(this.currentUser.getUserId());
+				this.userAccess.remove(currentUser.getUserId());
 			} catch (ErrorInProcessUser e) {
-				this.currentUser = tempUser;
 				throw e;
 			}
 		}
 	}
-	
+
 	// Find user for access application
 	public User findUser(String username, String password) throws ErrorInProcessUser {
 
 		// Find user in DB
 		try {
-			this.currentUser = this.userAccess.findUserByData(username, password);
+			User currentUser = this.userAccess.findUserByData(username, password);
 
 			// Set found user
-			return this.currentUser;
+			return currentUser;
 		} catch (ErrorInProcessUser e) {
 			throw e;
 		}
@@ -117,20 +118,20 @@ public class UserModel {
 			throw e;
 		}
 	}
-	
+
 	// Check if username is admin
-		public boolean checkUserAdmin(String username) throws ErrorInProcessUser {
+	public boolean checkUserAdmin(String username) throws ErrorInProcessUser {
 
-			// Find user in DB
-			try {
-				User foundUser = this.userAccess.checkUserAdmin(username);
+		// Find user in DB
+		try {
+			User foundUser = this.userAccess.checkUserAdmin(username);
 
-				if (foundUser != null)
-					return true;
-				else
-					return false;
-			} catch (ErrorInProcessUser e) {
-				throw e;
-			}
+			if (foundUser != null)
+				return true;
+			else
+				return false;
+		} catch (ErrorInProcessUser e) {
+			throw e;
 		}
+	}
 }

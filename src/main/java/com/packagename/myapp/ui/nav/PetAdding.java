@@ -29,7 +29,7 @@ import java.io.IOException;
 
 @Route(value="petadding",layout= MainView.class)
 
-@PageTitle("Add Pet")
+@PageTitle("Pet Details")
 
 public class PetAdding extends VerticalLayout{
 
@@ -38,8 +38,9 @@ public class PetAdding extends VerticalLayout{
 	byte[] fileContent;
 	AddPetLogic addPetLogic;
 	VerticalLayout vl=new VerticalLayout();
-	
-	private void isLogin() {
+
+    //moved to AddPetView
+	/*private void isLogin() {
 		if (MainView.isUserRegistered()) {
 			addPetLogic = new AddPetLogic();
 		}else {
@@ -48,18 +49,20 @@ public class PetAdding extends VerticalLayout{
             data.add(details);
             vl.add(data);
 		}
-	}
+	}*/
 	
 	 
 	
     public PetAdding(){
     	
-    	isLogin();
-        H3 title=new H3("Add a new pet");
+
+        H3 title=new H3("Pet Details");
 
         HorizontalLayout titlelayout=new HorizontalLayout();
         titlelayout.add(title);
         title.addClassName("titletext");
+
+
 
         FormLayout addLayout = new FormLayout();
 
@@ -151,6 +154,8 @@ public class PetAdding extends VerticalLayout{
         
         Button add=new Button("Add", click-> parametersCheck(petName, category, size, age, color, breed, description,
     		descriptionL, upload));
+
+
      //   Button add=new Button("Add", click-> addPetLogic.AddPet( user.getCurrentUser().getUserId() , 
        // 		null  , petName.getValue(), age.getValue(), size.getValue(),  description.getValue(), descriptionL.getValue(), upload,
         //		user.getCurrentUser().getFirstName(), user.getCurrentUser().getLastName()));
@@ -164,6 +169,7 @@ public class PetAdding extends VerticalLayout{
         form.add(addLayout);
 
         vl.add(titlelayout,form);
+        //isLogin();
 
         vl.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 

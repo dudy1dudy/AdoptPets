@@ -13,7 +13,7 @@
 				value="jdbc:mysql://localhost:3306/adoptpets?serverTimezone=UTC" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password"
-				value="Adresa12*" />
+				value="bla3bla" />
 
 			<!-- EclipseLink should create the database schema automatically -->
 	<!--		<property name="eclipselink.ddl-generation" value="drop-and-create-tables" /> -->

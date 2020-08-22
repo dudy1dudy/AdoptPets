@@ -2,21 +2,14 @@ package com.packagename.myapp.ui;
 
 import com.packagename.myapp.ui.nav.*;
 import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.*;
 
 import group.entities.User;
-
-import org.junit.rules.ExternalResource;
 
 @CssImport("./styles/shared-styles.css")
 public class MainView extends AppLayout {
@@ -63,11 +56,13 @@ public class MainView extends AppLayout {
         header.addClassName("header");
 
         //make link for route
-        RouterLink add = new RouterLink("Add", PetAdding.class);
+        //RouterLink add = new RouterLink("Add", PetAdding.class);
+        RouterLink add = new RouterLink("Add", AddPetView.class);
         RouterLink home = new RouterLink("Home", HomeView.class);
         RouterLink about = new RouterLink("About", AboutView.class);
         RouterLink contact = new RouterLink("Contact", ContactView.class);
         RouterLink more = new RouterLink("More", MorehView.class);
+
 
         //icon add
         Icon logoV = new Icon(VaadinIcon.HEART_O);

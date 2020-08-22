@@ -48,6 +48,15 @@ margin: 0 auto;
    padding: 5px;
  }
 
+.addNewPetTitle{
+    color:blue;
+    margin: 0 auto;
+    max-width: 610px;
+    padding: 5px;
+
+
+}
+
  .reg{
   position: absolute;
   color:DodgerBlue;
@@ -64,4 +73,5 @@ margin: 0 auto;
 .image{
 padding: 5px, 5px, 5px, 5px;
 }
+
 

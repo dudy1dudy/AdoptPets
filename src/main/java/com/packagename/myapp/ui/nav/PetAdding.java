@@ -1,5 +1,7 @@
 package com.packagename.myapp.ui.nav;
 
+import com.logic.AddPetLogic;
+import com.logic.RegisterLogic;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -16,6 +18,14 @@ import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import group.entities.User;
+import group.exception.ErrorInProcessUser;
+import group.models.UserModel;
+import group.utilities.Category;
+import group.utilities.PetSize;
+import java.nio.file.Files;
+import java.io.File;
+import java.io.IOException;
 
 @Route(value="petadding",layout= MainView.class)
 
@@ -23,8 +33,28 @@ import com.vaadin.flow.router.Route;
 
 public class PetAdding extends VerticalLayout{
 
-    VerticalLayout vl=new VerticalLayout();
+	
+	File fi;
+	byte[] fileContent;
+	AddPetLogic addPetLogic;
+	VerticalLayout vl=new VerticalLayout();
+	
+	private void isLogin() {
+		if (MainView.isUserRegistered()) {
+			addPetLogic = new AddPetLogic();
+		}else {
+			HorizontalLayout data=new HorizontalLayout();
+            Span details=new Span("Please register to the site, before adding pet for addoption");
+            data.add(details);
+            vl.add(data);
+		}
+	}
+	
+	 
+	
     public PetAdding(){
+    	
+    	isLogin();
         H3 title=new H3("Add a new pet");
 
         HorizontalLayout titlelayout=new HorizontalLayout();
@@ -41,14 +71,14 @@ public class PetAdding extends VerticalLayout{
         petNameLabel.addClassName("titletext");
 
         Select<String> category = new Select<>();
-        category.setItems("Dogs","Cats", "Reptiles","Birds","Rabbit");
+        category.setItems("Dogs","Cats", "Fish","Birds","Rodent", "Other");
         category.setPlaceholder("Cats");
 
         H4 categoryLabel=new H4("Category");
         categoryLabel.addClassName("titletext");
 
         Select<String> size = new Select<>();
-        size.setItems("Small","Medium");
+        size.setItems("Small","Medium", "Large", "XLarge");
         size.setPlaceholder("Medium");
 
         H4 sizeLabel=new H4("Size");
@@ -68,10 +98,10 @@ public class PetAdding extends VerticalLayout{
         colorLabel.addClassName("titletext");
 
         Select<String> breed = new Select<>();
-        breed.setItems("breed1","breed2");
-        breed.setPlaceholder("breed1");
+        breed.setItems("Male","Famale");
+        breed.setPlaceholder("Genger");
 
-        H4 breedLabel=new H4("Breed");
+        H4 breedLabel=new H4("Genger");
         breedLabel.addClassName("titletext");
 
         TextField description = new TextField();
@@ -93,6 +123,11 @@ public class PetAdding extends VerticalLayout{
         H4 uploadLabel=new H4("Upload");
         uploadLabel.addClassName("titletext");
 
+
+        
+       
+        
+        
         upload.addSucceededListener(event -> {
 
         });
@@ -109,14 +144,20 @@ public class PetAdding extends VerticalLayout{
 
         VerticalLayout form=new VerticalLayout();
         form.setWidth("500px");
-
-        Button add=new Button("Add", click->
-        {
-            HorizontalLayout data=new HorizontalLayout();
-            Span details=new Span(petName.getValue());
-            data.add(details);
-            vl.add(data);
-        });
+       
+        
+       
+        
+        
+        Button add=new Button("Add", click-> parametersCheck(petName, category, size, age, color, breed, description,
+    		descriptionL, upload));
+     //   Button add=new Button("Add", click-> addPetLogic.AddPet( user.getCurrentUser().getUserId() , 
+       // 		null  , petName.getValue(), age.getValue(), size.getValue(),  description.getValue(), descriptionL.getValue(), upload,
+        //		user.getCurrentUser().getFirstName(), user.getCurrentUser().getLastName()));
+        
+        
+        
+       
 
         addLayout.add(add);
 
@@ -128,5 +169,28 @@ public class PetAdding extends VerticalLayout{
 
         add(vl);
     }
+    
+    private void parametersCheck(TextField petName, Select<String> category, Select<String> size,
+    		NumberField age, Select<String> color, Select<String> breed, TextField description, 
+    		TextArea descriptionL, Upload upload) {
+    	
+    	
+    	
+    	if(petName.isEmpty() || category.isEmpty() ||size.isEmpty() || age.isEmpty() ||color.isEmpty() 
+    			|| breed.isEmpty() || description.isEmpty() || descriptionL.isEmpty() ) {
+    		
+    		HorizontalLayout data=new HorizontalLayout();
+            Span details=new Span("details are missing, please fill all of the fields");
+            data.add(details);
+            vl.add(data);
+			return;
+    	}else {
+    		addPetLogic.AddPet(vl, category.getValue(), petName.getValue(), age.getValue(),size.getValue(),
+    				breed.getValue(),description.getValue(), descriptionL.getValue(), 
+    				fileContent);
+    	}
+    }
+    
+    
 }
 

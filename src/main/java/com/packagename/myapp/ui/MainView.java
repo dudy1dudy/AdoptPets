@@ -13,23 +13,47 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.*;
+
+import group.entities.User;
+
 import org.junit.rules.ExternalResource;
 
 @CssImport("./styles/shared-styles.css")
 public class MainView extends AppLayout {
 
     /**
-
      */
+	private static User user;
+	
+	public static User getUser() {
+		return user;
+	}
+	
+	public static void setUser(User user) {
+		MainView.user = new User();
+		MainView.user = user;
+	}
+	
+	public static boolean isUserRegistered() {
+		if(user == null) {
+			return false;
+		}else {
+			return true;
+		}
+	}
 
     public MainView() {
 
         //nav bar side icon
         //H1 logo = new H1("Pet");
         //logo.addClassName("logo");
-
+    	
         Icon ico=new Icon(VaadinIcon.CLIPBOARD_USER);
 
+        
+       
+        
+        
         //nav bar item layout
         HorizontalLayout header = new HorizontalLayout( ico);
         header.setDefaultVerticalComponentAlignment(

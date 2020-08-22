@@ -1,5 +1,6 @@
 package com.packagename.myapp.ui.nav;
 
+import com.logic.RegisterLogic;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -12,6 +13,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
@@ -24,7 +26,7 @@ import com.vaadin.flow.router.Route;
 @PageTitle("Registration")
 
 public class RegView extends VerticalLayout{
-
+		RegisterLogic regLogic = new RegisterLogic();
         VerticalLayout vl=new VerticalLayout();
         public RegView(){
             H3 title=new H3("Register");
@@ -37,26 +39,52 @@ public class RegView extends VerticalLayout{
             FormLayout registerLayout = new FormLayout();
 
 
-            TextField firstName = new TextField(); //state
+            TextField firstName = new TextField(); 
             //petName.setLabel("Pet name");
             firstName.setPlaceholder("First Name");
 
             H4 firstNameLabel=new H4("First name");
             firstNameLabel.addClassName("titletext");
 
-            TextField lastName = new TextField(); //state
-            //petName.setLabel("Pet name");
+            TextField lastName = new TextField(); 
+           
             lastName.setPlaceholder("Last Name");
 
             H4 lastNameLabel=new H4("Last name");
             lastNameLabel.addClassName("titletext");
 
             NumberField phone = new NumberField();
-            phone.setPlaceholder("0741236547");
+            phone.setPlaceholder("Phone Number");
 
             H4 phoneLabel=new H4("Phone number");
             phoneLabel.addClassName("titletext");
 
+            TextField UserName = new TextField();
+            UserName.setPlaceholder("User Name");    
+            
+            H4 UserNameLabel=new H4("User Name");
+            UserNameLabel.addClassName("titletext");
+
+            PasswordField password = new PasswordField();
+            password.setPlaceholder("Password");
+            
+            H4 passwordLabel = new H4("Password");
+            passwordLabel.addClassName("titletext");
+            
+            PasswordField repeatePassword = new PasswordField();
+            repeatePassword.setPlaceholder("Repeate Password");
+            
+            H4 repeatePasswordLabel = new H4("Repeate Password");
+            repeatePasswordLabel.addClassName("titletext");
+      
+           
+            EmailField email = new EmailField();
+            email.setClearButtonVisible(true);
+            email.setErrorMessage("Please enter a valid email address");
+
+            H4 emailLabel=new H4("Email address");
+            emailLabel.addClassName("titletext");
+            
             TextField city = new TextField(); //state
             //petName.setLabel("Pet name");
             city.setPlaceholder("city");
@@ -77,35 +105,29 @@ public class RegView extends VerticalLayout{
             H4 houseLabel=new H4("House Number");
             houseLabel.addClassName("titletext");
 
-            EmailField email = new EmailField();
-            email.setClearButtonVisible(true);
-            email.setErrorMessage("Please enter a valid email address");
-
-            H4 emailLabel=new H4("Email address");
-            emailLabel.addClassName("titletext");
-
             registerLayout.addFormItem(firstName,firstNameLabel);
             registerLayout.addFormItem(lastName,lastNameLabel);
             registerLayout.addFormItem(phone,phoneLabel);
+            registerLayout.addFormItem(UserName,UserNameLabel);
+            registerLayout.addFormItem(password,passwordLabel);  
+            registerLayout.addFormItem(repeatePassword,repeatePasswordLabel); 
+            registerLayout.addFormItem(email,emailLabel);
             registerLayout.addFormItem(city,citiLabel);
             registerLayout.addFormItem(street,streetLabel);
             registerLayout.addFormItem(house,houseLabel);
-            registerLayout.addFormItem(email,emailLabel);
-
+            
             VerticalLayout form=new VerticalLayout();
             form.setWidth("500px");
+         
+            Button register;
+            
+            
+			register=new Button("Register", click-> parametersCheck( UserName, password, repeatePassword
+					, firstName, lastName, email, phone, city, street, house));
+			registerLayout.add(register);
 
-            Button register=new Button("Register", click->
-            {
-                HorizontalLayout data=new HorizontalLayout();
-                Span details=new Span(email.getValue());
-                data.add(details);
-                vl.add(data);
-            });
 
-            registerLayout.add(register);
-
-            form.add(registerLayout);
+			form.add(registerLayout);
 
             vl.add(titlelayout,form);
 
@@ -113,5 +135,31 @@ public class RegView extends VerticalLayout{
 
             add(vl);
         }
+        
+        private void parametersCheck(TextField userName, PasswordField password, PasswordField repeatePassword, 
+        		TextField firstName, TextField lastName, EmailField email, NumberField phone, TextField city, 
+        		TextField street,NumberField house) {
+        	
+        	 if(userName.isEmpty() || password.isEmpty() || repeatePassword.isEmpty() ||  firstName.isEmpty() || 
+             		 lastName.isEmpty() || email.isEmpty() || city.isEmpty() || street.isEmpty() ) {
+  				
+        		 	HorizontalLayout data=new HorizontalLayout();
+	                Span details=new Span("details are missing, please fill all of the fields");
+	                data.add(details);
+	                vl.add(data);
+					return;
+        		
+  			 }else {
+  				 regLogic.createUser(vl, userName.getValue() , password.getValue(), repeatePassword.getValue() ,
+  						 firstName.getValue() , lastName.getValue(), email.getValue(), phone.getValue()	, 
+  						 city.getValue(), street.getValue() ,house.getValue());
+   			     return;
+  	            	
+  	            
+  			}
+        }
+        
+        
+        
 
 }

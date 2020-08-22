@@ -32,7 +32,7 @@ public class PetModel {
 	private UserDAO userAccess = new UserDAO();
 
 	// Create new pet with new owner
-	public Pet createNewPet(int userId, Category petCategory, String petName, int petAge, PetSize petSize,
+	public Pet createNewPet(int userId, Category petCategory, String petName, double petAge, PetSize petSize,
 			Gender petGender, AdoptionStatus adoptionStatus, String shortDescription, String detailDescription,
 			byte[] petPhoto, String firstName, String lastName, int ownerPhoneNumber, String ownerCity,
 			String ownerStreet, int ownerHouseNumber)
@@ -88,7 +88,7 @@ public class PetModel {
 	}
 
 	// Update exist pet and owner
-	public Pet updatePet(int petId, Category petCategory, String petName, int petAge, PetSize petSize, Gender petGender,
+	public Pet updatePet(int petId, Category petCategory, String petName, double petAge, PetSize petSize, Gender petGender,
 			AdoptionStatus adoptionStatus, String shortDescription, String detailDescription, byte[] petPhoto,
 			String firstName, String lastName, int ownerPhoneNumber, String ownerCity, String ownerStreet,
 			int ownerHouseNumber) throws ErrorInProcessPetOwner, ErrorInProcessPetData {
@@ -208,7 +208,7 @@ public class PetModel {
 	}
 
 	// Get pets by criterias
-	public List<Pet> getPetsByCriteria(Category petCategory, int petAge, PetSize petSize, Gender petGender,
+	public List<Pet> getPetsByCriteria(Category petCategory, double petAge, PetSize petSize, Gender petGender,
 			AdoptionStatus adoptionStatus) throws ErrorInProcessPetData {
 		try {
 			return this.petAccess.getPetsByCriteria(petCategory, petAge, petSize, petGender, adoptionStatus);

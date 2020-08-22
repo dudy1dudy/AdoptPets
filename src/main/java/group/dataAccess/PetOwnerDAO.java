@@ -89,7 +89,7 @@ public class PetOwnerDAO {
 
 			Query q = em.createNamedQuery("PetOfOwner", Pet.class).setParameter("petOwnerId", idPetOwner);
 
-			if (q.getResultList() != null) {
+			if (q.getResultList().isEmpty() != true) {
 				Pet pet = (Pet) q.getSingleResult();
 				return pet;
 			} else

@@ -97,7 +97,7 @@ public class UserDAO {
 					.setParameter("password", password);
 
 			// Select User by username and password
-			if (q.getResultList() != null) {
+			if (q.getResultList().isEmpty() != true) {
 				User selectedUser = (User) q.getSingleResult();
 				return selectedUser;
 			} else
@@ -119,7 +119,7 @@ public class UserDAO {
 			// Select User by username
 			Query q = em.createNamedQuery("CheckUsername", User.class).setParameter("username", username);
 
-			if (q.getResultList() != null) {
+			if (q.getResultList().isEmpty() != true) {
 				User selectedUser = (User) q.getSingleResult();
 				return selectedUser;
 			} else
@@ -141,7 +141,7 @@ public class UserDAO {
 			// Select Pet owners of user
 			Query q = em.createNamedQuery("OwnersByUser", PetOwner.class).setParameter("userId", idUser);
 
-			if (q.getResultList() != null) {
+			if (q.getResultList().isEmpty() != true) {
 				List<PetOwner> results = (List<PetOwner>) q.getResultList();
 				return results;
 			} else
@@ -165,7 +165,7 @@ public class UserDAO {
 			Query q = em.createNamedQuery("CheckAdmin", User.class).setParameter("username", username)
 					.setParameter("type", UserType.ADMIN);
 
-			if (q.getResultList() != null) {
+			if (q.getResultList().isEmpty() != true) {
 				User selectedUser = (User) q.getSingleResult();
 				return selectedUser;
 			} else

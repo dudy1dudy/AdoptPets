@@ -100,7 +100,7 @@ public class PetDAO {
 
 			Query q = em.createNamedQuery("AllPets", Pet.class);
 
-			if (q.getResultList() != null) {
+			if (q.getResultList().isEmpty() != true) {
 				List<Pet> results = (List<Pet>) q.getResultList();
 				return results;
 			} else

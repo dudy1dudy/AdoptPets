@@ -113,7 +113,7 @@ public class PetDAO {
 	}
 
 	// Get pets by criteria
-	public List<Pet> getPetsByCriteria(Category petCategory, int petAge, PetSize petSize, Gender petGender,
+	public List<Pet> getPetsByCriteria(Category petCategory, double petAge, PetSize petSize, Gender petGender,
 			AdoptionStatus adoptionStatus) throws ErrorInProcessPetData {
 		try {
 			// access to DB

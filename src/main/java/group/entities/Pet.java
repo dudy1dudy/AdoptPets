@@ -37,7 +37,7 @@ public class Pet implements Serializable {
 	private String petName;
 	
 	@Column(name = "pet_age")
-	private int petAge;
+	private double petAge;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "pet_size", length = 15)
@@ -95,11 +95,11 @@ public class Pet implements Serializable {
 		this.petName = petName;
 	}
 
-	public int getPetAge() {
+	public double getPetAge() {
 		return this.petAge;
 	}
 
-	public void setPetAge(int petAge) {
+	public void setPetAge(double petAge) {
 		this.petAge = petAge;
 	}
 

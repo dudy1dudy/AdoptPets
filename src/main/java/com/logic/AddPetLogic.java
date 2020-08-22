@@ -30,12 +30,12 @@ public class AddPetLogic {
 		pet = new PetModel();
 	}
 	
-	public void AddPet(VerticalLayout vl, String petCategory, String petName, Double petAge, String petSize, String gender,
+	public void AddPet(VerticalLayout vl, String petCategory, String petName, double petAge, String petSize, String gender,
 			 String shortDescription, String detailDescription,	byte[] petPhoto) {
 		Category petC = findPetCategory(petCategory) ;
 		PetSize petS = findPetSize(petSize);
 		Gender gen = findGender(gender);
-		int age = petAge.intValue();
+//		int age = petAge.intValue();
 		
 		
 		
@@ -48,8 +48,8 @@ public class AddPetLogic {
 	            return;
 			}
 			
-			pet.createNewPet(MainView.getUser().getUserId(), petC, petName, age, petS, gen, AdoptionStatus.ADOPTABLE,
-					shortDescription, detailDescription, null, MainView.getUser().getFirstName(), 
+			pet.createNewPet(MainView.getUser().getUserId(), petC, petName, petAge, petS, gen, AdoptionStatus.ADOPTABLE,
+					shortDescription, detailDescription, petPhoto, MainView.getUser().getFirstName(), 
 					MainView.getUser().getLastName(), MainView.getUser().getPhoneNumber(), MainView.getUser().getCity(), MainView.getUser().getStreet(),
 					MainView.getUser().getHouseNumber());
 			

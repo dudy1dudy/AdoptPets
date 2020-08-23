@@ -52,6 +52,7 @@ public class PetAdding extends VerticalLayout {
 			Span details = new Span("Please register to the site, before adding pet for addoption");
 			data.add(details);
 			vl.add(data);
+			return;
 		}
 	}
 
@@ -168,6 +169,9 @@ public class PetAdding extends VerticalLayout {
 	private void parametersCheck(TextField petName, Select<String> category, Select<String> size, NumberField age,
 			Select<String> color, Select<String> breed, TextField description, TextArea descriptionL, Upload upload) {
 
+		isLogin();
+			
+		
 		if (petName.isEmpty() || category.isEmpty() || size.isEmpty() || age.isEmpty() || color.isEmpty()
 				|| breed.isEmpty() || description.isEmpty() || descriptionL.isEmpty()) {
 

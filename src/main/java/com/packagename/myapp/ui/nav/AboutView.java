@@ -19,7 +19,7 @@ import group.utilities.PetSize;
 @Route(value="about",layout= MainView.class)
 @PageTitle("About")
 public class AboutView extends VerticalLayout {
-	
+	/*
 	 H1 h1=new H1("Like");
     
 	private PetsList home;
@@ -47,5 +47,6 @@ public class AboutView extends VerticalLayout {
      grid.setColumns("categoryC", "genderC", "ageC", "sizeC", "petNameC", "shortDescriptionC", "cityC");
      
  }
+ */
 
 }

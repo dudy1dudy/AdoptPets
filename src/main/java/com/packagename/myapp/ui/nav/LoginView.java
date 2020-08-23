@@ -23,14 +23,14 @@ import group.utilities.UserType;
 //
 @PageTitle("Login")
 
-public class MorehView extends VerticalLayout {
+public class LoginView extends VerticalLayout {
 	
 	
 	UserModel user;
     H1 h1=new H1("Login");
    
 
-    public MorehView(){
+    public LoginView(){
     	
     	LoginForm component = new LoginForm();
     	

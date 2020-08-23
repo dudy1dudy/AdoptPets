@@ -27,7 +27,7 @@ public class MainView extends AppLayout {
     RouterLink home = new RouterLink("Home", HomeView.class);
     static RouterLink about = new RouterLink("About", AboutView.class);
     RouterLink contact = new RouterLink("Contact", ContactView.class);
-    RouterLink login = new RouterLink("Login", MorehView.class);
+    RouterLink login = new RouterLink("Login", LoginView.class);
 
     /**
      */

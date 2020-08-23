@@ -10,7 +10,7 @@ import com.vaadin.flow.router.Route;
 @PageTitle("About")
 public class AboutView extends VerticalLayout {
     public AboutView(){
-        H1 h1=new H1("About");
+        H1 h1=new H1("Aboutt");
         add(h1);
     }
 }

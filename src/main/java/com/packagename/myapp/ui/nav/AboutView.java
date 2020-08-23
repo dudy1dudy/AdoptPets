@@ -31,11 +31,12 @@ public class AboutView extends VerticalLayout {
      configureGrid(); 
 
      add(grid); 
-    
+     home = new PetsList();
+     if(HomeLogic.getPetsList() != null) {
     	 
     	 grid.setItems(home.getPetsList());
     	
-     
+     }
      add(h1);
     
  }

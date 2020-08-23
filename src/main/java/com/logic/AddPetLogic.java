@@ -4,6 +4,8 @@ import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.dom.Element;
 
@@ -21,88 +23,84 @@ import group.utilities.PetSize;
 
 public class AddPetLogic {
 
-	
 	private UserModel userModel;
 	private PetModel pet;
-	
+
 	public AddPetLogic() {
 		userModel = new UserModel();
 		pet = new PetModel();
 	}
-	
-	public void AddPet(VerticalLayout vl, String petCategory, String petName, double petAge, String petSize, String gender,
-			 String shortDescription, String detailDescription,	byte[] petPhoto) {
-		Category petC = findPetCategory(petCategory) ;
+
+	public void AddPet(VerticalLayout vl, String petCategory, String petName, double petAge, String petSize,
+			String gender, String shortDescription, String detailDescription, byte[] petPhoto, String firstName,
+			String lastName, int phone, String city, String street, int house) {
+		Category petC = findPetCategory(petCategory);
 		PetSize petS = findPetSize(petSize);
 		Gender gen = findGender(gender);
 //		int age = petAge.intValue();
-		
-		
-		
+
 		try {
-			if(!MainView.isUserRegistered()) {
-				HorizontalLayout data=new HorizontalLayout();
-	            Span details=new Span("User field is null");
-	            data.add(details);
-	            vl.add(data);
-	            return;
+			if (!MainView.isUserRegistered()) {
+				HorizontalLayout data = new HorizontalLayout();
+				Span details = new Span("User field is null");
+				data.add(details);
+				vl.add(data);
+				return;
 			}
-			
+
 			pet.createNewPet(MainView.getUser().getUserId(), petC, petName, petAge, petS, gen, AdoptionStatus.ADOPTABLE,
-					shortDescription, detailDescription, petPhoto, MainView.getUser().getFirstName(), 
-					MainView.getUser().getLastName(), MainView.getUser().getPhoneNumber(), MainView.getUser().getCity(), MainView.getUser().getStreet(),
-					MainView.getUser().getHouseNumber());
-			
+					shortDescription, detailDescription, petPhoto, firstName, lastName, phone, city, street, house);
+
 		} catch (ErrorInProcessPetOwner | ErrorInProcessUser | ErrorInProcessPetData e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
+
 	private Gender findGender(String gender) {
-		if(gender.equals("Male")) {
+		if (gender.equals("Male")) {
 			return Gender.MALE;
 		}
 		return Gender.FEMALE;
 	}
+
 	private PetSize findPetSize(String petSize) {
-		if(petSize.equals("Small")) {
+		if (petSize.equals("Small")) {
 			return PetSize.SMALL;
 		}
-		if(petSize.equals("Medium")) {
+		if (petSize.equals("Medium")) {
 			return PetSize.MEDIUM;
 		}
-		if(petSize.equals("Large")) {
+		if (petSize.equals("Large")) {
 			return PetSize.LARGE;
 		}
-		if(petSize.equals("XLarge")) {
+		if (petSize.equals("XLarge")) {
 			return PetSize.XLARGE;
 		}
 		return null;
 	}
-	
+
 	private Category findPetCategory(String petCategory) {
-		if(petCategory.equals("Bird")) {
+		if (petCategory.equals("Bird")) {
 			return Category.BIRD;
 		}
-		if(petCategory.equals("Cat")) {
+		if (petCategory.equals("Cat")) {
 			return Category.CAT;
 		}
-		if(petCategory.equals("Dog")) {
+		if (petCategory.equals("Dog")) {
 			return Category.DOG;
 		}
-		if(petCategory.equals("Fish")) {
+		if (petCategory.equals("Fish")) {
 			return Category.FISH;
 		}
-		if(petCategory.equals("Other")) {
+		if (petCategory.equals("Other")) {
 			return Category.OTHER;
 		}
-		if(petCategory.equals("Rodent")) {
+		if (petCategory.equals("Rodent")) {
 			return Category.RODENT;
 		}
 		return null;
 	}
 
-	
 }

@@ -3,6 +3,7 @@ package com.packagename.myapp.ui;
 import com.packagename.myapp.ui.nav.*;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.charts.model.Navigator;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;

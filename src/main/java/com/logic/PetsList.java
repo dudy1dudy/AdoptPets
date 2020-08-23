@@ -26,7 +26,7 @@ import group.utilities.PetSize;
 @SuppressWarnings("serial")
 public class PetsList  {
 
-	
+	//
     private Category categoryC;
     private Gender genderC;
     private int ageC;

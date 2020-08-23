@@ -3,6 +3,10 @@ package com.logic;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.textfield.TextField;
 
 import group.entities.User;
 import group.exception.ErrorInProcessUser;
@@ -17,6 +21,31 @@ public class RegisterLogic {
 	public RegisterLogic() {
 		logic = new UserModel();
 	}
+	
+	public void parametersCheck(VerticalLayout vl,TextField userName, PasswordField password, PasswordField repeatePassword, 
+    		TextField firstName, TextField lastName, EmailField email, NumberField phone, TextField city, 
+    		TextField street,NumberField house) {
+    	
+    	 if(userName.isEmpty() || password.isEmpty() || repeatePassword.isEmpty() ||  firstName.isEmpty() || 
+         		 lastName.isEmpty() || email.isEmpty() || city.isEmpty() || street.isEmpty() ) {
+				
+    		 	HorizontalLayout data=new HorizontalLayout();
+                Span details=new Span("details are missing, please fill all of the fields");
+                data.add(details);
+                vl.add(data);
+				return;
+    		
+			 }else {
+				 createUser(vl, userName.getValue() , password.getValue(), repeatePassword.getValue() ,
+						 firstName.getValue() , lastName.getValue(), email.getValue(), phone.getValue()	, 
+						 city.getValue(), street.getValue() ,house.getValue());
+			     return;
+	            	
+	            
+			}
+    }
+	
+	
 	
 	public void createUser(VerticalLayout vl, String username, String password, String repeatePassword, String firstName, String lastName, String email, double phone
 			,String userCity,String userStreet,double house) {

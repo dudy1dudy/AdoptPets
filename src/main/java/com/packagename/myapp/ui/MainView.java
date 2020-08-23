@@ -21,9 +21,22 @@ import org.junit.rules.ExternalResource;
 @CssImport("./styles/shared-styles.css")
 public class MainView extends AppLayout {
 
+	
+	 //make link for route
+    RouterLink add = new RouterLink("Add", PetAdding.class);
+    RouterLink home = new RouterLink("Home", HomeView.class);
+    static RouterLink about = new RouterLink("About", AboutView.class);
+    RouterLink contact = new RouterLink("Contact", ContactView.class);
+    RouterLink login = new RouterLink("Login", MorehView.class);
+
     /**
      */
 	private static User user;
+	
+	public static RouterLink getRoute() {
+		return about;
+	}
+	// RouterLink about = new RouterLink("About", AboutView.class);
 	
 	public static User getUser() {
 		return user;
@@ -62,13 +75,7 @@ public class MainView extends AppLayout {
         header.setHeight("40px");
         header.addClassName("header");
 
-        //make link for route
-        RouterLink add = new RouterLink("Add", PetAdding.class);
-        RouterLink home = new RouterLink("Home", HomeView.class);
-        RouterLink about = new RouterLink("About", AboutView.class);
-        RouterLink contact = new RouterLink("Contact", ContactView.class);
-        RouterLink more = new RouterLink("More", MorehView.class);
-
+       
         //icon add
         Icon logoV = new Icon(VaadinIcon.HEART_O);
         logoV.getStyle().set("cursor", "pointer");
@@ -92,7 +99,7 @@ public class MainView extends AppLayout {
         likelayout.setHeight("40px");
 
         //add links to headertab
-        header.add(home,add,about,contact,more,likelayout);
+        header.add(home,add,contact,login,likelayout);
 
         addToNavbar(header);
 

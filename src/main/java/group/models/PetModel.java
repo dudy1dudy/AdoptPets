@@ -14,7 +14,10 @@ import group.utilities.Gender;
 import group.utilities.PetSize;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import com.logic.PetsList;
 
 import group.dataAccess.PetDAO;
 import group.dataAccess.PetOwnerDAO;
@@ -199,13 +202,23 @@ public class PetModel {
 	}
 
 	// Get all pets in DB
-	public List<Pet> getAllPets() throws ErrorInProcessPetData {
+	public Collection<Pet> getAllPets() throws ErrorInProcessPetData {
 		try {
 			return this.petAccess.getAllPets();
 		} catch (ErrorInProcessPetData ePet) {
 			throw ePet;
 		}
 	}
+	/*
+	// Get all pets in DB
+		public List<Pet> getAllPets() throws ErrorInProcessPetData {
+			try {
+				return this.petAccess.getAllPets();
+			} catch (ErrorInProcessPetData ePet) {
+				throw ePet;
+			}
+		}
+		*/
 
 	// Get pets by criterias
 	public List<Pet> getPetsByCriteria(Category petCategory, double petAge, PetSize petSize, Gender petGender,

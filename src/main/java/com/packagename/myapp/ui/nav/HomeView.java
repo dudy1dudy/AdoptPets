@@ -1,7 +1,10 @@
 package com.packagename.myapp.ui.nav;
 
+import com.logic.HomeLogic;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEvent;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -28,13 +31,14 @@ import com.vaadin.flow.router.Route;
 
 public class HomeView extends VerticalLayout {
 
+	HomeLogic logic = new HomeLogic();
     VerticalLayout vl=new VerticalLayout();
 
     public HomeView(){
 
         //layout for title "find adoptable pets near"
         HorizontalLayout findadopt=new HorizontalLayout();
-        H2 title=new H2("Find an adoptable pet near you");
+        H2 title=new H2("Find the pet for you");
         findadopt.add(title);
 
         //css class for title "find adoptable pets near"
@@ -49,65 +53,52 @@ public class HomeView extends VerticalLayout {
         HorizontalLayout formlayoutr3=new HorizontalLayout();
         HorizontalLayout formlayoutr4=new HorizontalLayout();
 
-        TextField state = new TextField(); //state
-        state.setLabel("Location");
-        state.setPlaceholder("State");
-
-        NumberField miles = new NumberField(); //miles
-        miles.setHasControls(true);
-        miles.setLabel("Miles");
-        formlayoutr1.setDefaultVerticalComponentAlignment(Alignment.END);
-
-        formlayoutr1.add(state,miles);
+        
 
         Checkbox dogs = new Checkbox("Dogs");
         Checkbox cats = new Checkbox("Cats");
-        Checkbox reptiles = new Checkbox("Reptiles");
+        Checkbox rodent = new Checkbox("Rodent");
         Checkbox birds = new Checkbox("Birds");
-        Checkbox rabbits = new Checkbox("Rabbits");
-        Checkbox small = new Checkbox("Small");
-        Checkbox big = new Checkbox("Big");
+        Checkbox fish = new Checkbox("Fish");
+        Checkbox other = new Checkbox("Other");
+        Checkbox all = new Checkbox("All");
 
-        formlayoutr2.add(dogs,cats,reptiles,birds,rabbits,small,big);
+        formlayoutr2.add(dogs,cats,rodent,birds,fish,other);
 
         Select<String> gender = new Select<>();//combobox
-        gender.setItems("any", "male");
+        gender.setItems("Female", "Male", "All");
         gender.setLabel("Gender");
         gender.setPlaceholder("Gender");
 
         Select<String> age = new Select<>();
-        age.setItems("any","puppy", "young");
+        age.setItems("0 - 1","2 - 3", "4 +", "All");
         age.setLabel("Age");
         age.setPlaceholder("any");
 
         Select<String> size = new Select<>();
-        size.setItems("any", "small");
+        size.setItems("Medium", "Small", "Large", "XLarge", "All");
         size.setLabel("Size");
         size.setPlaceholder("any");
 
         formlayoutr3.add(gender,age,size);
 
-        Select<String> color= new Select<>();
-        color.setItems("any", "white","white");
-        color.setLabel("Color");
-        color.setPlaceholder("any");
-
-        Select<String> breed= new Select<>();
-        breed.setItems("any", "dogs");
-        breed.setLabel("Breed");
-        breed.setPlaceholder("any");
-
-        formlayoutr4.add(color,breed);
+       
 
         formvert.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        Button search=new Button("Search",click->
-        {
-            HorizontalLayout data=new HorizontalLayout();
-            Span details=new Span(state.getValue());
-            data.add(details);
-            vl.add(data);
-        });
+        Button search=new Button("Search"); 
+        
+        search.addClickListener( new ComponentEventListener( ) {
+            
+        	
+			@Override
+			public void onComponentEvent(ComponentEvent arg0) {
+				logic.parametersCheck(vl, search, dogs, cats, rodent, birds, fish,
+						other, all, gender, age, size);
+				
+			}
+        } );
+        
         search.setWidth("160px");
 
         formvert.add(formlayoutr1,formlayoutr2,formlayoutr3,formlayoutr4, search);

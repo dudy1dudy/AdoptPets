@@ -1,6 +1,7 @@
 package group.dataAccess;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -8,6 +9,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import com.logic.PetsList;
 
 import group.entities.Pet;
 import group.exception.ErrorInProcessPetData;
@@ -92,6 +95,28 @@ public class PetDAO {
 	}
 
 	// Get all pets in DB
+	public Collection<Pet> getAllPets() throws ErrorInProcessPetData {
+
+		try {
+			// access to DB
+			EntityManager em = AccessToDb.createFactory();
+
+			Query q = em.createNamedQuery("AllPets", Pet.class);
+
+			if (q.getResultList().isEmpty() != true) {
+				Collection<Pet> results = (List<Pet>) q.getResultList();
+				return results;
+			} else
+				return null;
+		} catch (Exception e) {
+			throw new ErrorInProcessPetData("Error in process pet data");
+		} finally {
+			AccessToDb.closeFactory();
+		}
+	}
+
+	/*
+	 * // Get all pets in DB
 	public List<Pet> getAllPets() throws ErrorInProcessPetData {
 
 		try {
@@ -112,6 +137,9 @@ public class PetDAO {
 		}
 	}
 
+	 * */
+	
+	
 	// Get pets by criteria
 	public List<Pet> getPetsByCriteria(Category petCategory, double petAge, PetSize petSize, Gender petGender,
 			AdoptionStatus adoptionStatus) throws ErrorInProcessPetData {

@@ -122,7 +122,7 @@ public class RegView extends VerticalLayout{
             Button register;
             
             
-			register=new Button("Register", click-> parametersCheck( UserName, password, repeatePassword
+			register=new Button("Register", click-> regLogic.parametersCheck(vl ,UserName, password, repeatePassword
 					, firstName, lastName, email, phone, city, street, house));
 			registerLayout.add(register);
 
@@ -136,28 +136,7 @@ public class RegView extends VerticalLayout{
             add(vl);
         }
         
-        private void parametersCheck(TextField userName, PasswordField password, PasswordField repeatePassword, 
-        		TextField firstName, TextField lastName, EmailField email, NumberField phone, TextField city, 
-        		TextField street,NumberField house) {
-        	
-        	 if(userName.isEmpty() || password.isEmpty() || repeatePassword.isEmpty() ||  firstName.isEmpty() || 
-             		 lastName.isEmpty() || email.isEmpty() || city.isEmpty() || street.isEmpty() ) {
-  				
-        		 	HorizontalLayout data=new HorizontalLayout();
-	                Span details=new Span("details are missing, please fill all of the fields");
-	                data.add(details);
-	                vl.add(data);
-					return;
-        		
-  			 }else {
-  				 regLogic.createUser(vl, userName.getValue() , password.getValue(), repeatePassword.getValue() ,
-  						 firstName.getValue() , lastName.getValue(), email.getValue(), phone.getValue()	, 
-  						 city.getValue(), street.getValue() ,house.getValue());
-   			     return;
-  	            	
-  	            
-  			}
-        }
+        
         
         
         

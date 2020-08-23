@@ -34,11 +34,11 @@ public class PetsList  {
 	private String petNameC;
 	private String shortDescriptionC;
 	private String cityC;
-	private Collection<PetsList> petsList= new ArrayList<PetsList>();
+	
 	
 	
 	public PetsList() {
-		petsList.clear();
+		
 		
 		for(int i = 0 ; i < HomeLogic.getPetsList().size() ; i++) {
 			
@@ -49,7 +49,23 @@ public class PetsList  {
 			this.shortDescriptionC = HomeLogic.getPetsList().get(i).getShortDescription();
 			this.sizeC = HomeLogic.getPetsList().get(i).getPetSize();
 			this.cityC = HomeLogic.getPetsList().get(i).getPetOwner().getCity();
-			petsList.add(this);
+			
+		}
+	}
+	
+public PetsList(Pet pet) {
+		
+		
+		for(int i = 0 ; i < HomeLogic.getPetsList().size() ; i++) {
+			
+			this.ageC = (int) pet.getPetAge();
+			this.categoryC = pet.getCategory();
+			this.genderC = pet.getGender();
+			this.petNameC = pet.getPetName();
+			this.shortDescriptionC = pet.getShortDescription();
+			this.sizeC = pet.getPetSize();
+			this.cityC = pet.getPetOwner().getCity();
+			
 		}
 	}
 	
@@ -101,15 +117,6 @@ public class PetsList  {
 	public void setShortDescriptionC(String shortDescriptionC) {
 		this.shortDescriptionC = shortDescriptionC;
 	}
-
-	public Collection<PetsList> getPetsList() {
-		return petsList;
-	}
-
-	public void setPetsList(Collection<PetsList> petsList) {
-		this.petsList = petsList;
-	}
-
 
 	public String getCityC() {
 		return cityC;

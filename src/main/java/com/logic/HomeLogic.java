@@ -60,7 +60,7 @@ public class HomeLogic implements RouterLayout{
 		
 		createPetsList();
 		if(pets != null && !pets.isEmpty()) {
-			search.getUI().get().navigate("about");
+			search.getUI().get().navigate("petSearch");
 		}
 	}
 
@@ -69,6 +69,8 @@ public class HomeLogic implements RouterLayout{
 		Boolean ageB = false;
 		ArrayList<Pet> tempPets = new ArrayList<Pet>();
 		tempPets.addAll(pets);
+		if(tempPets == null || tempPets.isEmpty())
+			return;
 		for(int i = 0 ; i < tempPets.size() ; i++) {
 			
 			if(tempPets.get(i).getCategory() != null) {

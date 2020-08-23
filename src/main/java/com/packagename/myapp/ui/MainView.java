@@ -26,7 +26,7 @@ public class MainView extends AppLayout {
     RouterLink add = new RouterLink("Add", PetAdding.class);
     RouterLink home = new RouterLink("Home", HomeView.class);
     static RouterLink about = new RouterLink("About", AboutView.class);
-    RouterLink contact = new RouterLink("Contact", ContactView.class);
+    RouterLink petSearch = new RouterLink("PetSearch", PetSearchView.class);
     RouterLink login = new RouterLink("Login", LoginView.class);
 
     /**
@@ -99,7 +99,7 @@ public class MainView extends AppLayout {
         likelayout.setHeight("40px");
 
         //add links to headertab
-        header.add(home,add,contact,login,likelayout);
+        header.add(home,add,petSearch,login,likelayout);
 
         addToNavbar(header);
 

@@ -34,7 +34,7 @@ public class AboutView extends VerticalLayout {
      home = new PetsList();
      if(HomeLogic.getPetsList() != null) {
     	 
-    	 grid.setItems(home.getPetsList());
+    	// grid.setItems(home.getPetsList());
     	
      }
      add(h1);

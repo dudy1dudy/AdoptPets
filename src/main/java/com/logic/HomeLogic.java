@@ -24,7 +24,7 @@ import group.utilities.PetSize;
 public class HomeLogic implements RouterLayout{
 	
 	private PetModel petM = new PetModel();
-	
+	 
 	private ArrayList<Category> categoryList = new ArrayList<Category>();
 	private Gender genderF;
 	private ArrayList<Integer> ageF = new ArrayList<Integer>();

@@ -1,5 +1,6 @@
 package com.logic;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -22,7 +23,7 @@ public class RegisterLogic {
 		logic = new UserModel();
 	}
 	
-	public void parametersCheck(VerticalLayout vl,TextField userName, PasswordField password, PasswordField repeatePassword, 
+	public void parametersCheck(VerticalLayout vl,TextField userName, PasswordField password, PasswordField repeatePassword,
     		TextField firstName, TextField lastName, EmailField email, NumberField phone, TextField city, 
     		TextField street,NumberField house) {
     	
@@ -39,6 +40,7 @@ public class RegisterLogic {
 				 createUser(vl, userName.getValue() , password.getValue(), repeatePassword.getValue() ,
 						 firstName.getValue() , lastName.getValue(), email.getValue(), phone.getValue()	, 
 						 city.getValue(), street.getValue() ,house.getValue());
+			 UI.getCurrent().navigate("");
 			     return;
 	            	
 	            

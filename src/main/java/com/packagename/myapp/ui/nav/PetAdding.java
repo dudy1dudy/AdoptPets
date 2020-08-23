@@ -4,6 +4,7 @@ import com.logic.AddPetLogic;
 import com.logic.RegisterLogic;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.*;
@@ -183,6 +184,7 @@ public class PetAdding extends VerticalLayout {
 		} else {
 			addPetLogic.AddPet(vl, category.getValue(), petName.getValue(), age.getValue(), size.getValue(),
 					breed.getValue(), description.getValue(), descriptionL.getValue(), fileContent);
+			UI.getCurrent().navigate("");
 		}
 	}
 

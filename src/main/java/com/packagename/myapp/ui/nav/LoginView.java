@@ -4,6 +4,7 @@ import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.login.AbstractLogin.LoginEvent;
 import com.vaadin.flow.component.login.LoginForm;
@@ -25,22 +26,31 @@ import group.utilities.UserType;
 
 public class LoginView extends VerticalLayout {
 	
-	
+	private LoginForm component = new LoginForm();
 	UserModel user;
-    H1 h1=new H1("Login");
+    //H1 h1=new H1("Adopt Pets");
+	Image image = new Image("icons/logo.PNG", "DummyImage");
+
    
 
     public LoginView(){
     	
-    	LoginForm component = new LoginForm();
+
+    	addClassName("login-view");
+    	setAlignItems(Alignment.CENTER);
+    	//h1.setClassName("logintitle");
+    	setJustifyContentMode(JustifyContentMode.CENTER);
+		add(image, component);
+
     	
     	component.addLoginListener(e -> {
     	    boolean isAuthenticated = authenticate(e);
     	    if (isAuthenticated) {
-    	    	HorizontalLayout data=new HorizontalLayout();
-	            Span details=new Span("Log in succsessful");
-	            data.add(details);
-	            h1.add(data);
+    	    	//HorizontalLayout data=new HorizontalLayout();
+	            //Span details=new Span("Log in succsessful");
+	            //data.add(details);
+	            //h1.add(data);
+	            UI.getCurrent().navigate("");
     	        //navigateToMainPage();
     	    } else {
     	    	
@@ -48,9 +58,10 @@ public class LoginView extends VerticalLayout {
     	    }
     	});
 
-    	add(component);
+    	//add(component);
     	
-        add(h1);
+        //add(h1);
+
     }
 
 	private boolean authenticate(LoginEvent e) {

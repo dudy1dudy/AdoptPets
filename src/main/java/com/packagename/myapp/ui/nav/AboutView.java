@@ -25,6 +25,7 @@ public class AboutView extends VerticalLayout {
 	private PetsList home;
 	private Grid<PetsList> grid = new Grid<>(PetsList.class); 
     public AboutView(){
+<<<<<<< HEAD
     	
      addClassName("list_view"); 
      setSizeFull(); 
@@ -47,6 +48,11 @@ public class AboutView extends VerticalLayout {
      grid.setColumns("categoryC", "genderC", "ageC", "sizeC", "petNameC", "shortDescriptionC", "cityC");
      
  }
- */
+ 
 
+
+        H1 h1=new H1("Aboutt");
+        add(h1);
+    
+*/
 }

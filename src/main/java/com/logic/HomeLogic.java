@@ -51,7 +51,7 @@ public class HomeLogic implements RouterLayout{
 			e.printStackTrace();
 		}
 		if(pets == null || pets.isEmpty()) {
-			search.getUI().get().navigate("about");
+			search.getUI().get().navigate("petSearch");
 			HorizontalLayout data=new HorizontalLayout();
             Span details=new Span("No pets available");
             data.add(details);

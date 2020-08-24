@@ -95,11 +95,6 @@ public class UserDAO {
 
 			Query q = em.createNamedQuery("FindUser", User.class).setParameter("username", username)
 					.setParameter("password", password);
-			
-//			User selectedUser = (User) q.
-//			
-////			List<User> selectedUser = q.getResultList();
-//			System.out.println(selectedUser.getUsername());
 
 			// Select User by username and password
 			if (q.getResultList().isEmpty() != true) {

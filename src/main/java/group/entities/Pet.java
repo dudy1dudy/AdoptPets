@@ -16,7 +16,7 @@ import group.utilities.PetSize;
  */
 @Entity
 @NamedQueries({ @NamedQuery(name = "AllPets", query = "SELECT p FROM Pet p"),
-		@NamedQuery(name = "PetsByCriteria", query = "SELECT p FROM Pet p WHERE p.category = :category") })
+				@NamedQuery(name = "PetsByCriteria", query = "SELECT p FROM Pet p WHERE p.category = :category") })
 public class Pet implements Serializable {
 	private static final long serialVersionUID = 1L;
 

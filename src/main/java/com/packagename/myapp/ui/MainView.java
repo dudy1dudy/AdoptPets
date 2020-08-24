@@ -32,13 +32,9 @@ public class MainView extends AppLayout {
     RouterLink login = new RouterLink("Login", LoginView.class);
 
     /**
+     * Static Login parameter
      */
 	private static User user;
-	private UserPetsLogic userPetsLogic = new UserPetsLogic();
-	//public static RouterLink getRoute() {
-		//return about;
-	//}
-	// RouterLink about = new RouterLink("About", AboutView.class);
 	
 	public static User getUser() {
 		return user;

@@ -1,6 +1,10 @@
 package com.packagename.myapp.ui.nav;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.logic.HomeLogic;
+import com.logic.LikeLogic;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
@@ -24,6 +28,10 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import group.entities.Pet;
+import group.exception.ErrorInProcessPetData;
+import group.models.PetModel;
+
 @Route(value="", layout = MainView.class)
 //
 @PageTitle("Home")
@@ -32,6 +40,8 @@ import com.vaadin.flow.router.Route;
 
 public class HomeView extends VerticalLayout {
 
+	LikeLogic likeL = new LikeLogic();
+	PetModel petM = new PetModel();
 	HomeLogic logic = new HomeLogic();
     VerticalLayout vl=new VerticalLayout();
 
@@ -107,7 +117,25 @@ public class HomeView extends VerticalLayout {
         vl.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
         //add defined card layout
-        HorizontalLayout workspace = new HorizontalLayout(createCard(), createCard(), createCard(), createCard(),createCard(), createCard());
+        
+   //     HorizontalLayout workspace = new HorizontalLayout(createCard(), createCard(), createCard(), createCard(),createCard(), createCard());
+        List<Pet> allPets = new ArrayList<Pet>();
+        try {
+			allPets.addAll(petM.getAllPets());
+		} catch (ErrorInProcessPetData e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       	HomeLogic.setPetsList(allPets);
+        HorizontalLayout workspace = new HorizontalLayout();
+        for(int i = 0 ; i < HomeLogic.getPetsList().size() ; i ++) {
+        	workspace.add(createCard(i));
+        	
+        }
+        
+        
+        
+        
         workspace.addClassName("workspace");
 
         //add to main layout
@@ -117,6 +145,8 @@ public class HomeView extends VerticalLayout {
         add(vl);
     }
 
+    
+    
     //create cards
     private Component createCard() {
 
@@ -167,10 +197,88 @@ public class HomeView extends VerticalLayout {
         return card;
     }
 
+    
+  //create cards
+    private Component createCard(int index) {
+    	
+    	Pet pet = new Pet();
+    	pet = HomeLogic.getPetsList().get(index);
+    	//card title
+    	
+    	
+        H4 category = new H4(pet.getCategory().toString());
+        H4 name = new H4(pet.getPetName());
+        
+        //card details
+
+        Span details = new Span("Age: "+pet.getPetAge()+ " Size: "+ pet.getPetSize()+ "\nCity: "+ pet.getPetOwner().getCity());
+        details.setWidth("180px");
+        details.getStyle().set("cursor", "pointer");
+        details.addClickListener(e->
+                details.getUI().ifPresent(ui ->
+                        ui.navigate("detail")));
+
+        
+        Image image = new Image("icons/img.jpg", "DummyImage");
+        image.addClassName("image");
+        image.setWidth("160px");
+        image.setHeight("140px");
+        image.getStyle().set("cursor", "pointer");
+        image.addClickListener(e ->
+                image.getUI().ifPresent(ui ->//Vaadin way to navigate between UIs
+                        ui.navigate("detail"))
+        );
+
+        //like button heart add to custom card
+        Icon logoV = new Icon(VaadinIcon.HEART_O);
+        logoV.getStyle().set("cursor", "pointer");
+        logoV.setColor("White");
+        logoV.addClickListener(
+                event -> like(index, logoV));
+        logoV.addClassName("heartlike");
+
+        HorizontalLayout title=new HorizontalLayout(category, name, logoV);
+        title.setDefaultVerticalComponentAlignment(Alignment.END);
+        title.setWidth("180px");
+
+        //card layout
+        VerticalLayout verrticalcard=new VerticalLayout();
+        verrticalcard.setAlignItems(Alignment.CENTER);
+        verrticalcard.setJustifyContentMode(JustifyContentMode.CENTER);
+        verrticalcard.add(image,title,details);
+
+        FlexLayout card = new FlexLayout(verrticalcard);
+        card.addClassName("card");
+        card.setAlignItems(Alignment.CENTER);
+        card.setJustifyContentMode(JustifyContentMode.CENTER);
+        card.setWidth("200px");
+        card.setHeight("280px");
+
+        return card;
+    }
+
+    public void like(int index, Icon logoV){
+    	if(!MainView.isUserRegistered()) {
+    		HorizontalLayout data=new HorizontalLayout();
+            Span details=new Span("Please login Before pressing like");
+            data.add(details);
+            vl.add(data);
+            return;
+    	}
+    	
+    	if(logoV.getColor().equals("White")) {
+    		likeL.like(index);
+    		logoV.setColor("Blue");
+    	}
+    	if(logoV.getColor().equals("Blue")) {
+    		likeL.unLike(index);
+    		logoV.setColor("White");
+    	}
+    	
+    	
+    }
+    
     public void like(String text){
-
-        Notification.show(text);
-
-
+      Notification.show(text);
     }
 }

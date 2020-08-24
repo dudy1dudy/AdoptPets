@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.packagename.myapp.ui.MainView;
+import com.packagename.myapp.ui.nav.HomeView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.Span;
@@ -35,11 +36,18 @@ public class HomeLogic implements RouterLayout{
 	private Gender genderF;
 	private ArrayList<Integer> ageF = new ArrayList<Integer>();
 	private PetSize sizeF;
+	
+	
 	private static List<Pet> pets = new ArrayList<Pet>();
 	
 	public static List<Pet> getPetsList(){
 		return pets;
 	}
+	
+	public static void setPetsList(List<Pet> allPets) {
+			HomeLogic.pets.addAll(allPets);
+	}
+	
 	
 	public void parametersCheck(VerticalLayout vl, Button search, Checkbox dogs, Checkbox cats, Checkbox rodent, 
 			Checkbox birds, Checkbox fish, Checkbox other, Checkbox all, 

@@ -7,6 +7,8 @@ import com.packagename.myapp.ui.MainView;
 import com.packagename.myapp.ui.nav.HomeView;
 
 import group.entities.Pet;
+import group.exception.ErrorInProcessPetData;
+import group.exception.ErrorInProcessPetLove;
 import group.exception.ErrorInProcessUser;
 import group.models.LikeModel;
 import group.models.PetModel;
@@ -36,8 +38,39 @@ public class LikeLogic {
 		return;
 	}
 
-	public void like() {
+	public void like(int index) {
+			
+			try {
+				likeM.createNewLike(MainView.getUser().getUserId()
+							, HomeLogic.getPetsList().get(index).getPetId());
+			} catch (ErrorInProcessUser e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ErrorInProcessPetData e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ErrorInProcessPetLove e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
 
+	public void unLike(int index) {
+		
+			try {
+				likeM.deleteLike(MainView.getUser().getUserId(), HomeLogic.getPetsList().get(index).getPetId());
+			} catch (ErrorInProcessPetData e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ErrorInProcessPetLove e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ErrorInProcessUser e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
 	}
 
 }

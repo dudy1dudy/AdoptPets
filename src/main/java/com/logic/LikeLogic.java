@@ -15,29 +15,29 @@ public class LikeLogic {
 
 	private LikeModel likeM = new LikeModel();
 	private PetModel petM = new PetModel();
-	private static List<Pet> petsL = new ArrayList<Pet>(); 
-	
-	public static List<Pet> getLikePetsList(){
+	private static List<Pet> petsL = new ArrayList<Pet>();
+
+	public static List<Pet> getLikePetsList() {
 		return petsL;
 	}
-	
+
 	public void likePetList() {
 		petsL.clear();
 		int userId = MainView.getUser().getUserId();
 		try {
-			petsL.addAll(likeM.getAllLikes(userId));
+			List<Pet> pets = likeM.getAllLikes(userId);
+			if (pets != null)
+				petsL.addAll(pets);
 		} catch (ErrorInProcessUser e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return;		
+
+		return;
 	}
-	
+
 	public void like() {
-		
+
 	}
-	
-	
-	
+
 }

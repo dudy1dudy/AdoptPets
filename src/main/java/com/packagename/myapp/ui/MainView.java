@@ -1,5 +1,6 @@
 package com.packagename.myapp.ui;
 
+import com.logic.UserPetsLogic;
 import com.packagename.myapp.ui.nav.*;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
@@ -33,7 +34,7 @@ public class MainView extends AppLayout {
     /**
      */
 	private static User user;
-	
+	private UserPetsLogic userPetsLogic = new UserPetsLogic();
 	//public static RouterLink getRoute() {
 		//return about;
 	//}
@@ -100,8 +101,10 @@ public class MainView extends AppLayout {
         likelayout.setHeight("40px");
 
         //add links to headertab
-        header.add(home,addNewPet,login,likelayout);
+        header.add(home,addNewPet,login, about, likelayout);
 
+        
+        
         addToNavbar(header);
 
     }

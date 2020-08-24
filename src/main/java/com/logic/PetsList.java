@@ -12,6 +12,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
 
+import com.packagename.myapp.ui.MainView;
+
 import group.entities.Pet;
 import group.entities.PetOwner;
 import group.utilities.AdoptionStatus;
@@ -37,36 +39,34 @@ public class PetsList  {
 	
 	
 	
-	public PetsList() {
-		
-		
-		for(int i = 0 ; i < HomeLogic.getPetsList().size() ; i++) {
+	public PetsList(Pet pet) {
 			
-			this.ageC = (int) HomeLogic.getPetsList().get(i).getPetAge();
-			this.categoryC = HomeLogic.getPetsList().get(i).getCategory();
-			this.genderC = HomeLogic.getPetsList().get(i).getGender();
-			this.petNameC = HomeLogic.getPetsList().get(i).getPetName();
-			this.shortDescriptionC = HomeLogic.getPetsList().get(i).getShortDescription();
-			this.sizeC = HomeLogic.getPetsList().get(i).getPetSize();
-			this.cityC = HomeLogic.getPetsList().get(i).getPetOwner().getCity();
-			
-		}
+		this.ageC = (int) pet.getPetAge();
+		this.categoryC = pet.getCategory();
+		this.genderC = pet.getGender();
+		this.petNameC = pet.getPetName();
+		this.shortDescriptionC = pet.getShortDescription();
+		this.sizeC = pet.getPetSize();
+		this.cityC = pet.getPetOwner().getCity();
+	
 	}
 	
-public PetsList(Pet pet) {
+	public PetsList() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public PetsList addPet(Pet pet) {
+		this.ageC = (int) pet.getPetAge();
+		this.categoryC = pet.getCategory();
+		this.genderC = pet.getGender();
+		this.petNameC = pet.getPetName();
+		this.shortDescriptionC = pet.getShortDescription();
+		this.sizeC = pet.getPetSize();
+		this.cityC = pet.getPetOwner().getCity();
 		
 		
-		for(int i = 0 ; i < HomeLogic.getPetsList().size() ; i++) {
-			
-			this.ageC = (int) pet.getPetAge();
-			this.categoryC = pet.getCategory();
-			this.genderC = pet.getGender();
-			this.petNameC = pet.getPetName();
-			this.shortDescriptionC = pet.getShortDescription();
-			this.sizeC = pet.getPetSize();
-			this.cityC = pet.getPetOwner().getCity();
-			
-		}
+		return this;
+		
 	}
 	
 	
@@ -128,7 +128,6 @@ public PetsList(Pet pet) {
 	}
 
 	
-    
 
 }
    

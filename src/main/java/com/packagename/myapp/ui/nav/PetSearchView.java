@@ -27,24 +27,19 @@ public class PetSearchView extends VerticalLayout {
 
     public PetSearchView(){
         add(h1);
- 
-
-
-
-List<PetsList> petList = new ArrayList<>();
-for(int i=0; i<HomeLogic.getPetsList().size(); i++) {
-	petList.add(new PetsList(HomeLogic.getPetsList().get(i)));
-}
-
-
-Grid<PetsList> grid = new Grid<>(PetsList.class);
-grid.setItems(petList);
-
-//grid.removeColumnByKey("");
-
-// The Grid<>(Person.class) sorts the properties and in order to
-// reorder the properties we use the 'setColumns' method.
-grid.setColumns("categoryC", "genderC", "ageC", "sizeC" ,"petNameC", "shortDescriptionC", "cityC");
-add(grid);
-}
+        PetsList petL;
+        ArrayList<PetsList> pets = new ArrayList<PetsList>();
+				
+        for(int i =0 ; i < HomeLogic.getPetsList().size() ; i++) {
+        	petL = new PetsList(HomeLogic.getPetsList().get(i));
+        	pets.add(petL);
+        }
+        
+		Grid<PetsList> grid = new Grid<>(PetsList.class);
+		grid.setItems(pets);
+		
+	
+		grid.setColumns("categoryC", "genderC", "ageC", "sizeC" ,"petNameC", "shortDescriptionC", "cityC");
+		add(grid);
+	}
 }

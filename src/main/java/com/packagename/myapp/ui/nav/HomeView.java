@@ -64,7 +64,7 @@ public class HomeView extends VerticalLayout {
         Checkbox other = new Checkbox("Other");
         Checkbox all = new Checkbox("All");
 
-        formlayoutr2.add(dogs,cats,rodent,birds,fish,other);
+        formlayoutr2.add(dogs,cats,rodent,birds,fish,other, all);
 
         Select<String> gender = new Select<>();//combobox
         gender.setItems("Female", "Male", "All");
@@ -77,7 +77,7 @@ public class HomeView extends VerticalLayout {
         age.setPlaceholder("any");
 
         Select<String> size = new Select<>();
-        size.setItems("Medium", "Small", "Large", "XLarge", "All");
+        size.setItems("Small", "Medium",  "Large", "XLarge", "All");
         size.setLabel("Size");
         size.setPlaceholder("any");
 

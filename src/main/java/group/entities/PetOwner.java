@@ -124,4 +124,12 @@ public class PetOwner implements Serializable {
 	public void setPet(Pet pet) {
 		this.pet = pet;
 	}
+	
+	public String toString() {
+		String s = "Pet owner name: "+ firstName + " " + lastName + "\nPhone number: "+ phoneNumber +
+				"\nAddress: " + street + " " + houseNumber + ", " + city;
+		
+		return s;
+		
+	}
 }

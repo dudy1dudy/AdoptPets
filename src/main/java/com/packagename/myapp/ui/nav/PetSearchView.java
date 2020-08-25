@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.logic.HomeLogic;
+import com.logic.PetSearchLogic;
 import com.logic.PetsList;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.grid.Grid;
@@ -30,8 +31,8 @@ public class PetSearchView extends VerticalLayout {
         PetsList petL;
         ArrayList<PetsList> pets = new ArrayList<PetsList>();
 				
-        for(int i =0 ; i < HomeLogic.getPetsList().size() ; i++) {
-        	petL = new PetsList(HomeLogic.getPetsList().get(i));
+        for(int i =0 ; i < PetSearchLogic.getPetsSearchList().size() ; i++) {
+        	petL = new PetsList(PetSearchLogic.getPetsSearchList().get(i));
         	pets.add(petL);
         }
         
@@ -41,5 +42,6 @@ public class PetSearchView extends VerticalLayout {
 	
 		grid.setColumns("categoryC", "genderC", "ageC", "sizeC" ,"petNameC", "shortDescriptionC", "cityC");
 		add(grid);
+		
 	}
 }

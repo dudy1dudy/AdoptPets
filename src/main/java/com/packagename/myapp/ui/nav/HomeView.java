@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.logic.HomeLogic;
 import com.logic.LikeLogic;
+import com.logic.PetSearchLogic;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
@@ -40,18 +41,20 @@ import group.models.PetModel;
 
 public class HomeView extends VerticalLayout {
 
-	LikeLogic likeL = new LikeLogic();
-	PetModel petM = new PetModel();
-	HomeLogic logic = new HomeLogic();
-    VerticalLayout vl=new VerticalLayout();
-
+	private LikeLogic likeL = new LikeLogic();
+	private PetModel petM = new PetModel();
+	private HomeLogic logic = new HomeLogic();
+	private PetSearchLogic searchL = new PetSearchLogic();
+	private VerticalLayout vl=new VerticalLayout();
+	private int petOwnerCardId;
+	
     public HomeView(){
 
         //layout for title "find adoptable pets near"
         HorizontalLayout findadopt=new HorizontalLayout();
         H2 title=new H2("Find the pet for you");
         findadopt.add(title);
-
+        
         //css class for title "find adoptable pets near"
         title.addClassName("titletext");
 
@@ -104,9 +107,10 @@ public class HomeView extends VerticalLayout {
         	
 			@Override
 			public void onComponentEvent(ComponentEvent arg0) {
-				logic.parametersCheck(vl, search, dogs, cats, rodent, birds, fish,
-						other, all, gender, age, size);
 				
+				searchL.parametersCheck(vl, search, dogs, cats, rodent, birds, fish,
+						other, all, gender, age, size);
+				return;
 			}
         } );
         
@@ -118,7 +122,7 @@ public class HomeView extends VerticalLayout {
 
         //add defined card layout
         
-   //     HorizontalLayout workspace = new HorizontalLayout(createCard(), createCard(), createCard(), createCard(),createCard(), createCard());
+       
         List<Pet> allPets = new ArrayList<Pet>();
         try {
 			allPets.addAll(petM.getAllPets());
@@ -129,13 +133,10 @@ public class HomeView extends VerticalLayout {
        	HomeLogic.setPetsList(allPets);
         HorizontalLayout workspace = new HorizontalLayout();
         for(int i = 0 ; i < HomeLogic.getPetsList().size() ; i ++) {
+        	petOwnerCardId = i;
         	workspace.add(createCard(i));
         	
         }
-        
-        
-        
-        
         workspace.addClassName("workspace");
 
         //add to main layout
@@ -200,6 +201,7 @@ public class HomeView extends VerticalLayout {
     
   //create cards
     private Component createCard(int index) {
+    	
     	
     	Pet pet = new Pet();
     	pet = HomeLogic.getPetsList().get(index);
@@ -274,11 +276,15 @@ public class HomeView extends VerticalLayout {
     		likeL.unLike(index);
     		logoV.setColor("White");
     	}
-    	
+    }
+    
+    public int getPetOwnerCardId() {
+		return petOwnerCardId;
     	
     }
     
     public void like(String text){
       Notification.show(text);
+      
     }
 }

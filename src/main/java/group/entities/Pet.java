@@ -150,4 +150,14 @@ public class Pet implements Serializable {
 	public void setPetPhoto(byte[] petPhoto) {
 		this.petPhoto = petPhoto;
 	}
+	
+	public String toString() {
+		String s = "Age: "+ petAge+ "\nSize: "+ petSize+ "\nGender: "+ gender;
+		
+		
+		
+		return s;
+		
+	}
+	
 }

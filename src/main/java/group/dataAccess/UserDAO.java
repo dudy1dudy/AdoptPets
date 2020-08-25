@@ -118,7 +118,7 @@ public class UserDAO {
 
 			// Select User by username
 			Query q = em.createNamedQuery("CheckUsername", User.class).setParameter("username", username);
-
+			
 			if (q.getResultList().isEmpty() != true) {
 				User selectedUser = (User) q.getSingleResult();
 				return selectedUser;

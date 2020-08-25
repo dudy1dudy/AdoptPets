@@ -25,10 +25,10 @@ public class MainView extends AppLayout {
 
 	
 	 //make link for route
-    RouterLink addNewPet = new RouterLink("AddPet", PetAdding.class);
+    RouterLink addNewPet = new RouterLink("Add Pet", PetAdding.class);
     RouterLink home = new RouterLink("Home", HomeView.class);
-    RouterLink about = new RouterLink("About", AboutView.class);
-    RouterLink petSearch = new RouterLink("PetSearch", PetSearchView.class);
+    RouterLink yourPets = new RouterLink("Your Pets", AboutView.class);
+//    RouterLink petSearch = new RouterLink("PetSearch", PetSearchView.class);
     RouterLink login = new RouterLink("Login", LoginView.class);
 
     /**
@@ -95,13 +95,15 @@ public class MainView extends AppLayout {
         HorizontalLayout likelayout=new HorizontalLayout(reg,logoV);
         likelayout.setSizeFull();
         likelayout.setHeight("40px");
+        
+        addNewPet.setText("Add Pet");
 
         //add links to headertab
-        header.add(home,addNewPet,login, about, likelayout);
+        header.add(home,addNewPet,login, yourPets, likelayout);
 
         
-        
-        addToNavbar(header);
+        header.setHeight("80px");
+        addToNavbar(true,header);
 
     }
 

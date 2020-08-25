@@ -134,4 +134,20 @@ public class UserModel {
 			throw e;
 		}
 	}
+	
+	// Check if username already exist
+	public User getUserByUsername(String username) throws ErrorInProcessUser {
+
+		// Find user in DB
+		try {
+			User foundUser = this.userAccess.checkUserName(username);
+
+			if (foundUser != null)
+				return foundUser;
+			else
+				return null;
+		} catch (ErrorInProcessUser e) {
+			throw e;
+		}
+	}
 }

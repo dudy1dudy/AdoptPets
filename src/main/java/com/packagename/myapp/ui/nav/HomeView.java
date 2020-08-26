@@ -6,6 +6,7 @@ import java.util.List;
 import com.logic.HomeLogic;
 import com.logic.LikeLogic;
 import com.logic.PetSearchLogic;
+import com.logic.PetsList;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
@@ -128,14 +129,15 @@ public class HomeView extends VerticalLayout {
 	}
 
 	private void setPetsCards(boolean first) {
-		
-		List<Pet> allPets;
-		
+
+		List<Pet> allPets = new ArrayList<Pet>();
+
 		// Check if pets already selected
 		if (first == false) {
-			allPets = PetSearchLogic.getPetsSearchList();
+			for (int i = 0; i < PetSearchLogic.getPetsSearchList().size(); i++) {
+				allPets.add(PetSearchLogic.getPetsSearchList().get(i));
+			}
 		} else {
-			allPets = new ArrayList<Pet>();
 			try {
 				allPets.addAll(petM.getAllPets());
 			} catch (ErrorInProcessPetData e) {
@@ -151,11 +153,10 @@ public class HomeView extends VerticalLayout {
 		workspace.setMaxWidth("72%");
 		workspace.setAlignContent(FlexLayout.ContentAlignment.SPACE_AROUND);
 
-		System.out.println(allPets.size());
-
 		for (int i = 0; i < allPets.size(); i++) {
-			petOwnerCardId = i;
-			workspace.add(createCard(i));
+			Pet pet = (Pet) allPets.get(i);
+			petOwnerCardId = pet.getPetId();
+			workspace.add(createCard(pet));
 		}
 		workspace.addClassName("workspace");
 
@@ -214,10 +215,12 @@ public class HomeView extends VerticalLayout {
 	}
 
 	// create cards
-	private Component createCard(int index) {
+	private Component createCard(Pet pet) {
 
-		Pet pet = new Pet();
-		pet = (Pet) HomeLogic.getPetsList().get(index);
+//		Pet pet = new Pet();
+//		pet = (Pet) HomeLogic.getPetsList().get(index);
+
+//		 HomeLogic.getPetsList().
 
 		// card title
 		if (pet != null) {
@@ -245,7 +248,7 @@ public class HomeView extends VerticalLayout {
 			Icon logoV = new Icon(VaadinIcon.HEART_O);
 			logoV.getStyle().set("cursor", "pointer");
 			logoV.setColor("White");
-			logoV.addClickListener(event -> like(index, logoV));
+			logoV.addClickListener(event -> like(pet.getPetId(), logoV));
 			logoV.addClassName("heartlike");
 
 			HorizontalLayout title = new HorizontalLayout(category, name, logoV);
@@ -270,7 +273,7 @@ public class HomeView extends VerticalLayout {
 		return null;
 	}
 
-	public void like(int index, Icon logoV) {
+	public void like(int petId, Icon logoV) {
 		if (!MainView.isUserRegistered()) {
 			HorizontalLayout data = new HorizontalLayout();
 			Span details = new Span("Please login Before pressing like");
@@ -280,11 +283,11 @@ public class HomeView extends VerticalLayout {
 		}
 
 		if (logoV.getColor().equals("White")) {
-			likeL.like(index);
+			likeL.like(petId);
 			logoV.setColor("Blue");
 		}
 		if (logoV.getColor().equals("Blue")) {
-			likeL.unLike(index);
+			likeL.unLike(petId);
 			logoV.setColor("White");
 		}
 

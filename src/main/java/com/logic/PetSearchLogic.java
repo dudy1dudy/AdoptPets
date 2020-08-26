@@ -55,14 +55,14 @@ public class PetSearchLogic implements RouterLayout{
 		checkSize(size);
 		
 		
-//		if(PetSearchLogic.petsSearch == null || PetSearchLogic.petsSearch.isEmpty()) {
-//			search.getUI().get().navigate("petSearch");
-//			
-//            Span details=new Span("No pets available");
-//            vl.add(details);
-//            return;
-//		}
-		
+////		if(PetSearchLogic.petsSearch == null || PetSearchLogic.petsSearch.isEmpty()) {
+////			search.getUI().get().navigate("petSearch");
+////			
+////            Span details=new Span("No pets available");
+////            vl.add(details);
+////            return;
+////		}
+//		
 //		
 //		if(PetSearchLogic.petsSearch != null && !PetSearchLogic.petsSearch.isEmpty()) {
 //			search.getUI().get().navigate("petSearch");

@@ -38,11 +38,11 @@ public class LikeLogic {
 		return;
 	}
 
-	public void like(int index) {
+	public void like(int petId) {
 			
 			try {
 				likeM.createNewLike(MainView.getUser().getUserId()
-							, HomeLogic.getPetsList().get(index).getPetId());
+							, petId);
 			} catch (ErrorInProcessUser e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -55,10 +55,10 @@ public class LikeLogic {
 			}
 	}
 
-	public void unLike(int index) {
+	public void unLike(int petId) {
 		
 			try {
-				likeM.deleteLike(MainView.getUser().getUserId(), HomeLogic.getPetsList().get(index).getPetId());
+				likeM.deleteLike(MainView.getUser().getUserId(), petId);
 			} catch (ErrorInProcessPetData e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

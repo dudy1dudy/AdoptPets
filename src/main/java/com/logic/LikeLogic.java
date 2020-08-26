@@ -17,19 +17,41 @@ public class LikeLogic {
 
 	private LikeModel likeM = new LikeModel();
 	private PetModel petM = new PetModel();
-	private static List<Pet> petsL = new ArrayList<Pet>();
+	private List<Pet> petsL = new ArrayList<Pet>();
 
-	public static List<Pet> getLikePetsList() {
+	public  List<Pet> getLikePetsList() {
+		likePetList();
 		return petsL;
 	}
+	
+	public boolean isRegUesrLikePet(Pet pet) {
+		int petId = pet.getPetId();
+		List<Pet> userPetsL = new ArrayList<Pet>();
+		try {
+			
+			userPetsL.addAll(likeM.getAllLikes(MainView.getUser().getUserId()));
+		} catch (ErrorInProcessUser e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(int i = 0 ; i < userPetsL.size() ; i++) {
+			if(userPetsL.get(i).getPetId() == pet.getPetId()) {
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
 
-	public void likePetList() {
+	private void likePetList() {
 		petsL.clear();
 		int userId = MainView.getUser().getUserId();
 		try {
 			List<Pet> pets = likeM.getAllLikes(userId);
 			if (pets != null)
 				petsL.addAll(pets);
+			return;
 		} catch (ErrorInProcessUser e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,8 +63,8 @@ public class LikeLogic {
 	public void like(int petId) {
 			
 			try {
-				likeM.createNewLike(MainView.getUser().getUserId()
-							, petId);
+				likeM.createNewLike(MainView.getUser().getUserId() , petId);
+				return;
 			} catch (ErrorInProcessUser e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -53,12 +75,14 @@ public class LikeLogic {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			return;
 	}
 
 	public void unLike(int petId) {
 		
 			try {
 				likeM.deleteLike(MainView.getUser().getUserId(), petId);
+				return;
 			} catch (ErrorInProcessPetData e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -70,7 +94,7 @@ public class LikeLogic {
 				e.printStackTrace();
 			}
 		
-		
+		return;
 	}
 
 }

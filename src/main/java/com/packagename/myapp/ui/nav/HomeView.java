@@ -37,6 +37,8 @@ import com.vaadin.flow.router.Route;
 
 import group.entities.Pet;
 import group.exception.ErrorInProcessPetData;
+import group.exception.ErrorInProcessUser;
+import group.models.LikeModel;
 import group.models.PetModel;
 import group.utilities.ConvertPhoto;
 
@@ -48,6 +50,7 @@ import group.utilities.ConvertPhoto;
 
 public class HomeView extends VerticalLayout {
 
+	private LikeModel likeM = new LikeModel();
 	private LikeLogic likeL = new LikeLogic();
 	private PetModel petM = new PetModel();
 	private HomeLogic logic = new HomeLogic();
@@ -169,58 +172,9 @@ public class HomeView extends VerticalLayout {
 		add(vl);
 	}
 
-	// create cards
-	private Component createCard() {
-
-		// card title
-		H4 card1Label = new H4("Title");
-		// card details
-		Span details = new Span("dogs are near to you selected area");
-		details.setWidth("180px");
-		details.getStyle().set("cursor", "pointer");
-		details.addClickListener(e -> details.getUI().ifPresent(ui -> ui.navigate("detail")));
-
-		Image image = new Image("icons/img.jpg", "DummyImage");
-		image.addClassName("image");
-		image.setWidth("160px");
-		image.setHeight("140px");
-		image.getStyle().set("cursor", "pointer");
-		image.addClickListener(e -> image.getUI().ifPresent(ui -> // Vaadin way to navigate between UIs
-		ui.navigate("detail")));
-
-		// like button heart add to custom card
-		Icon logoV = new Icon(VaadinIcon.HEART_O);
-		logoV.getStyle().set("cursor", "pointer");
-		logoV.addClickListener(event -> like("You Like"));
-		logoV.addClassName("heartlike");
-
-		HorizontalLayout title = new HorizontalLayout(card1Label, logoV);
-		title.setDefaultVerticalComponentAlignment(Alignment.END);
-		title.setWidth("180px");
-
-		// card layout
-		VerticalLayout verrticalcard = new VerticalLayout();
-		verrticalcard.setAlignItems(Alignment.CENTER);
-		verrticalcard.setJustifyContentMode(JustifyContentMode.CENTER);
-		verrticalcard.add(image, title, details);
-
-		FlexLayout card = new FlexLayout(verrticalcard);
-		card.addClassName("card");
-		card.setAlignItems(Alignment.CENTER);
-		card.setJustifyContentMode(JustifyContentMode.CENTER);
-		card.setWidth("200px");
-		card.setHeight("280px");
-
-		return card;
-	}
-
+	
 	// create cards
 	private Component createCard(Pet pet) {
-
-//		Pet pet = new Pet();
-//		pet = (Pet) HomeLogic.getPetsList().get(index);
-
-//		 HomeLogic.getPetsList().
 
 		// card title
 		if (pet != null) {
@@ -247,7 +201,22 @@ public class HomeView extends VerticalLayout {
 			// like button heart add to custom card
 			Icon logoV = new Icon(VaadinIcon.HEART_O);
 			logoV.getStyle().set("cursor", "pointer");
-			logoV.setColor("White");
+			if(MainView.isUserRegistered()) {
+				try {
+					if(likeM.checkLikeOfUser(MainView.getUser().getUserId(), pet.getPetId())) {
+						logoV.setColor("Red");
+					
+					}
+				} catch (ErrorInProcessUser e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ErrorInProcessPetData e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}else {
+				logoV.setColor("White");
+			}
 			logoV.addClickListener(event -> like(pet.getPetId(), logoV));
 			logoV.addClassName("heartlike");
 
@@ -283,10 +252,9 @@ public class HomeView extends VerticalLayout {
 
 		if (logoV.getColor().equals("White")) {
 			likeL.like(petId);
-			logoV.setColor("Blue");
-			like("Thank You for like me");
+			logoV.setColor("Red");
 		}
-		if (logoV.getColor().equals("Blue")) {
+		if (logoV.getColor().equals("Red")) {
 			likeL.unLike(petId);
 			logoV.setColor("White");
 		}

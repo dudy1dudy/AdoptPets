@@ -70,7 +70,8 @@ public class PetSearchLogic implements RouterLayout {
 //		}
 		return;
 	}
-	private void checkSize(Select<String> size) {
+	
+private void checkSize(Select<String> size) {
 		
 		if(size.getValue() == null || size.getValue().equals("All")) {
 			return;
@@ -197,7 +198,7 @@ public class PetSearchLogic implements RouterLayout {
 		return;
 		
 	}
-
+	
 	@Override
 	public Element getElement() {
 		// TODO Auto-generated method stub

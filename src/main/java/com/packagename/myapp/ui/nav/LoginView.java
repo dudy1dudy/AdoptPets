@@ -70,9 +70,11 @@ public class LoginView extends VerticalLayout {
 				// Notification
 				Notification.show("Log in succsessful")
 						.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
+				return;
 			} else {
 
 				component.setError(true);
+				return;
 			}
 		});
 

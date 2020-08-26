@@ -20,11 +20,7 @@ import group.utilities.UserType;
 
 public class RegisterLogic {
 
-	private UserModel logic;
-
-	public RegisterLogic() {
-		logic = new UserModel();
-	}
+	private UserModel logic = new UserModel();
 
 	public void parametersCheck(VerticalLayout vl, TextField userName, PasswordField password,
 			PasswordField repeatePassword, TextField firstName, TextField lastName, EmailField email, NumberField phone,

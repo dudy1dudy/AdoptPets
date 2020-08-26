@@ -26,13 +26,13 @@ import group.utilities.Category;
 import group.utilities.Gender;
 import group.utilities.PetSize;
 
-public class PetSearchLogic implements RouterLayout{
+public class PetSearchLogic implements RouterLayout {
 	
 	private PetModel petM = new PetModel();
 	private ArrayList<Pet> tempPets = new ArrayList<Pet>();
 		
 	private static List<Pet> petsSearch = new ArrayList<Pet>();
-	
+
 	public static List<Pet> getPetsSearchList(){
 		return PetSearchLogic.petsSearch;
 	}

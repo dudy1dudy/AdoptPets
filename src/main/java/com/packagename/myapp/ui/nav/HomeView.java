@@ -276,8 +276,7 @@ public class HomeView extends VerticalLayout {
 	public void like(int petId, Icon logoV) {
 		if (!MainView.isUserRegistered()) {
 			HorizontalLayout data = new HorizontalLayout();
-			Span details = new Span("Please login Before pressing like");
-			data.add(details);
+			like("Please login Before pressing like");
 			vl.add(data);
 			return;
 		}
@@ -285,13 +284,12 @@ public class HomeView extends VerticalLayout {
 		if (logoV.getColor().equals("White")) {
 			likeL.like(petId);
 			logoV.setColor("Blue");
+			like("Thank You for like me");
 		}
 		if (logoV.getColor().equals("Blue")) {
 			likeL.unLike(petId);
 			logoV.setColor("White");
 		}
-
-		like("Thank You for like me");
 	}
 
 	public int getPetOwnerCardId() {

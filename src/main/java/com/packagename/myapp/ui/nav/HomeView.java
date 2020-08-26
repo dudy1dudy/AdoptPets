@@ -284,12 +284,14 @@ public class HomeView extends VerticalLayout {
 			likeL.like(petId);
 			logoV.setColor("Red");
 			like("Thank you for like me!");
+		}else {		
+			if (logoV.getColor().equals("Red")) {
+				likeL.unLike(petId);
+				logoV.setColor("White");
+				like("OK, Bye Bye");
+			}
 		}
-		if (logoV.getColor().equals("Red")) {
-			likeL.unLike(petId);
-			logoV.setColor("White");
-			like("OK, Bye Bye");
-		}
+		return;
 	}
 
 	public int getPetOwnerCardId() {

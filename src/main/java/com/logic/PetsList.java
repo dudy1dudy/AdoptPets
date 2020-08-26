@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
 
 import com.packagename.myapp.ui.MainView;
+import com.vaadin.flow.component.button.Button;
 
 import group.entities.Pet;
 import group.entities.PetOwner;
@@ -36,6 +37,7 @@ public class PetsList  {
 	private String petNameC;
 	private String shortDescriptionC;
 	private String cityC;
+	private Button b;
 	
 	
 	
@@ -48,6 +50,7 @@ public class PetsList  {
 		this.shortDescriptionC = pet.getShortDescription();
 		this.sizeC = pet.getPetSize();
 		this.cityC = pet.getPetOwner().getCity();
+		this.setB(new Button());
 	
 	}
 	
@@ -126,6 +129,17 @@ public class PetsList  {
 	public void setCityC(String cityC) {
 		this.cityC = cityC;
 	}
+
+	public Button getB() {
+		return b;
+	}
+
+	public void setB(Button b) {
+				
+		this.b = b;
+	}
+
+	
 
 	
 

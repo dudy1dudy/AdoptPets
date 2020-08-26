@@ -1,8 +1,10 @@
 package com.packagename.myapp.ui;
 
+import com.logic.UserPetsLogic;
 import com.packagename.myapp.ui.nav.*;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.charts.model.Navigator;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
@@ -23,20 +25,16 @@ public class MainView extends AppLayout {
 
 	
 	 //make link for route
-    RouterLink addNewPet = new RouterLink("AddPet", PetAdding.class);
+    RouterLink addNewPet = new RouterLink("Add Pet", PetAdding.class);
     RouterLink home = new RouterLink("Home", HomeView.class);
-    RouterLink about = new RouterLink("About", AboutView.class);
-    RouterLink petSearch = new RouterLink("PetSearch", PetSearchView.class);
+    RouterLink yourPets = new RouterLink("Your Pets", AboutView.class);
+//    RouterLink petSearch = new RouterLink("PetSearch", PetSearchView.class);
     RouterLink login = new RouterLink("Login", LoginView.class);
 
     /**
+     * Static Login parameter
      */
 	private static User user;
-	
-	//public static RouterLink getRoute() {
-		//return about;
-	//}
-	// RouterLink about = new RouterLink("About", AboutView.class);
 	
 	public static User getUser() {
 		return user;
@@ -97,11 +95,15 @@ public class MainView extends AppLayout {
         HorizontalLayout likelayout=new HorizontalLayout(reg,logoV);
         likelayout.setSizeFull();
         likelayout.setHeight("40px");
+        
+        addNewPet.setText("Add Pet");
 
         //add links to headertab
-        header.add(home,addNewPet,login,likelayout);
+        header.add(home,addNewPet,login, yourPets, likelayout);
 
-        addToNavbar(header);
+        
+        header.setHeight("80px");
+        addToNavbar(true,header);
 
     }
 

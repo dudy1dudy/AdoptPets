@@ -16,7 +16,7 @@ import group.utilities.PetSize;
  */
 @Entity
 @NamedQueries({ @NamedQuery(name = "AllPets", query = "SELECT p FROM Pet p"),
-		@NamedQuery(name = "PetsByCriteria", query = "SELECT p FROM Pet p WHERE p.category = :category") })
+				@NamedQuery(name = "PetsByCriteria", query = "SELECT p FROM Pet p WHERE p.category = :category") })
 public class Pet implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -150,4 +150,14 @@ public class Pet implements Serializable {
 	public void setPetPhoto(byte[] petPhoto) {
 		this.petPhoto = petPhoto;
 	}
+	
+	public String toString() {
+		String s = "Age: "+ petAge+ "\nSize: "+ petSize+ "\nGender: "+ gender;
+		
+		
+		
+		return s;
+		
+	}
+	
 }

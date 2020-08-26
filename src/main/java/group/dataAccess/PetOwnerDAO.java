@@ -87,13 +87,13 @@ public class PetOwnerDAO {
 			// access to DB
 			EntityManager em = AccessToDb.createFactory();
 
-			Query q = em.createNamedQuery("PetOfOwner", Pet.class).setParameter("petOwnerId", idPetOwner);
-
-			if (q.getResultList().isEmpty() != true) {
-				Pet pet = (Pet) q.getSingleResult();
-				return pet;
-			} else
-				return null;
+			// Get owner
+			PetOwner petOwner = getPetOwner(idPetOwner);
+			System.out.println(petOwner.getPet());
+			
+			// Get Pet of owner
+			Pet pet = petOwner.getPet();
+			return pet;
 		} catch (Exception e) {
 			throw new ErrorInProcessPetOwner("Error in process pet owner data");
 		} finally {

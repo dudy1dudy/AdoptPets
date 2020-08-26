@@ -29,7 +29,7 @@ public class RegView extends VerticalLayout{
 		RegisterLogic regLogic = new RegisterLogic();
         VerticalLayout vl=new VerticalLayout();
         public RegView(){
-            H3 title=new H3("Owner Details");
+            H3 title=new H3("New User Details");
 
             HorizontalLayout titlelayout=new HorizontalLayout();
             title.setClassName("titletext");

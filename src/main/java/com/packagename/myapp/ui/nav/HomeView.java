@@ -1,10 +1,16 @@
 package com.packagename.myapp.ui.nav;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.logic.HomeLogic;
+import com.logic.LikeLogic;
+import com.logic.PetSearchLogic;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -13,9 +19,13 @@ import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.BoxSizing;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
+import com.vaadin.flow.component.orderedlayout.FlexLayout.FlexWrap;
+import com.vaadin.flow.component.orderedlayout.FlexLayout.WrapMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
@@ -24,7 +34,12 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value="", layout = MainView.class)
+import group.entities.Pet;
+import group.exception.ErrorInProcessPetData;
+import group.models.PetModel;
+import group.utilities.ConvertPhoto;
+
+@Route(value = "", layout = MainView.class)
 //
 @PageTitle("Home")
 
@@ -32,145 +47,257 @@ import com.vaadin.flow.router.Route;
 
 public class HomeView extends VerticalLayout {
 
-	HomeLogic logic = new HomeLogic();
-    VerticalLayout vl=new VerticalLayout();
+	private LikeLogic likeL = new LikeLogic();
+	private PetModel petM = new PetModel();
+	private HomeLogic logic = new HomeLogic();
+	private PetSearchLogic searchL = new PetSearchLogic();
+	private VerticalLayout vl = new VerticalLayout();
+	private int petOwnerCardId;
+	private H2 title;
+	private VerticalLayout formvert;
 
-    public HomeView(){
+	public HomeView() {
 
-        //layout for title "find adoptable pets near"
-        HorizontalLayout findadopt=new HorizontalLayout();
-        H2 title=new H2("Find the pet for you");
-        findadopt.add(title);
+		// layout for title "find adoptable pets near"
+		HorizontalLayout findadopt = new HorizontalLayout();
+		this.title = new H2("Find the pet for you");
+		findadopt.add(title);
 
-        //css class for title "find adoptable pets near"
-        title.addClassName("titletext");
+		// css class for title "find adoptable pets near"
+		title.addClassName("titletext");
 
-        //form layout as formvert
-        VerticalLayout formvert=new VerticalLayout();
+		// form layout as formvert
+		this.formvert = new VerticalLayout();
 
-        //layouts for text fields
-        HorizontalLayout formlayoutr1=new HorizontalLayout();
-        HorizontalLayout formlayoutr2=new HorizontalLayout();
-        HorizontalLayout formlayoutr3=new HorizontalLayout();
-        HorizontalLayout formlayoutr4=new HorizontalLayout();
+		// layouts for text fields
+		HorizontalLayout formlayoutr1 = new HorizontalLayout();
+		HorizontalLayout formlayoutr2 = new HorizontalLayout();
+		HorizontalLayout formlayoutr3 = new HorizontalLayout();
+		HorizontalLayout formlayoutr4 = new HorizontalLayout();
 
-        
+		Checkbox dogs = new Checkbox("Dogs");
+		Checkbox cats = new Checkbox("Cats");
+		Checkbox rodent = new Checkbox("Rodent");
+		Checkbox birds = new Checkbox("Birds");
+		Checkbox fish = new Checkbox("Fish");
+		Checkbox other = new Checkbox("Other");
+		Checkbox all = new Checkbox("All");
 
-        Checkbox dogs = new Checkbox("Dogs");
-        Checkbox cats = new Checkbox("Cats");
-        Checkbox rodent = new Checkbox("Rodent");
-        Checkbox birds = new Checkbox("Birds");
-        Checkbox fish = new Checkbox("Fish");
-        Checkbox other = new Checkbox("Other");
-        Checkbox all = new Checkbox("All");
+		formlayoutr2.add(dogs, cats, rodent, birds, fish, other, all);
 
-        formlayoutr2.add(dogs,cats,rodent,birds,fish,other);
+		Select<String> gender = new Select<>();// combobox
+		gender.setItems("Female", "Male", "All");
+		gender.setLabel("Gender");
+		gender.setPlaceholder("Gender");
 
-        Select<String> gender = new Select<>();//combobox
-        gender.setItems("Female", "Male", "All");
-        gender.setLabel("Gender");
-        gender.setPlaceholder("Gender");
+		Select<String> age = new Select<>();
+		age.setItems("0 - 1", "2 - 3", "4 +", "All");
+		age.setLabel("Age");
+		age.setPlaceholder("any");
 
-        Select<String> age = new Select<>();
-        age.setItems("0 - 1","2 - 3", "4 +", "All");
-        age.setLabel("Age");
-        age.setPlaceholder("any");
+		Select<String> size = new Select<>();
+		size.setItems("Small", "Medium", "Large", "XLarge", "All");
+		size.setLabel("Size");
+		size.setPlaceholder("any");
 
-        Select<String> size = new Select<>();
-        size.setItems("Medium", "Small", "Large", "XLarge", "All");
-        size.setLabel("Size");
-        size.setPlaceholder("any");
+		formlayoutr3.add(gender, age, size);
 
-        formlayoutr3.add(gender,age,size);
+		formvert.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-       
+		Button search = new Button("Search");
 
-        formvert.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+		search.addClickListener(new ComponentEventListener() {
 
-        Button search=new Button("Search"); 
-        
-        search.addClickListener( new ComponentEventListener( ) {
-            
-        	
 			@Override
 			public void onComponentEvent(ComponentEvent arg0) {
-				logic.parametersCheck(vl, search, dogs, cats, rodent, birds, fish,
-						other, all, gender, age, size);
-				
+
+				searchL.parametersCheck(vl, search, dogs, cats, rodent, birds, fish, other, all, gender, age, size);
+				setPetsCards(false);
+				return;
 			}
-        } );
-        
-        search.setWidth("160px");
+		});
 
-        formvert.add(formlayoutr1,formlayoutr2,formlayoutr3,formlayoutr4, search);
+		search.setWidth("160px");
 
-        vl.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+		formvert.add(formlayoutr1, formlayoutr2, formlayoutr3, formlayoutr4, search);
 
-        //add defined card layout
-        HorizontalLayout workspace = new HorizontalLayout(createCard(), createCard(), createCard(), createCard(),createCard(), createCard());
-        workspace.addClassName("workspace");
+		vl.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        //add to main layout
-        vl.add(title,formvert,workspace);
+		// add defined card layout
+		setPetsCards(true);
+	}
 
-        //layout add to page - main vertical unit layout
-        add(vl);
-    }
+	private void setPetsCards(boolean first) {
+		
+		List<Pet> allPets;
+		
+		// Check if pets already selected
+		if (first == false) {
+			allPets = PetSearchLogic.getPetsSearchList();
+		} else {
+			allPets = new ArrayList<Pet>();
+			try {
+				allPets.addAll(petM.getAllPets());
+			} catch (ErrorInProcessPetData e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			HomeLogic.setPetsList(allPets);
+		}
 
-    //create cards
-    private Component createCard() {
+		FlexLayout workspace = new FlexLayout();
+		workspace.setAlignItems(Alignment.CENTER);
+		workspace.setFlexWrap(FlexWrap.WRAP);
+		workspace.setMaxWidth("72%");
+		workspace.setAlignContent(FlexLayout.ContentAlignment.SPACE_AROUND);
 
-        //card title
-        H4 card1Label = new H4("Title");
-        //card details
-        Span details = new Span("dogs are near to you selected area");
-        details.setWidth("180px");
-        details.getStyle().set("cursor", "pointer");
-        details.addClickListener(e->
-                details.getUI().ifPresent(ui ->
-                        ui.navigate("detail")));
+		System.out.println(allPets.size());
 
-        Image image = new Image("icons/img.jpg", "DummyImage");
-        image.addClassName("image");
-        image.setWidth("160px");
-        image.setHeight("140px");
-        image.getStyle().set("cursor", "pointer");
-        image.addClickListener(e ->
-                image.getUI().ifPresent(ui ->//Vaadin way to navigate between UIs
-                        ui.navigate("detail"))
-        );
+		for (int i = 0; i < allPets.size(); i++) {
+			petOwnerCardId = i;
+			workspace.add(createCard(i));
+		}
+		workspace.addClassName("workspace");
 
-        //like button heart add to custom card
-        Icon logoV = new Icon(VaadinIcon.HEART_O);
-        logoV.getStyle().set("cursor", "pointer");
-        logoV.addClickListener(
-                event -> like("You Like"));
-        logoV.addClassName("heartlike");
+		vl.removeAll();
 
-        HorizontalLayout title=new HorizontalLayout(card1Label,logoV);
-        title.setDefaultVerticalComponentAlignment(Alignment.END);
-        title.setWidth("180px");
+		// add to main layout
+		vl.add(title, formvert, workspace);
 
-        //card layout
-        VerticalLayout verrticalcard=new VerticalLayout();
-        verrticalcard.setAlignItems(Alignment.CENTER);
-        verrticalcard.setJustifyContentMode(JustifyContentMode.CENTER);
-        verrticalcard.add(image,title,details);
+		// layout add to page - main vertical unit layout
+		add(vl);
+	}
 
-        FlexLayout card = new FlexLayout(verrticalcard);
-        card.addClassName("card");
-        card.setAlignItems(Alignment.CENTER);
-        card.setJustifyContentMode(JustifyContentMode.CENTER);
-        card.setWidth("200px");
-        card.setHeight("280px");
+	// create cards
+	private Component createCard() {
 
-        return card;
-    }
+		// card title
+		H4 card1Label = new H4("Title");
+		// card details
+		Span details = new Span("dogs are near to you selected area");
+		details.setWidth("180px");
+		details.getStyle().set("cursor", "pointer");
+		details.addClickListener(e -> details.getUI().ifPresent(ui -> ui.navigate("detail")));
 
-    public void like(String text){
+		Image image = new Image("icons/img.jpg", "DummyImage");
+		image.addClassName("image");
+		image.setWidth("160px");
+		image.setHeight("140px");
+		image.getStyle().set("cursor", "pointer");
+		image.addClickListener(e -> image.getUI().ifPresent(ui -> // Vaadin way to navigate between UIs
+		ui.navigate("detail")));
 
-        Notification.show(text);
+		// like button heart add to custom card
+		Icon logoV = new Icon(VaadinIcon.HEART_O);
+		logoV.getStyle().set("cursor", "pointer");
+		logoV.addClickListener(event -> like("You Like"));
+		logoV.addClassName("heartlike");
 
+		HorizontalLayout title = new HorizontalLayout(card1Label, logoV);
+		title.setDefaultVerticalComponentAlignment(Alignment.END);
+		title.setWidth("180px");
 
-    }
+		// card layout
+		VerticalLayout verrticalcard = new VerticalLayout();
+		verrticalcard.setAlignItems(Alignment.CENTER);
+		verrticalcard.setJustifyContentMode(JustifyContentMode.CENTER);
+		verrticalcard.add(image, title, details);
+
+		FlexLayout card = new FlexLayout(verrticalcard);
+		card.addClassName("card");
+		card.setAlignItems(Alignment.CENTER);
+		card.setJustifyContentMode(JustifyContentMode.CENTER);
+		card.setWidth("200px");
+		card.setHeight("280px");
+
+		return card;
+	}
+
+	// create cards
+	private Component createCard(int index) {
+
+		Pet pet = new Pet();
+		pet = (Pet) HomeLogic.getPetsList().get(index);
+
+		// card title
+		if (pet != null) {
+			H4 category = new H4(pet.getCategory().toString());
+			H4 name = new H4(pet.getPetName());
+
+			// card details
+
+			Span details = new Span("Age: " + pet.getPetAge() + " Size: " + pet.getPetSize() + "\nCity: "
+					+ pet.getPetOwner().getCity());
+			details.setWidth("210px");
+			details.getStyle().set("cursor", "pointer");
+			details.addClickListener(e -> details.getUI().ifPresent(ui -> ui.navigate("detail")));
+
+			Image image = ConvertPhoto.dbPhotoToImage(pet);
+
+			image.addClassName("image");
+			image.setWidth("160px");
+			image.setHeight("140px");
+			image.getStyle().set("cursor", "pointer");
+			image.addClickListener(e -> image.getUI().ifPresent(ui -> // Vaadin way to navigate between UIs
+			ui.navigate("detail")));
+
+			// like button heart add to custom card
+			Icon logoV = new Icon(VaadinIcon.HEART_O);
+			logoV.getStyle().set("cursor", "pointer");
+			logoV.setColor("White");
+			logoV.addClickListener(event -> like(index, logoV));
+			logoV.addClassName("heartlike");
+
+			HorizontalLayout title = new HorizontalLayout(category, name, logoV);
+			title.setDefaultVerticalComponentAlignment(Alignment.END);
+			title.setWidth("210px");
+
+			// card layout
+			VerticalLayout verrticalcard = new VerticalLayout();
+			verrticalcard.setAlignItems(Alignment.CENTER);
+			verrticalcard.setJustifyContentMode(JustifyContentMode.CENTER);
+			verrticalcard.add(image, title, details);
+
+			FlexLayout card = new FlexLayout(verrticalcard);
+			card.addClassName("card");
+			card.setAlignItems(Alignment.CENTER);
+			card.setJustifyContentMode(JustifyContentMode.CENTER);
+			card.setWidth("300px");
+			card.setHeight("300px");
+
+			return card;
+		}
+		return null;
+	}
+
+	public void like(int index, Icon logoV) {
+		if (!MainView.isUserRegistered()) {
+			HorizontalLayout data = new HorizontalLayout();
+			Span details = new Span("Please login Before pressing like");
+			data.add(details);
+			vl.add(data);
+			return;
+		}
+
+		if (logoV.getColor().equals("White")) {
+			likeL.like(index);
+			logoV.setColor("Blue");
+		}
+		if (logoV.getColor().equals("Blue")) {
+			likeL.unLike(index);
+			logoV.setColor("White");
+		}
+
+		like("Thank You for like me");
+	}
+
+	public int getPetOwnerCardId() {
+		return petOwnerCardId;
+
+	}
+
+	public void like(String text) {
+		Notification.show(text).setPosition(Position.TOP_CENTER);
+
+	}
 }

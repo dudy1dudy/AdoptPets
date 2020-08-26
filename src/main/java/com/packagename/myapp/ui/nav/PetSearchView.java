@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.logic.HomeLogic;
+import com.logic.PetSearchLogic;
 import com.logic.PetsList;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.grid.Grid;
@@ -27,24 +28,20 @@ public class PetSearchView extends VerticalLayout {
 
     public PetSearchView(){
         add(h1);
- 
-
-
-
-List<PetsList> petList = new ArrayList<>();
-for(int i=0; i<HomeLogic.getPetsList().size(); i++) {
-	petList.add(new PetsList(HomeLogic.getPetsList().get(i)));
-}
-
-
-Grid<PetsList> grid = new Grid<>(PetsList.class);
-grid.setItems(petList);
-
-//grid.removeColumnByKey("");
-
-// The Grid<>(Person.class) sorts the properties and in order to
-// reorder the properties we use the 'setColumns' method.
-grid.setColumns("categoryC", "genderC", "ageC", "sizeC" ,"petNameC", "shortDescriptionC", "cityC");
-add(grid);
-}
+        PetsList petL;
+        ArrayList<PetsList> pets = new ArrayList<PetsList>();
+				
+        for(int i =0 ; i < PetSearchLogic.getPetsSearchList().size() ; i++) {
+        	petL = new PetsList(PetSearchLogic.getPetsSearchList().get(i));
+        	pets.add(petL);
+        }
+        
+		Grid<PetsList> grid = new Grid<>(PetsList.class);
+		grid.setItems(pets);
+		
+	
+		grid.setColumns("categoryC", "genderC", "ageC", "sizeC" ,"petNameC", "shortDescriptionC", "cityC");
+		add(grid);
+		
+	}
 }

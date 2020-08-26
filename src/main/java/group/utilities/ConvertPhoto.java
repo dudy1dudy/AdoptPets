@@ -1,8 +1,14 @@
 package group.utilities;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import com.vaadin.flow.server.StreamResource;
+import com.vaadin.flow.component.html.Image;
+
+import group.entities.Pet;
 
 public class ConvertPhoto {
 
@@ -31,6 +37,26 @@ public class ConvertPhoto {
 			if (fis != null)
 				fis.close();
 		}
+	}
+
+	// Convert bytes to photo for screen
+	public static Image dbPhotoToImage(Pet pet) {
+
+		Image image = new Image("icons/no-image-available.jpg", "DummyImage");
+
+		if (pet != null) {
+			if (pet.getPetPhoto() != null) {
+
+				// Get stream data of photo
+				StreamResource sr = new StreamResource("pet", () -> {
+					return new ByteArrayInputStream(pet.getPetPhoto());
+				});
+				
+				sr.setContentType("image/jpg");
+				image = new Image(sr, "Pet-image");
+			}
+		}
+		return image;
 	}
 
 }

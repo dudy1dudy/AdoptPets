@@ -91,10 +91,10 @@ public class PetModel {
 	}
 
 	// Update exist pet and owner
-	public Pet updatePet(int petId, Category petCategory, String petName, double petAge, PetSize petSize, Gender petGender,
-			AdoptionStatus adoptionStatus, String shortDescription, String detailDescription, byte[] petPhoto,
-			String firstName, String lastName, int ownerPhoneNumber, String ownerCity, String ownerStreet,
-			int ownerHouseNumber) throws ErrorInProcessPetOwner, ErrorInProcessPetData {
+	public Pet updatePet(int petId, Category petCategory, String petName, double petAge, PetSize petSize,
+			Gender petGender, AdoptionStatus adoptionStatus, String shortDescription, String detailDescription,
+			byte[] petPhoto, String firstName, String lastName, int ownerPhoneNumber, String ownerCity,
+			String ownerStreet, int ownerHouseNumber) throws ErrorInProcessPetOwner, ErrorInProcessPetData {
 
 		// Get Pet using id
 		Pet currentPet = this.petAccess.getPet(petId);
@@ -190,7 +190,8 @@ public class PetModel {
 				Pet pet = this.petOwnerAccess.getPetByOwnerId(currPetOwner.getPetOwnerId());
 
 				// Add pet
-				pets.add(pet);
+				if (pet != null)
+					pets.add(pet);
 			}
 
 			return pets;
@@ -210,15 +211,10 @@ public class PetModel {
 		}
 	}
 	/*
-	// Get all pets in DB
-		public List<Pet> getAllPets() throws ErrorInProcessPetData {
-			try {
-				return this.petAccess.getAllPets();
-			} catch (ErrorInProcessPetData ePet) {
-				throw ePet;
-			}
-		}
-		*/
+	 * // Get all pets in DB public List<Pet> getAllPets() throws
+	 * ErrorInProcessPetData { try { return this.petAccess.getAllPets(); } catch
+	 * (ErrorInProcessPetData ePet) { throw ePet; } }
+	 */
 
 	// Get pets by criterias
 	public List<Pet> getPetsByCriteria(Category petCategory, double petAge, PetSize petSize, Gender petGender,

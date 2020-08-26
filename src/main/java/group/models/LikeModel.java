@@ -115,7 +115,10 @@ public class LikeModel {
 			PetLove petLike = user.getPetLove();
 
 			// Get all likes of pets
-			return petLike.getPets();
+			if (petLike != null)
+				return petLike.getPets();
+			else
+				return null;
 
 		} catch (ErrorInProcessUser eUser) {
 			throw eUser;

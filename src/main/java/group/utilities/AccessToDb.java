@@ -47,7 +47,7 @@ public class AccessToDb {
 
 	// Close Entity manager
 	public static void closeFactory() {
-		if (em != null)
+		if (em != null && em.isOpen() == true )
 			em.close();
 	}
 }

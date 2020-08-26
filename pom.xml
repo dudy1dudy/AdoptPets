@@ -147,6 +147,19 @@
 			<version>8.0.20</version>
 		</dependency>
 
+		<!-- Apache Commons Email -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.2.4.RELEASE</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -1,6 +1,7 @@
 package com.packagename.myapp.ui.nav;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.logic.HomeLogic;
@@ -33,7 +34,10 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinRequest;
+import com.vaadin.flow.spring.annotation.UIScope;
 
 import group.entities.Pet;
 import group.exception.ErrorInProcessPetData;
@@ -42,6 +46,7 @@ import group.models.LikeModel;
 import group.models.PetModel;
 import group.utilities.ConvertPhoto;
 
+@UIScope
 @Route(value = "", layout = MainView.class)
 //
 @PageTitle("Home")
@@ -172,7 +177,6 @@ public class HomeView extends VerticalLayout {
 		add(vl);
 	}
 
-	
 	// create cards
 	private Component createCard(Pet pet) {
 
@@ -187,7 +191,20 @@ public class HomeView extends VerticalLayout {
 					+ pet.getPetOwner().getCity());
 			details.setWidth("210px");
 			details.getStyle().set("cursor", "pointer");
-			details.addClickListener(e -> details.getUI().ifPresent(ui -> ui.navigate("detail")));
+			details.setId(String.valueOf(pet.getPetId()));
+
+			details.addClickListener(e -> {
+
+				List<String> list = new ArrayList<String>();
+				java.util.Map<String, List<String>> parametersMap = new HashMap<String, List<String>>();
+				list.add(details.getId().get());
+				parametersMap.put("ID", list);
+				QueryParameters qp = new QueryParameters(parametersMap);
+
+				details.getUI().ifPresent(ui -> {
+					ui.navigate("detail", qp);
+				});
+			});
 
 			Image image = ConvertPhoto.dbPhotoToImage(pet);
 
@@ -195,18 +212,30 @@ public class HomeView extends VerticalLayout {
 			image.setWidth("160px");
 			image.setHeight("140px");
 			image.getStyle().set("cursor", "pointer");
-			image.addClickListener(e -> image.getUI().ifPresent(ui -> // Vaadin way to navigate between UIs
-			ui.navigate("detail")));
+			image.setId(String.valueOf(pet.getPetId()));
+
+			image.addClickListener(e -> {
+
+				List<String> list = new ArrayList<String>();
+				java.util.Map<String, List<String>> parametersMap = new HashMap<String, List<String>>();
+				list.add(image.getId().get());
+				parametersMap.put("ID", list);
+				QueryParameters qp = new QueryParameters(parametersMap);
+
+				image.getUI().ifPresent(ui -> {
+					ui.navigate("detail", qp);
+				});
+			});
 
 			// like button heart add to custom card
 			Icon logoV = new Icon(VaadinIcon.HEART_O);
 			logoV.getStyle().set("cursor", "pointer");
-			if(MainView.isUserRegistered()) {
+			if (MainView.isUserRegistered()) {
 				try {
-					if(likeM.checkLikeOfUser(MainView.getUser().getUserId(), pet.getPetId())) {
+					if (likeM.checkLikeOfUser(MainView.getUser().getUserId(), pet.getPetId())) {
 						logoV.setColor("Red");
-					
-					}
+					} else
+						logoV.setColor("White");
 				} catch (ErrorInProcessUser e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -214,7 +243,7 @@ public class HomeView extends VerticalLayout {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			}else {
+			} else {
 				logoV.setColor("White");
 			}
 			logoV.addClickListener(event -> like(pet.getPetId(), logoV));
@@ -240,6 +269,7 @@ public class HomeView extends VerticalLayout {
 			return card;
 		}
 		return null;
+
 	}
 
 	public void like(int petId, Icon logoV) {
@@ -253,10 +283,12 @@ public class HomeView extends VerticalLayout {
 		if (logoV.getColor().equals("White")) {
 			likeL.like(petId);
 			logoV.setColor("Red");
+			like("Thank you for like me!");
 		}
 		if (logoV.getColor().equals("Red")) {
 			likeL.unLike(petId);
 			logoV.setColor("White");
+			like("OK, Bye Bye");
 		}
 	}
 

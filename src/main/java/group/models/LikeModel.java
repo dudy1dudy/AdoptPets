@@ -1,5 +1,6 @@
 package group.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import group.dataAccess.PetDAO;
@@ -91,6 +92,15 @@ public class LikeModel {
 
 				// Delete pet from list of likes
 				petLike.getPets().remove(pet);
+				
+				List<Pet> pets = new ArrayList<Pet>();
+				
+				for (Pet checkPet : petLike.getPets()) {
+					if (checkPet.getPetId() != pet.getPetId())
+						pets.add(checkPet);
+					}
+				
+				petLike.setPets(pets);
 
 				// Now update all changes in DB
 				this.lovePetAccess.update(petLike);
@@ -129,23 +139,18 @@ public class LikeModel {
 	public boolean checkLikeOfUser(int userId, int petId) throws ErrorInProcessUser, ErrorInProcessPetData {
 		try {
 
-			// Get user by user id
-			User user = this.userAccess.getUser(userId);
-
-			// Get user likes by user id
-			PetLove petLike = user.getPetLove();
+			List<Pet> pets = getAllLikes(userId);
 
 			// Get pet by pet id
 			Pet pet = this.petAccess.getPet(petId);
 
 			// Get all likes of pets
-			if (petLike != null) {
-				int index = petLike.getPets().indexOf(pet);
-
-				if (index == -1)
-					return true;
-				else
-					return false;
+			if (pets != null) {
+				for (Pet checkPet : pets) {
+					if (checkPet.getPetId() == pet.getPetId())
+						return true;
+				}
+				return false;
 			} else
 				return false;
 

@@ -124,4 +124,35 @@ public class LikeModel {
 			throw eUser;
 		}
 	}
+
+	// Show all likes of user
+	public boolean checkLikeOfUser(int userId, int petId) throws ErrorInProcessUser, ErrorInProcessPetData {
+		try {
+
+			// Get user by user id
+			User user = this.userAccess.getUser(userId);
+
+			// Get user likes by user id
+			PetLove petLike = user.getPetLove();
+
+			// Get pet by pet id
+			Pet pet = this.petAccess.getPet(petId);
+
+			// Get all likes of pets
+			if (petLike != null) {
+				int index = petLike.getPets().indexOf(pet);
+
+				if (index == -1)
+					return true;
+				else
+					return false;
+			} else
+				return false;
+
+		} catch (ErrorInProcessUser eUser) {
+			throw eUser;
+		} catch (ErrorInProcessPetData ePet) {
+			throw ePet;
+		}
+	}
 }

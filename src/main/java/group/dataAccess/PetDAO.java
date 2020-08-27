@@ -63,10 +63,16 @@ public class PetDAO {
 	// Delete pet
 	public void remove(int idPPet) throws ErrorInProcessPetData {
 		try {
+
+			Pet pet = getPet(idPPet);
+
 			// access to DB
 			EntityManager em = AccessToDb.createFactory();
 
-			em.remove(getPet(idPPet));
+			if (!em.contains(pet)) {
+				pet = em.merge(pet);
+			}
+			em.remove(pet);
 
 			// Save and close
 			AccessToDb.commitFactory();
@@ -116,30 +122,20 @@ public class PetDAO {
 	}
 
 	/*
-	 * // Get all pets in DB
-	public List<Pet> getAllPets() throws ErrorInProcessPetData {
+	 * // Get all pets in DB public List<Pet> getAllPets() throws
+	 * ErrorInProcessPetData {
+	 * 
+	 * try { // access to DB EntityManager em = AccessToDb.createFactory();
+	 * 
+	 * Query q = em.createNamedQuery("AllPets", Pet.class);
+	 * 
+	 * if (q.getResultList().isEmpty() != true) { List<Pet> results = (List<Pet>)
+	 * q.getResultList(); return results; } else return null; } catch (Exception e)
+	 * { throw new ErrorInProcessPetData("Error in process pet data"); } finally {
+	 * AccessToDb.closeFactory(); } }
+	 * 
+	 */
 
-		try {
-			// access to DB
-			EntityManager em = AccessToDb.createFactory();
-
-			Query q = em.createNamedQuery("AllPets", Pet.class);
-
-			if (q.getResultList().isEmpty() != true) {
-				List<Pet> results = (List<Pet>) q.getResultList();
-				return results;
-			} else
-				return null;
-		} catch (Exception e) {
-			throw new ErrorInProcessPetData("Error in process pet data");
-		} finally {
-			AccessToDb.closeFactory();
-		}
-	}
-
-	 * */
-	
-	
 	// Get pets by criteria
 	public List<Pet> getPetsByCriteria(Category petCategory, double petAge, PetSize petSize, Gender petGender,
 			AdoptionStatus adoptionStatus) throws ErrorInProcessPetData {

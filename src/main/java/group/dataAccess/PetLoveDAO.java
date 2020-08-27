@@ -50,10 +50,16 @@ public class PetLoveDAO {
 	// Delete pet love
 	public void remove(int idPPetLove) throws ErrorInProcessPetLove {
 		try {
+			
+			PetLove petLove = getPetLove(idPPetLove);
+			
 			// access to DB
 			EntityManager em = AccessToDb.createFactory();
 
-			em.remove(getPetLove(idPPetLove));
+			if (!em.contains(petLove)) {
+				petLove = em.merge(petLove);
+			}
+			em.remove(petLove);
 
 			// Save and close
 			AccessToDb.commitFactory();

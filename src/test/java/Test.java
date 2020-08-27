@@ -22,22 +22,22 @@ public class Test {
 
 		// 1. Create User
 		UserModel userModel = new UserModel();
-		try {
-		//	userModel.createNewUser("yael", "a123456", "Valia", "Yerv", UserType.REGULAR, "valia@gmail.com", 0, null, null, 0);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+//		try {
+//		//	userModel.createNewUser("yael", "a123456", "Valia", "Yerv", UserType.REGULAR, "valia@gmail.com", 0, null, null, 0);
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());
+//		}
 
 		// 2. Create Per + Owner x 4
 		PetModel petModel = new PetModel();
-		try {
-			petModel.createNewPet(1, Category.CAT, "Yuyu", 1, PetSize.SMALL, Gender.FEMALE,
-					AdoptionStatus.ADOPTABLE, "ijlo", "869yukill", null, "Valia", "Yerv", 
-					0, null, null, 0);
-		} catch (ErrorInProcessPetOwner | ErrorInProcessUser | ErrorInProcessPetData e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			petModel.createNewPet(1, Category.CAT, "Yuyu", 1, PetSize.SMALL, Gender.FEMALE,
+//					AdoptionStatus.ADOPTABLE, "ijlo", "869yukill", null, "Valia", "Yerv", 
+//					0, null, null, 0);
+//		} catch (ErrorInProcessPetOwner | ErrorInProcessUser | ErrorInProcessPetData e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		try {
 
 			// URL photo

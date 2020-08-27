@@ -146,14 +146,20 @@ public class PetModel {
 		// Get user that create this pet with owner
 		User user = petOwner.getUser();
 
+		List<PetOwner> owners = new ArrayList<PetOwner>();
+
 		// Delete pet owner from user
-		user.getOwners().remove(petOwner);
+		for (PetOwner checkOwner : user.getOwners()) {
+			if (checkOwner.getPetOwnerId() != petOwner.getPetOwnerId())
+				owners.add(checkOwner);
+		}
+		user.setOwners(owners);
 
 		// Now update all changes in DB
 		try {
-			this.userAccess.update(user);
-			this.petOwnerAccess.remove(petOwner.getPetOwnerId());
 			this.petAccess.remove(petId);
+			this.petOwnerAccess.remove(petOwner.getPetOwnerId());
+			this.userAccess.update(user);
 		} catch (ErrorInProcessPetOwner ePetOwner) {
 			throw ePetOwner;
 		} catch (ErrorInProcessUser eUser) {

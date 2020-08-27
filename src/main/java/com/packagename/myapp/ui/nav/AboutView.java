@@ -28,7 +28,11 @@ import group.utilities.PetSize;
 
 @Route(value="about",layout= MainView.class)
 @PageTitle("About")
+
 public class AboutView extends VerticalLayout {
+
+
+
 	
 	
     H1 h1=new H1("Your Pets, \nPleas doube click a pet to edit it");

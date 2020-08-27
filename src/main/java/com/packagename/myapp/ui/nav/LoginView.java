@@ -57,6 +57,8 @@ public class LoginView extends VerticalLayout {
 	public LoginView() {
 
 		LoginForm component = new LoginForm();
+		setAlignItems(Alignment.CENTER);
+		setSizeFull();
 
 		component.addLoginListener(e -> {
 			boolean isAuthenticated = authenticate(e);
@@ -112,39 +114,41 @@ public class LoginView extends VerticalLayout {
 
 	private void sendMail() {
 
-		// Get user name
-		VerticalLayout userlayout = new VerticalLayout();
-		H3 title = new H3("Set Your User");
-		userlayout.add(title);
-		title.addClassName("titletext");
+		VerticalLayout vl = new VerticalLayout();
 
-		TextField usernmae = new TextField();
-		usernmae.setPlaceholder("User Name");
+		// Get user name
+		HorizontalLayout titlelayout = new HorizontalLayout();
+		H3 title = new H3("Set Your User");
+		titlelayout.add(title);
+		title.addClassName("titletext");
+		
+		FormLayout fLayout = new FormLayout();
+
+		TextField usernane = new TextField();
+		usernane.setPlaceholder("User Name");
 		H4 descriptionLabel = new H4("User Name");
 		descriptionLabel.addClassName("titletext");
+		fLayout.addFormItem(usernane, descriptionLabel);
+		fLayout.setHeightFull();
 
-		Button send = new Button("Send", click -> sendMailToUser(usernmae.getValue()));
-
-		FormLayout form = new FormLayout();
-		form.addFormItem(usernmae, descriptionLabel);
-//		VerticalLayout vform = new VerticalLayout();
-//		vform.setWidth("500px");
-//		vform.add(form);
-//		
-		HorizontalLayout horizontal = new HorizontalLayout();
-		horizontal.add(form);
+		Button send = new Button("Send", click -> sendMailToUser(usernane.getValue()));
 		
-		userlayout.add(horizontal, send);
-		userlayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-
-		h1.add(userlayout);
+		VerticalLayout form = new VerticalLayout();
+		form.setWidth("500px");
+		form.add(fLayout);
+		
+		vl.add(titlelayout, form, send);
+		
+		vl.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+		
+		h1.add(vl);
 
 	}
 
 	private void sendMailToUser(String userName) {
 
 		User userID = new User();
-		
+
 		// Get User name
 		try {
 			userID = user.getUserByUsername(userName);
@@ -153,7 +157,6 @@ public class LoginView extends VerticalLayout {
 			Notification.show("Email can't be send")
 					.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
 		}
-		
 
 		// load email configuration from properties file
 		Properties properties = new Properties();
@@ -198,7 +201,7 @@ public class LoginView extends VerticalLayout {
 			// Notification
 			Notification.show("Email can't be send")
 					.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
-		
+
 		}
 	}
 }

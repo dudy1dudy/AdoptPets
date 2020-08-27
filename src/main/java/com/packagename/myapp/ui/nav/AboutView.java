@@ -30,11 +30,12 @@ import group.utilities.PetSize;
 @PageTitle("About")
 public class AboutView extends VerticalLayout {
 	
-
+	
     H1 h1=new H1("Your Pets, \nPleas doube click a pet to edit it");
     
     public AboutView(){
     	
+    	UserPetsLogic.setUserPetsList();
     	if (MainView.getUser() == null) {
 			
 			Span details = new Span("Please register to view your pets");
@@ -42,8 +43,7 @@ public class AboutView extends VerticalLayout {
 			add(details);
 			return;
 		}	
-    	
-    	UserPetsLogic.setUserPetsList();
+    	    	
 	    
 	    if(UserPetsLogic.getUserPetsList() == null) {
 	    	Span details = new Span("You have no pets registered");

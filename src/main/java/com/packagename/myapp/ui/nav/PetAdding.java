@@ -10,6 +10,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.model.Navigator;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
@@ -31,8 +32,12 @@ import group.utilities.ConvertPhoto;
 import group.utilities.PetSize;
 import java.nio.file.Files;
 
+import javax.imageio.ImageIO;
+
 import org.apache.commons.compress.utils.IOUtils;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -126,7 +131,10 @@ public class PetAdding extends VerticalLayout {
 
 		upload.addSucceededListener(event -> {
 			try {
-				fileContent = IOUtils.toByteArray(buffer.getInputStream());
+				BufferedImage inputImage = ImageIO.read(buffer.getInputStream());
+				ByteArrayOutputStream pngContent = new ByteArrayOutputStream();
+				ImageIO.write(inputImage, "jpg", pngContent);
+				fileContent = pngContent.toByteArray();
 			} catch (Exception e) {
 				new Span("Error in process photo");
 			}
@@ -232,10 +240,9 @@ public class PetAdding extends VerticalLayout {
 				|| description.isEmpty() || descriptionL.isEmpty() || firstName.isEmpty() || lastName.isEmpty()
 				|| phone.isEmpty() || city.isEmpty() || street.isEmpty() || house.isEmpty()) {
 
-			HorizontalLayout data = new HorizontalLayout();
-			Span details = new Span("details are missing, please fill all of the fields");
-			data.add(details);
-			vl.add(data);
+			// Notification
+			Notification.show("Details are missing, please fill all of the fields")
+					.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
 			return;
 		} else {
 			addPetLogic.addPet(vl, category.getValue(), petName.getValue(), age.getValue(), size.getValue(),
@@ -243,6 +250,9 @@ public class PetAdding extends VerticalLayout {
 					firstName.getValue(), lastName.getValue(), phone.getValue().intValue(), city.getValue(),
 					street.getValue(), house.getValue().intValue());
 		}
+		// Notification
+		Notification.show("Thank you for added new pet")
+				.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
 		UI.getCurrent().navigate("");
 	}
 

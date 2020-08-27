@@ -37,6 +37,8 @@ public class AboutView extends VerticalLayout {
     
     public AboutView(){
     	
+    	
+    	
     	if (MainView.getUser() == null) {
 			
 			Span details = new Span("Please register to view your pets");
@@ -45,9 +47,16 @@ public class AboutView extends VerticalLayout {
 			return;
 		}	
     	    	
+	    
+	    if(UserPetsLogic.getUserPetsList() == null) {
+	    	Span details = new Span("You have no pets registered");
+			
+			add(details);
+			return;
+	    }
+	    
 	    add(h1);
-	    userPetsLogic.findUserPets();
-		
+	    
 	    PetsList petL;
         ArrayList<PetsList> userPets = new ArrayList<PetsList>();
 				

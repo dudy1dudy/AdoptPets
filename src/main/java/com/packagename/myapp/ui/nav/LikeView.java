@@ -91,7 +91,13 @@ public class LikeView extends VerticalLayout{
 					+ pet.getPetOwner().getCity());
 			details.setWidth("210px");
 			details.getStyle().set("cursor", "pointer");
-			details.addClickListener(e -> details.getUI().ifPresent(ui -> ui.navigate("detail")));
+			details.addClickListener(e -> {
+
+				MainView.setCurrDeatailPet(pet);
+				details.getUI().ifPresent(ui -> {
+					ui.navigate("detail");
+				});
+			});
 
 			Image image = ConvertPhoto.dbPhotoToImage(pet);
 
@@ -99,8 +105,12 @@ public class LikeView extends VerticalLayout{
 			image.setWidth("160px");
 			image.setHeight("140px");
 			image.getStyle().set("cursor", "pointer");
-			image.addClickListener(e -> image.getUI().ifPresent(ui -> // Vaadin way to navigate between UIs
-			ui.navigate("detail")));
+			image.addClickListener(e -> {
+				MainView.setCurrDeatailPet(pet);
+				image.getUI().ifPresent(ui -> {
+					ui.navigate("detail");
+				});
+			});
 
 			
 			HorizontalLayout title = new HorizontalLayout(category, name);

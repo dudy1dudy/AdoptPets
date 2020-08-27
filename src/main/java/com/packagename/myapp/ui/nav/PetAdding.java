@@ -243,6 +243,7 @@ public class PetAdding extends VerticalLayout {
 					firstName.getValue(), lastName.getValue(), phone.getValue().intValue(), city.getValue(),
 					street.getValue(), house.getValue().intValue());
 		}
+		UI.getCurrent().navigate("");
 	}
 
 }

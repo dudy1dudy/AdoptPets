@@ -83,7 +83,7 @@ public class HomeView extends VerticalLayout {
 		HorizontalLayout formlayoutr2 = new HorizontalLayout();
 		HorizontalLayout formlayoutr3 = new HorizontalLayout();
 		HorizontalLayout formlayoutr4 = new HorizontalLayout();
-
+		
 		Checkbox dogs = new Checkbox("Dogs");
 		Checkbox cats = new Checkbox("Cats");
 		Checkbox rodent = new Checkbox("Rodent");
@@ -180,6 +180,7 @@ public class HomeView extends VerticalLayout {
 	// create cards
 	private Component createCard(Pet pet) {
 
+		
 		// card title
 		if (pet != null) {
 			H4 category = new H4(pet.getCategory().toString());
@@ -195,14 +196,9 @@ public class HomeView extends VerticalLayout {
 
 			details.addClickListener(e -> {
 
-				List<String> list = new ArrayList<String>();
-				java.util.Map<String, List<String>> parametersMap = new HashMap<String, List<String>>();
-				list.add(details.getId().get());
-				parametersMap.put("ID", list);
-				QueryParameters qp = new QueryParameters(parametersMap);
-
+				MainView.setCurrDeatailPet(pet);
 				details.getUI().ifPresent(ui -> {
-					ui.navigate("detail", qp);
+					ui.navigate("detail");
 				});
 			});
 
@@ -215,15 +211,9 @@ public class HomeView extends VerticalLayout {
 			image.setId(String.valueOf(pet.getPetId()));
 
 			image.addClickListener(e -> {
-
-				List<String> list = new ArrayList<String>();
-				java.util.Map<String, List<String>> parametersMap = new HashMap<String, List<String>>();
-				list.add(image.getId().get());
-				parametersMap.put("ID", list);
-				QueryParameters qp = new QueryParameters(parametersMap);
-
+				MainView.setCurrDeatailPet(pet);
 				image.getUI().ifPresent(ui -> {
-					ui.navigate("detail", qp);
+					ui.navigate("detail");
 				});
 			});
 

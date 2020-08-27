@@ -77,19 +77,19 @@ private void checkSize(Select<String> size) {
 			return;
 		}
 		for(int i = 0 ; i < tempPets.size() ; i ++) {
-			if(size.getValue().equals("Small") && !tempPets.get(i).getGender().equals(PetSize.SMALL)) {
+			if(size.getValue().equals("Small") && !tempPets.get(i).getPetSize().equals(PetSize.SMALL)) {
 				PetSearchLogic.petsSearch.remove(tempPets.get(i));
 				
 			}
-			if(size.getValue().equals("Medium") && !tempPets.get(i).getGender().equals(PetSize.MEDIUM)) {
+			if(size.getValue().equals("Medium") && !tempPets.get(i).getPetSize().equals(PetSize.MEDIUM)) {
 				PetSearchLogic.petsSearch.remove(tempPets.get(i));
 				
 			}
-			if(size.getValue().equals("Large") && !tempPets.get(i).getGender().equals(PetSize.LARGE)) {
+			if(size.getValue().equals("Large") && !tempPets.get(i).getPetSize().equals(PetSize.LARGE)) {
 				PetSearchLogic.petsSearch.remove(tempPets.get(i));
 				
 			}
-			if(size.getValue().equals("XLarge") && !tempPets.get(i).getGender().equals(PetSize.XLARGE)) {
+			if(size.getValue().equals("XLarge") && !tempPets.get(i).getPetSize().equals(PetSize.XLARGE)) {
 				PetSearchLogic.petsSearch.remove(tempPets.get(i));
 				
 			}

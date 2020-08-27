@@ -9,6 +9,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
 
 import group.exception.ErrorInProcessPetData;
@@ -42,7 +43,7 @@ public class PetDetailsView extends VerticalLayout {
         VerticalLayout divLayout=new VerticalLayout();
         H3 name = null;
         Span detail = null;
-        int id = homeV.getPetOwnerCardId();
+        int id = MainView.getCurrDeatailPet().getPetId();
         try {
         name=new H3("My name is "+petM.getPetById(id).getPetName());
         detail=new Span("DESCRIPTION: /n" + petM.getPetById(id).getShortDescription()

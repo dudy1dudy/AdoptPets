@@ -36,7 +36,22 @@ public class MainView extends AppLayout {
      * Static Login parameter
      */
 	private static User user;
+	/**
+     * Static Current edit pet parameter
+     */
 	private static Pet CurrEditPet;
+	/**
+     * Static Current detailed pet parameter
+     */
+	private static Pet currDeatailPet;
+	
+	public static Pet getCurrDeatailPet() {
+		return MainView.currDeatailPet;
+	}
+	public static void setCurrDeatailPet(Pet pet) {
+		MainView.currDeatailPet = new Pet();
+		MainView.currDeatailPet = pet;
+	}
 	
 	public static Pet getCurrentEditPet() {
 		return MainView.CurrEditPet;

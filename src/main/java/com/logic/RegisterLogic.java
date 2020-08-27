@@ -79,6 +79,7 @@ public class RegisterLogic {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		UI.getCurrent().navigate("");
 	}
 
 }

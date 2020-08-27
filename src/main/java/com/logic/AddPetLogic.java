@@ -21,7 +21,7 @@ import group.utilities.Category;
 import group.utilities.Gender;
 import group.utilities.PetSize;
 
-public class AddPetLogic {
+public class AddPetLogic   {
 
 	private UserModel userModel;
 	private PetModel pet;

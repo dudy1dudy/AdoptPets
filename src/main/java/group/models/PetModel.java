@@ -99,6 +99,8 @@ public class PetModel {
 		// Get Pet using id
 		Pet currentPet = this.petAccess.getPet(petId);
 
+		System.out.println(petId);
+
 		// Start with update pet owner
 		PetOwner petOwner = currentPet.getPetOwner();
 
@@ -123,8 +125,8 @@ public class PetModel {
 
 		// Now update all changes in DB
 		try {
+			this.petAccess.update(currentPet);
 			this.petOwnerAccess.update(petOwner);
-			this.petAccess.create(currentPet);
 
 			return currentPet;
 		} catch (ErrorInProcessPetOwner ePetOwner) {

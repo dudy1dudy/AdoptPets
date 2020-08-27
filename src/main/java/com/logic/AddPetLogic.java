@@ -21,7 +21,7 @@ import group.utilities.Category;
 import group.utilities.Gender;
 import group.utilities.PetSize;
 
-public class AddPetLogic   {
+public class AddPetLogic {
 
 	private UserModel userModel;
 	private PetModel pet;
@@ -104,7 +104,7 @@ public class AddPetLogic   {
 	}
 
 	public void editPet(int petId, String petCategory, String petName, double petAge, String petSize, String petGender,
-			String shortDescription, String detailDescription, String firstName, String lastName,
+			String shortDescription, String detailDescription, byte[] petPhoto, String firstName, String lastName,
 			int ownerPhoneNumber, String ownerCity, String ownerStreet, int ownerHouseNumber, String aduptStatus) {
 
 		Category petC = findPetCategory(petCategory);
@@ -112,7 +112,7 @@ public class AddPetLogic   {
 		Gender gen = findGender(petGender);
 		AdoptionStatus adupt = findAduptStatus(aduptStatus);
 		try {
-			pet.updatePet(petId, petC, petName, petAge, petS, gen, adupt, shortDescription, detailDescription,null,
+			pet.updatePet(petId, petC, petName, petAge, petS, gen, adupt, shortDescription, detailDescription, petPhoto,
 					firstName, lastName, ownerPhoneNumber, ownerCity, ownerStreet, ownerHouseNumber);
 		} catch (ErrorInProcessPetOwner e) {
 			// TODO Auto-generated catch block

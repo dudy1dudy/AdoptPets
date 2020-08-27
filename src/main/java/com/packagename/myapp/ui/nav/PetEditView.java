@@ -10,6 +10,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.model.Navigator;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
@@ -32,14 +33,18 @@ import group.utilities.ConvertPhoto;
 import group.utilities.PetSize;
 import java.nio.file.Files;
 
+import javax.imageio.ImageIO;
+
 import org.apache.commons.compress.utils.IOUtils;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-@Route(value="EditPet",layout= MainView.class)
+@Route(value = "EditPet", layout = MainView.class)
 
 @PageTitle("Edit Pet")
 
@@ -47,10 +52,10 @@ public class PetEditView extends VerticalLayout {
 
 	File fi;
 	byte[] fileContent;
+	byte[] currPhoto;
 	AddPetLogic addPetLogic;
 	VerticalLayout vl = new VerticalLayout();
-	
-	
+
 	private void isLogin() {
 		if (MainView.isUserRegistered()) {
 			addPetLogic = new AddPetLogic();
@@ -121,26 +126,28 @@ public class PetEditView extends VerticalLayout {
 
 		MemoryBuffer buffer = new MemoryBuffer(); // temporary memory
 		Upload upload = new Upload(buffer);
-		Div output = new Div();
 
 		H4 uploadLabel = new H4("Upload Photo");
 		uploadLabel.addClassName("titletext");
-		
-		Select<String> aduptStatus = new Select<>();
-		aduptStatus.setItems("ADOPTABLE", "PENDING", "ADOPTED");
-		aduptStatus.setPlaceholder("Choose Status");
-		
-		H4 aduptStatusLabel = new H4("Genger");
-		aduptStatusLabel.addClassName("titletext");
 
 		upload.addSucceededListener(event -> {
 			try {
-				fileContent = IOUtils.toByteArray(buffer.getInputStream());
+				BufferedImage inputImage = ImageIO.read(buffer.getInputStream());
+				ByteArrayOutputStream pngContent = new ByteArrayOutputStream();
+				ImageIO.write(inputImage, "jpg", pngContent);
+				fileContent = pngContent.toByteArray();
 			} catch (Exception e) {
 				new Span("Error in process photo");
 			}
 		});
-		
+
+		Select<String> aduptStatus = new Select<>();
+		aduptStatus.setItems("ADOPTABLE", "PENDING", "ADOPTED");
+		aduptStatus.setPlaceholder("Choose Status");
+
+		H4 aduptStatusLabel = new H4("Genger");
+		aduptStatusLabel.addClassName("titletext");
+
 		VerticalLayout form = new VerticalLayout();
 		form.setWidth("500px");
 
@@ -208,6 +215,7 @@ public class PetEditView extends VerticalLayout {
 			description.setValue(pet.getShortDescription());
 			descriptionL.setValue(pet.getDetailDescription());
 			aduptStatus.setLabel(pet.getAdoptionStatus().name());
+			currPhoto = pet.getPetPhoto();
 		}
 
 		addLayout.addFormItem(petName, petNameLabel);
@@ -218,13 +226,14 @@ public class PetEditView extends VerticalLayout {
 		addLayout.addFormItem(description, descriptionLabel);
 		addLayout.addFormItem(descriptionL, descriptionLLabel);
 		addLayout.addFormItem(aduptStatus, aduptStatusLabel);
-	
+		addLayout.addFormItem(upload, uploadLabel);
+
 		VerticalLayout form2 = new VerticalLayout();
 		form2.setWidth("500px");
 
-		Button add = new Button("Edit", click -> edit(pet.getPetId(), petName, category, size, age, breed, 
-				description, descriptionL, upload, firstName, lastName, phone, city, street, house, aduptStatus));
-		
+		Button add = new Button("Edit", click -> edit(pet.getPetId(), petName, category, size, age, breed, description,
+				descriptionL, upload, firstName, lastName, phone, city, street, house, aduptStatus));
+
 		form.add(addLayout);
 		form2.add(ownerLayout);
 
@@ -238,32 +247,36 @@ public class PetEditView extends VerticalLayout {
 		add(vl);
 	}
 
-	private void edit(int petId, TextField petName, Select<String> category, Select<String> size, 
-			NumberField age, Select<String> breed, TextField description, TextArea descriptionL, 
-			Upload upload, TextField firstName, TextField lastName, NumberField phone, TextField city, 
-			TextField street, NumberField house, Select<String> aduptStatus) {
-		
-		
+	private void edit(int petId, TextField petName, Select<String> category, Select<String> size, NumberField age,
+			Select<String> breed, TextField description, TextArea descriptionL, Upload upload, TextField firstName,
+			TextField lastName, NumberField phone, TextField city, TextField street, NumberField house,
+			Select<String> aduptStatus) {
+
 		isLogin();
 
 		if (petName.isEmpty() || category.isEmpty() || size.isEmpty() || age.isEmpty() || breed.isEmpty()
 				|| description.isEmpty() || descriptionL.isEmpty() || firstName.isEmpty() || lastName.isEmpty()
-				|| phone.isEmpty() || city.isEmpty() || street.isEmpty() || house.isEmpty() ||
-				aduptStatus.isEmpty()) {
+				|| phone.isEmpty() || city.isEmpty() || street.isEmpty() || house.isEmpty() || aduptStatus.isEmpty()) {
 
-			HorizontalLayout data = new HorizontalLayout();
-			Span details = new Span("details are missing, please fill all of the fields");
-			data.add(details);
-			vl.add(data);
+			// Notification
+			Notification.show("Details are missing, please fill all of the fields")
+					.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
 			return;
 		} else {
+
+			if (fileContent == null)
+				fileContent = currPhoto;
+
 			addPetLogic.editPet(petId, category.getValue(), petName.getValue(), age.getValue(), size.getValue(),
-					breed.getValue(), description.getValue(), descriptionL.getValue(), 
+					breed.getValue(), description.getValue(), descriptionL.getValue(), fileContent,
 					firstName.getValue(), lastName.getValue(), phone.getValue().intValue(), city.getValue(),
 					street.getValue(), house.getValue().intValue(), aduptStatus.getValue());
 		}
-		return;
+
+		// Notification
+		Notification.show("Pet was updated")
+				.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
+		UI.getCurrent().navigate("");
 	}
 
 }
-

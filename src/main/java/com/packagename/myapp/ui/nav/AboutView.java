@@ -33,11 +33,7 @@ public class AboutView extends VerticalLayout {
 
     H1 h1=new H1("Your Pets, \nPleas doube click a pet to edit it");
     
-    UserPetsLogic userPetsLogic = new UserPetsLogic();
-    
     public AboutView(){
-    	
-    	
     	
     	if (MainView.getUser() == null) {
 			
@@ -46,7 +42,8 @@ public class AboutView extends VerticalLayout {
 			add(details);
 			return;
 		}	
-    	    	
+    	
+    	UserPetsLogic.setUserPetsList();
 	    
 	    if(UserPetsLogic.getUserPetsList() == null) {
 	    	Span details = new Span("You have no pets registered");

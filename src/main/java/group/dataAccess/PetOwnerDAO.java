@@ -51,14 +51,21 @@ public class PetOwnerDAO {
 	// Delete pet owner
 	public void remove(int idPetOwner) throws ErrorInProcessPetOwner {
 		try {
+
+			PetOwner petOwner = getPetOwner(idPetOwner);
+
 			// access to DB
 			EntityManager em = AccessToDb.createFactory();
 
-			em.remove(getPetOwner(idPetOwner));
+			if (!em.contains(petOwner)) {
+				petOwner = em.merge(petOwner);
+			}
+			em.remove(petOwner);
 
 			// Save and close
 			AccessToDb.commitFactory();
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ErrorInProcessPetOwner("Error in process pet owner data");
 		} finally {
 			AccessToDb.closeFactory();
@@ -89,8 +96,7 @@ public class PetOwnerDAO {
 
 			// Get owner
 			PetOwner petOwner = getPetOwner(idPetOwner);
-			System.out.println(petOwner.getPet());
-			
+
 			// Get Pet of owner
 			Pet pet = petOwner.getPet();
 			return pet;

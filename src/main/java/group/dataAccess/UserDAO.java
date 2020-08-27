@@ -55,10 +55,16 @@ public class UserDAO {
 	// Delete user
 	public void remove(int idUser) throws ErrorInProcessUser {
 		try {
+
+			User user = getUser(idUser);
+
 			// access to DB
 			EntityManager em = AccessToDb.createFactory();
 
-			em.remove(getUser(idUser));
+			if (!em.contains(user)) {
+				user = em.merge(user);
+			}
+			em.remove(user);
 
 			// Save and close
 			AccessToDb.commitFactory();
@@ -118,7 +124,7 @@ public class UserDAO {
 
 			// Select User by username
 			Query q = em.createNamedQuery("CheckUsername", User.class).setParameter("username", username);
-			
+
 			if (q.getResultList().isEmpty() != true) {
 				User selectedUser = (User) q.getSingleResult();
 				return selectedUser;

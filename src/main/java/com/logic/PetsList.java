@@ -37,8 +37,8 @@ public class PetsList  {
 	private String petNameC;
 	private String shortDescriptionC;
 	private String cityC;
-	private Button b;
-	
+	private int petId;
+	private Pet pet;
 	
 	
 	public PetsList(Pet pet) {
@@ -50,8 +50,8 @@ public class PetsList  {
 		this.shortDescriptionC = pet.getShortDescription();
 		this.sizeC = pet.getPetSize();
 		this.cityC = pet.getPetOwner().getCity();
-		this.setB(new Button());
-	
+		this.petId = pet.getPetId();
+		this.setPet(pet);
 	}
 	
 	public PetsList() {
@@ -130,13 +130,20 @@ public class PetsList  {
 		this.cityC = cityC;
 	}
 
-	public Button getB() {
-		return b;
+	public int getPetId() {
+		return petId;
 	}
 
-	public void setB(Button b) {
-				
-		this.b = b;
+	public void setPetId(int petId) {
+		this.petId = petId;
+	}
+
+	public Pet getPet() {
+		return pet;
+	}
+
+	public void setPet(Pet pet) {
+		this.pet = pet;
 	}
 
 	

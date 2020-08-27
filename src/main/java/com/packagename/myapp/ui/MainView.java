@@ -16,6 +16,7 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.*;
 
+import group.entities.Pet;
 import group.entities.User;
 
 import org.junit.rules.ExternalResource;
@@ -28,16 +29,25 @@ public class MainView extends AppLayout {
     RouterLink addNewPet = new RouterLink("Add Pet", PetAdding.class);
     RouterLink home = new RouterLink("Home", HomeView.class);
     RouterLink yourPets = new RouterLink("Your Pets", AboutView.class);
-//    RouterLink petSearch = new RouterLink("PetSearch", PetSearchView.class);
+    RouterLink editPet = new RouterLink("EditPet", PetSearchView.class);
     RouterLink login = new RouterLink("Login", LoginView.class);
 
     /**
      * Static Login parameter
      */
 	private static User user;
+	private static Pet CurrEditPet;
+	
+	public static Pet getCurrentEditPet() {
+		return MainView.CurrEditPet;
+	}
+	public static void setPet(Pet pet) {
+		MainView.CurrEditPet = new Pet();
+		MainView.CurrEditPet = pet;
+	}
 	
 	public static User getUser() {
-		return user;
+		return MainView.user;
 	}
 	
 	public static void setUser(User user) {
@@ -55,16 +65,9 @@ public class MainView extends AppLayout {
 
     public MainView() {
 
-        //nav bar side icon
-        //H1 logo = new H1("Pet");
-        //logo.addClassName("logo");
     	
         Icon ico=new Icon(VaadinIcon.CLIPBOARD_USER);
 
-        
-       
-        
-        
         //nav bar item layout
         HorizontalLayout header = new HorizontalLayout( ico);
         header.setDefaultVerticalComponentAlignment(

@@ -238,7 +238,7 @@ public class PetAdding extends VerticalLayout {
 			vl.add(data);
 			return;
 		} else {
-			addPetLogic.AddPet(vl, category.getValue(), petName.getValue(), age.getValue(), size.getValue(),
+			addPetLogic.addPet(vl, category.getValue(), petName.getValue(), age.getValue(), size.getValue(),
 					breed.getValue(), description.getValue(), descriptionL.getValue(), fileContent,
 					firstName.getValue(), lastName.getValue(), phone.getValue().intValue(), city.getValue(),
 					street.getValue(), house.getValue().intValue());

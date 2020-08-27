@@ -31,13 +31,13 @@ public class AddPetLogic {
 		pet = new PetModel();
 	}
 
-	public void AddPet(VerticalLayout vl, String petCategory, String petName, double petAge, String petSize,
+	public void addPet(VerticalLayout vl, String petCategory, String petName, double petAge, String petSize,
 			String gender, String shortDescription, String detailDescription, byte[] petPhoto, String firstName,
 			String lastName, int phone, String city, String street, int house) {
+		
 		Category petC = findPetCategory(petCategory);
 		PetSize petS = findPetSize(petSize);
 		Gender gen = findGender(gender);
-//		int age = petAge.intValue();
 
 		try {
 			if (!MainView.isUserRegistered()) {
@@ -102,5 +102,42 @@ public class AddPetLogic {
 		}
 		return null;
 	}
+
+	public void editPet(int petId, String petCategory,String petName,double petAge,String petSize,
+			String petGender, String shortDescription,String detailDescription,String firstName, 
+			String lastName,int ownerPhoneNumber,
+			String ownerCity,String ownerStreet,int ownerHouseNumber, String aduptStatus) {
+		
+		Category petC = findPetCategory(petCategory);
+		PetSize petS = findPetSize(petSize);
+		Gender gen = findGender(petGender);
+		AdoptionStatus adupt = findAduptStatus(aduptStatus);
+		try {
+			pet.updatePet(petId, petC, petName, petAge, petS, gen, adupt, 
+					shortDescription, detailDescription, null, firstName, lastName, ownerPhoneNumber, 
+					ownerCity, ownerStreet, ownerHouseNumber);
+		} catch (ErrorInProcessPetOwner e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ErrorInProcessPetData e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	private AdoptionStatus findAduptStatus(String aduptStatus) {
+		if (aduptStatus.equals("ADOPTABLE")) {
+			return AdoptionStatus.ADOPTABLE;
+		}
+		if (aduptStatus.equals("ADOPTED")) {
+			return AdoptionStatus.ADOPTED;
+		}
+		if (aduptStatus.equals("PENDING")) {
+			return AdoptionStatus.PENDING;
+		}
+		return null;
+	}
+	
 
 }

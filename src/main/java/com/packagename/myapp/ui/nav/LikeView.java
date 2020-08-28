@@ -54,7 +54,7 @@ public class LikeView extends VerticalLayout {
 
 		if (likePetsList.isEmpty() == true) {
 			HorizontalLayout data = new HorizontalLayout();
-			Span details = new Span("Please register to view your likes");
+			Span details = new Span("You didn't like any pet");
 			data.add(details);
 			add(data);
 			return;

@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.logic.PetsList;
+import com.logic.UserPetsLogic;
 
 import group.dataAccess.PetDAO;
 import group.dataAccess.PetOwnerDAO;
@@ -77,8 +78,13 @@ public class PetModel {
 		// Now update all changes in DB
 		try {
 			this.petOwnerAccess.create(newPetOwner);
-			this.userAccess.update(user);
 			this.petAccess.create(newPet);
+			
+			// Set pet to Owner
+			newPetOwner.setPet(newPet);
+			this.petOwnerAccess.update(newPetOwner);
+			
+			this.userAccess.update(user);
 
 			return newPet;
 		} catch (ErrorInProcessPetOwner ePetOwner) {
@@ -196,18 +202,24 @@ public class PetModel {
 
 			if (petOwners.isEmpty() == true)
 				return null;
+			
+			System.out.println(petOwners.size());
 
 			// Get from each pet owner a pet that connected to him
 			for (PetOwner currPetOwner : petOwners) {
 
 				// Get pet of owner
 				Pet pet = this.petOwnerAccess.getPetByOwnerId(currPetOwner.getPetOwnerId());
+				
+				System.out.println(pet);
 
 				// Add pet
 				if (pet != null)
 					pets.add(pet);
 			}
-
+			
+			System.out.println(pets.size());
+			
 			return pets;
 		} catch (ErrorInProcessPetOwner ePetOwner) {
 			throw ePetOwner;

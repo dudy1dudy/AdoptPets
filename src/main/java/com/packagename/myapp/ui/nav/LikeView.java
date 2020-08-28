@@ -30,31 +30,39 @@ import group.entities.Pet;
 import group.exception.ErrorInProcessPetData;
 import group.utilities.ConvertPhoto;
 
-@Route(value="likeview",layout= MainView.class)
+@Route(value = "likeview", layout = MainView.class)
 @PageTitle("About")
 
-public class LikeView extends VerticalLayout{
+public class LikeView extends VerticalLayout {
 
 	private List<Pet> likePetsList = new ArrayList<Pet>();
 	private LikeLogic likeL = new LikeLogic();
-	
-	public LikeView(){
-		 
-        H1 h1=new H1("Like");
-        add(h1);
-        if (MainView.getUser() == null) {
+
+	public LikeView() {
+
+		H1 h1 = new H1("Like");
+		add(h1);
+		if (MainView.getUser() == null) {
 			HorizontalLayout data = new HorizontalLayout();
 			Span details = new Span("Please register to view your likes");
 			data.add(details);
 			add(data);
 			return;
-		}	
-       
-        likePetsList.addAll(likeL.getLikePetsList());
-        
-        setLikePetsCards();
+		}
+
+		likePetsList.addAll(likeL.getLikePetsList());
+
+		if (likePetsList.isEmpty() == true) {
+			HorizontalLayout data = new HorizontalLayout();
+			Span details = new Span("Please register to view your likes");
+			data.add(details);
+			add(data);
+			return;
+		}
+
+		setLikePetsCards();
 	}
-	
+
 	private void setLikePetsCards() {
 
 		FlexLayout workspace = new FlexLayout();
@@ -71,10 +79,8 @@ public class LikeView extends VerticalLayout{
 		add(workspace);
 		return;
 	}
-	
-	
-	private Component createCard(Pet pet) {
 
+	private Component createCard(Pet pet) {
 
 		if (pet != null) {
 			H4 category = new H4(pet.getCategory().toString());
@@ -107,7 +113,6 @@ public class LikeView extends VerticalLayout{
 				});
 			});
 
-			
 			HorizontalLayout title = new HorizontalLayout(category, name);
 			title.setDefaultVerticalComponentAlignment(Alignment.END);
 			title.setWidth("210px");
@@ -131,4 +136,3 @@ public class LikeView extends VerticalLayout{
 	}
 
 }
-	

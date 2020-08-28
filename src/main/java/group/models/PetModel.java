@@ -191,6 +191,12 @@ public class PetModel {
 			// Get all pet owners that user create
 			List<PetOwner> petOwners = this.userAccess.getAllPetOwners(userId);
 
+			if (petOwners == null)
+				return null;
+
+			if (petOwners.isEmpty() == true)
+				return null;
+
 			// Get from each pet owner a pet that connected to him
 			for (PetOwner currPetOwner : petOwners) {
 

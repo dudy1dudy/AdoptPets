@@ -5,6 +5,7 @@ import static com.vaadin.flow.server.VaadinSession.getCurrent;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
@@ -39,6 +40,13 @@ public class RegisterLogic {
 			createUser(vl, userName.getValue(), password.getValue(), repeatePassword.getValue(), firstName.getValue(),
 					lastName.getValue(), email.getValue(), phone.getValue(), city.getValue(), street.getValue(),
 					house.getValue());
+
+			// Go back to home
+			UI.getCurrent().navigate("");
+
+			// Notification
+			Notification.show("User created succsessfully")
+					.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
 			return;
 
 		}

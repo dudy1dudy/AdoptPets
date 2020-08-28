@@ -136,12 +136,7 @@ public class RegView extends VerticalLayout{
             vl.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
             add(vl);
-         // Go back to home
-			UI.getCurrent().navigate("");
-
-			// Notification
-			Notification.show("Log in succsessful")
-					.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
+        
 			return;
         }
   

@@ -26,10 +26,10 @@ import group.utilities.AdoptionStatus;
 import group.utilities.Gender;
 import group.utilities.PetSize;
 
-@Route(value="about",layout= MainView.class)
-@PageTitle("About")
+@Route(value="userPetsView",layout= MainView.class)
+@PageTitle("UserPetsView")
 
-public class AboutView extends VerticalLayout {
+public class UserPetsView extends VerticalLayout {
 
 
 
@@ -37,7 +37,7 @@ public class AboutView extends VerticalLayout {
 	
     H1 h1=new H1("Your Pets, \nPleas doube click a pet to edit it");
     
-    public AboutView(){
+    public UserPetsView(){
     	
     	UserPetsLogic.setUserPetsList();
     	if (MainView.getUser() == null) {

@@ -27,7 +27,7 @@ public class MainView extends AppLayout {
 	// make link for route
 	RouterLink addNewPet = new RouterLink("Add Pet", PetAdding.class);
 	RouterLink home = new RouterLink("Home", HomeView.class);
-	RouterLink yourPets = new RouterLink("Your Pets", AboutView.class);
+	RouterLink yourPets = new RouterLink("Your Pets", UserPetsView.class);
 	RouterLink editPet = new RouterLink("EditPet", PetEditView.class);
 //	RouterLink editPet = new RouterLink("EditPet", PetChange.class);
 	RouterLink login = new RouterLink("Login", LoginView.class);

@@ -24,7 +24,9 @@ public class UserPetsLogic {
 	}
 	
 	public static void setUserPetsList() {
-		
+		if( MainView.getUser() == null) {
+			return;
+		}
 		int ownerID = MainView.getUser().getUserId();
 		try {
 			UserPetsLogic.petsL = UserPetsLogic.petM.getAllPetsByUser(ownerID);

@@ -105,8 +105,6 @@ public class PetModel {
 		// Get Pet using id
 		Pet currentPet = this.petAccess.getPet(petId);
 
-		System.out.println(petId);
-
 		// Start with update pet owner
 		PetOwner petOwner = currentPet.getPetOwner();
 
@@ -202,23 +200,17 @@ public class PetModel {
 
 			if (petOwners.isEmpty() == true)
 				return null;
-			
-			System.out.println(petOwners.size());
 
 			// Get from each pet owner a pet that connected to him
 			for (PetOwner currPetOwner : petOwners) {
 
 				// Get pet of owner
 				Pet pet = this.petOwnerAccess.getPetByOwnerId(currPetOwner.getPetOwnerId());
-				
-				System.out.println(pet);
 
 				// Add pet
 				if (pet != null)
 					pets.add(pet);
 			}
-			
-			System.out.println(pets.size());
 			
 			return pets;
 		} catch (ErrorInProcessPetOwner ePetOwner) {

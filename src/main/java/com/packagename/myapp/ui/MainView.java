@@ -23,6 +23,7 @@ import org.junit.rules.ExternalResource;
 
 @CssImport("./styles/shared-styles.css")
 public class MainView extends AppLayout {
+	private static final long serialVersionUID = 1L;
 
 	// make link for route
 	RouterLink addNewPet = new RouterLink("Add Pet", PetAdding.class);

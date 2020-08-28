@@ -118,7 +118,7 @@ public class LoginView extends VerticalLayout {
 
 		// Get user name
 		HorizontalLayout titlelayout = new HorizontalLayout();
-		H3 title = new H3("Set Your User");
+		H3 title = new H3("Set your user for sending email with your password");
 		titlelayout.add(title);
 		title.addClassName("titletext");
 		
@@ -126,9 +126,9 @@ public class LoginView extends VerticalLayout {
 
 		TextField usernane = new TextField();
 		usernane.setPlaceholder("User Name");
-		H4 descriptionLabel = new H4("User Name");
-		descriptionLabel.addClassName("titletext");
-		fLayout.addFormItem(usernane, descriptionLabel);
+//		H4 descriptionLabel = new H4("User Name");
+//		descriptionLabel.addClassName("titletext");
+//		fLayout.addFormItem(usernane, descriptionLabel);
 		fLayout.setHeightFull();
 
 		Button send = new Button("Send", click -> sendMailToUser(usernane.getValue()));
@@ -137,7 +137,7 @@ public class LoginView extends VerticalLayout {
 		form.setWidth("500px");
 		form.add(fLayout);
 		
-		vl.add(titlelayout, form, send);
+		vl.add(titlelayout, usernane, send);
 		
 		vl.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 		

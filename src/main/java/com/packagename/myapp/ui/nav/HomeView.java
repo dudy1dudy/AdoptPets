@@ -55,13 +55,10 @@ import group.utilities.ConvertPhoto;
 
 public class HomeView extends VerticalLayout {
 
-	private LikeModel likeM = new LikeModel();
 	private LikeLogic likeL = new LikeLogic();
 	private PetModel petM = new PetModel();
-	private HomeLogic logic = new HomeLogic();
 	private PetSearchLogic searchL = new PetSearchLogic();
 	private VerticalLayout vl = new VerticalLayout();
-	private int petOwnerCardId;
 	private H2 title;
 	private VerticalLayout formvert;
 
@@ -72,7 +69,7 @@ public class HomeView extends VerticalLayout {
 		this.title = new H2("Find the pet for you");
 		findadopt.add(title);
 
-		// css class for title "find adoptable pets near"
+		
 		title.addClassName("titletext");
 
 		// form layout as formvert
@@ -163,7 +160,6 @@ public class HomeView extends VerticalLayout {
 
 		for (int i = 0; i < allPets.size(); i++) {
 			Pet pet = (Pet) allPets.get(i);
-			petOwnerCardId = pet.getPetId();
 			workspace.add(createCard(pet));
 		}
 		workspace.addClassName("workspace");
@@ -220,19 +216,14 @@ public class HomeView extends VerticalLayout {
 			// like button heart add to custom card
 			Icon logoV = new Icon(VaadinIcon.HEART_O);
 			logoV.getStyle().set("cursor", "pointer");
+			logoV.setColor("White");
+			
+			//Check if user like pet, then like == red
 			if (MainView.isUserRegistered()) {
-				try {
-					if (likeM.checkLikeOfUser(MainView.getUser().getUserId(), pet.getPetId())) {
+				
+					if (likeL.isRegUesrLikePet(pet)) {
 						logoV.setColor("Red");
-					} else
-						logoV.setColor("White");
-				} catch (ErrorInProcessUser e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ErrorInProcessPetData e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+					}
 			} else {
 				logoV.setColor("White");
 			}
@@ -282,11 +273,6 @@ public class HomeView extends VerticalLayout {
 			}
 		}
 		return;
-	}
-
-	public int getPetOwnerCardId() {
-		return petOwnerCardId;
-
 	}
 
 	public void like(String text) {

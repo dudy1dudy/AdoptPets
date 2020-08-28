@@ -2,12 +2,14 @@ package com.packagename.myapp.ui.nav;
 
 import com.logic.RegisterLogic;
 import com.packagename.myapp.ui.MainView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
@@ -134,11 +136,13 @@ public class RegView extends VerticalLayout{
             vl.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
             add(vl);
-        }
-        
-        
-        
-        
-        
+         // Go back to home
+			UI.getCurrent().navigate("");
 
+			// Notification
+			Notification.show("Log in succsessful")
+					.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
+			return;
+        }
+  
 }

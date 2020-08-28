@@ -16,7 +16,6 @@ import group.models.PetModel;
 public class LikeLogic {
 
 	private LikeModel likeM = new LikeModel();
-	private PetModel petM = new PetModel();
 	private List<Pet> petsL = new ArrayList<Pet>();
 
 	public  List<Pet> getLikePetsList() {
@@ -25,17 +24,13 @@ public class LikeLogic {
 	}
 	
 	public boolean isRegUesrLikePet(Pet pet) {
-		int petId = pet.getPetId();
-		List<Pet> userPetsL = new ArrayList<Pet>();
-		try {
-			
-			userPetsL.addAll(likeM.getAllLikes(MainView.getUser().getUserId()));
-		} catch (ErrorInProcessUser e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		likePetList();
+		if(petsL == null) {
+			return false;
 		}
-		for(int i = 0 ; i < userPetsL.size() ; i++) {
-			if(userPetsL.get(i).getPetId() == pet.getPetId()) {
+		for(int i = 0 ; i < petsL.size() ; i++) {
+			if(petsL.get(i).getPetId() == pet.getPetId()) {
 				return true;
 			}
 		}

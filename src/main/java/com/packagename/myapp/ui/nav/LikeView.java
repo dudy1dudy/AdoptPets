@@ -75,12 +75,7 @@ public class LikeView extends VerticalLayout{
 	
 	private Component createCard(Pet pet) {
 
-//		Pet pet = new Pet();
-//		pet = (Pet) HomeLogic.getPetsList().get(index);
 
-//		 HomeLogic.getPetsList().
-
-		// card title
 		if (pet != null) {
 			H4 category = new H4(pet.getCategory().toString());
 			H4 name = new H4(pet.getPetName());

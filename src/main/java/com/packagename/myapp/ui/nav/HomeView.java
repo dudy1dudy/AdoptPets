@@ -1,11 +1,13 @@
 package com.packagename.myapp.ui.nav;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import com.logic.HomeLogic;
+
 import com.logic.LikeLogic;
 import com.logic.PetSearchLogic;
+import com.logic.PetsList;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
@@ -32,13 +34,19 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinRequest;
+import com.vaadin.flow.spring.annotation.UIScope;
 
 import group.entities.Pet;
 import group.exception.ErrorInProcessPetData;
+import group.exception.ErrorInProcessUser;
+import group.models.LikeModel;
 import group.models.PetModel;
 import group.utilities.ConvertPhoto;
 
+@UIScope
 @Route(value = "", layout = MainView.class)
 //
 @PageTitle("Home")
@@ -49,10 +57,8 @@ public class HomeView extends VerticalLayout {
 
 	private LikeLogic likeL = new LikeLogic();
 	private PetModel petM = new PetModel();
-	private HomeLogic logic = new HomeLogic();
 	private PetSearchLogic searchL = new PetSearchLogic();
 	private VerticalLayout vl = new VerticalLayout();
-	private int petOwnerCardId;
 	private H2 title;
 	private VerticalLayout formvert;
 
@@ -63,7 +69,7 @@ public class HomeView extends VerticalLayout {
 		this.title = new H2("Find the pet for you");
 		findadopt.add(title);
 
-		// css class for title "find adoptable pets near"
+		
 		title.addClassName("titletext");
 
 		// form layout as formvert
@@ -74,7 +80,7 @@ public class HomeView extends VerticalLayout {
 		HorizontalLayout formlayoutr2 = new HorizontalLayout();
 		HorizontalLayout formlayoutr3 = new HorizontalLayout();
 		HorizontalLayout formlayoutr4 = new HorizontalLayout();
-
+		
 		Checkbox dogs = new Checkbox("Dogs");
 		Checkbox cats = new Checkbox("Cats");
 		Checkbox rodent = new Checkbox("Rodent");
@@ -128,21 +134,22 @@ public class HomeView extends VerticalLayout {
 	}
 
 	private void setPetsCards(boolean first) {
-		
-		List<Pet> allPets;
-		
+
+		List<Pet> allPets = new ArrayList<Pet>();
+
 		// Check if pets already selected
 		if (first == false) {
-			allPets = PetSearchLogic.getPetsSearchList();
+			for (int i = 0; i < PetSearchLogic.getPetsSearchList().size(); i++) {
+				allPets.add(PetSearchLogic.getPetsSearchList().get(i));
+			}
 		} else {
-			allPets = new ArrayList<Pet>();
 			try {
 				allPets.addAll(petM.getAllPets());
 			} catch (ErrorInProcessPetData e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			HomeLogic.setPetsList(allPets);
+			
 		}
 
 		FlexLayout workspace = new FlexLayout();
@@ -151,11 +158,9 @@ public class HomeView extends VerticalLayout {
 		workspace.setMaxWidth("72%");
 		workspace.setAlignContent(FlexLayout.ContentAlignment.SPACE_AROUND);
 
-		System.out.println(allPets.size());
-
 		for (int i = 0; i < allPets.size(); i++) {
-			petOwnerCardId = i;
-			workspace.add(createCard(i));
+			Pet pet = (Pet) allPets.get(i);
+			workspace.add(createCard(pet));
 		}
 		workspace.addClassName("workspace");
 
@@ -169,56 +174,9 @@ public class HomeView extends VerticalLayout {
 	}
 
 	// create cards
-	private Component createCard() {
+	private Component createCard(Pet pet) {
 
-		// card title
-		H4 card1Label = new H4("Title");
-		// card details
-		Span details = new Span("dogs are near to you selected area");
-		details.setWidth("180px");
-		details.getStyle().set("cursor", "pointer");
-		details.addClickListener(e -> details.getUI().ifPresent(ui -> ui.navigate("detail")));
-
-		Image image = new Image("icons/img.jpg", "DummyImage");
-		image.addClassName("image");
-		image.setWidth("160px");
-		image.setHeight("140px");
-		image.getStyle().set("cursor", "pointer");
-		image.addClickListener(e -> image.getUI().ifPresent(ui -> // Vaadin way to navigate between UIs
-		ui.navigate("detail")));
-
-		// like button heart add to custom card
-		Icon logoV = new Icon(VaadinIcon.HEART_O);
-		logoV.getStyle().set("cursor", "pointer");
-		logoV.addClickListener(event -> like("You Like"));
-		logoV.addClassName("heartlike");
-
-		HorizontalLayout title = new HorizontalLayout(card1Label, logoV);
-		title.setDefaultVerticalComponentAlignment(Alignment.END);
-		title.setWidth("180px");
-
-		// card layout
-		VerticalLayout verrticalcard = new VerticalLayout();
-		verrticalcard.setAlignItems(Alignment.CENTER);
-		verrticalcard.setJustifyContentMode(JustifyContentMode.CENTER);
-		verrticalcard.add(image, title, details);
-
-		FlexLayout card = new FlexLayout(verrticalcard);
-		card.addClassName("card");
-		card.setAlignItems(Alignment.CENTER);
-		card.setJustifyContentMode(JustifyContentMode.CENTER);
-		card.setWidth("200px");
-		card.setHeight("280px");
-
-		return card;
-	}
-
-	// create cards
-	private Component createCard(int index) {
-
-		Pet pet = new Pet();
-		pet = (Pet) HomeLogic.getPetsList().get(index);
-
+		
 		// card title
 		if (pet != null) {
 			H4 category = new H4(pet.getCategory().toString());
@@ -230,7 +188,15 @@ public class HomeView extends VerticalLayout {
 					+ pet.getPetOwner().getCity());
 			details.setWidth("210px");
 			details.getStyle().set("cursor", "pointer");
-			details.addClickListener(e -> details.getUI().ifPresent(ui -> ui.navigate("detail")));
+			details.setId(String.valueOf(pet.getPetId()));
+
+			details.addClickListener(e -> {
+
+				MainView.setCurrDeatailPet(pet);
+				details.getUI().ifPresent(ui -> {
+					ui.navigate("detail");
+				});
+			});
 
 			Image image = ConvertPhoto.dbPhotoToImage(pet);
 
@@ -238,14 +204,30 @@ public class HomeView extends VerticalLayout {
 			image.setWidth("160px");
 			image.setHeight("140px");
 			image.getStyle().set("cursor", "pointer");
-			image.addClickListener(e -> image.getUI().ifPresent(ui -> // Vaadin way to navigate between UIs
-			ui.navigate("detail")));
+			image.setId(String.valueOf(pet.getPetId()));
+
+			image.addClickListener(e -> {
+				MainView.setCurrDeatailPet(pet);
+				image.getUI().ifPresent(ui -> {
+					ui.navigate("detail");
+				});
+			});
 
 			// like button heart add to custom card
 			Icon logoV = new Icon(VaadinIcon.HEART_O);
 			logoV.getStyle().set("cursor", "pointer");
 			logoV.setColor("White");
-			logoV.addClickListener(event -> like(index, logoV));
+			
+			//Check if user like pet, then like == red
+			if (MainView.isUserRegistered()) {
+				
+					if (likeL.isRegUesrLikePet(pet)) {
+						logoV.setColor("Red");
+					}
+			} else {
+				logoV.setColor("White");
+			}
+			logoV.addClickListener(event -> like(pet.getPetId(), logoV));
 			logoV.addClassName("heartlike");
 
 			HorizontalLayout title = new HorizontalLayout(category, name, logoV);
@@ -268,32 +250,29 @@ public class HomeView extends VerticalLayout {
 			return card;
 		}
 		return null;
+
 	}
 
-	public void like(int index, Icon logoV) {
+	public void like(int petId, Icon logoV) {
 		if (!MainView.isUserRegistered()) {
 			HorizontalLayout data = new HorizontalLayout();
-			Span details = new Span("Please login Before pressing like");
-			data.add(details);
+			like("Please login Before pressing like");
 			vl.add(data);
 			return;
 		}
 
 		if (logoV.getColor().equals("White")) {
-			likeL.like(index);
-			logoV.setColor("Blue");
+			likeL.like(petId);
+			logoV.setColor("Red");
+			like("Thank you for like me!");
+		}else {		
+			if (logoV.getColor().equals("Red")) {
+				likeL.unLike(petId);
+				logoV.setColor("White");
+				like("OK, Bye Bye");
+			}
 		}
-		if (logoV.getColor().equals("Blue")) {
-			likeL.unLike(index);
-			logoV.setColor("White");
-		}
-
-		like("Thank You for like me");
-	}
-
-	public int getPetOwnerCardId() {
-		return petOwnerCardId;
-
+		return;
 	}
 
 	public void like(String text) {

@@ -26,23 +26,23 @@ import group.utilities.Category;
 import group.utilities.Gender;
 import group.utilities.PetSize;
 
-public class PetSearchLogic implements RouterLayout{
+public class PetSearchLogic implements RouterLayout {
 	
 	private PetModel petM = new PetModel();
 	private ArrayList<Pet> tempPets = new ArrayList<Pet>();
 		
 	private static List<Pet> petsSearch = new ArrayList<Pet>();
-	
+
 	public static List<Pet> getPetsSearchList(){
 		return PetSearchLogic.petsSearch;
 	}
 
-	public static void setPetsList(List<Pet> allPets) {
+	private static void setPetsList(List<Pet> allPets) {
 		PetSearchLogic.petsSearch.clear();
 		PetSearchLogic.petsSearch.addAll(allPets);
 	}
 	
-	
+	//Check search pet parameters added by user, and update petsSearch list accordingly.
 	public void parametersCheck(VerticalLayout vl, Button search, Checkbox dogs, Checkbox cats, Checkbox rodent, 
 			Checkbox birds, Checkbox fish, Checkbox other, Checkbox all, 
 			Select<String> gender, Select<String> age, Select<String> size) {
@@ -53,42 +53,29 @@ public class PetSearchLogic implements RouterLayout{
 		checkGender(gender);
 		checkAge(age);
 		checkSize(size);
-		
-		
-//		if(PetSearchLogic.petsSearch == null || PetSearchLogic.petsSearch.isEmpty()) {
-//			search.getUI().get().navigate("petSearch");
-//			
-//            Span details=new Span("No pets available");
-//            vl.add(details);
-//            return;
-//		}
-		
-//		
-//		if(PetSearchLogic.petsSearch != null && !PetSearchLogic.petsSearch.isEmpty()) {
-//			search.getUI().get().navigate("petSearch");
-//			return;
-//		}
+
 		return;
 	}
-	private void checkSize(Select<String> size) {
+	
+private void checkSize(Select<String> size) {
 		
 		if(size.getValue() == null || size.getValue().equals("All")) {
 			return;
 		}
 		for(int i = 0 ; i < tempPets.size() ; i ++) {
-			if(size.getValue().equals("Small") && !tempPets.get(i).getGender().equals(PetSize.SMALL)) {
+			if(size.getValue().equals("Small") && !tempPets.get(i).getPetSize().equals(PetSize.SMALL)) {
 				PetSearchLogic.petsSearch.remove(tempPets.get(i));
 				
 			}
-			if(size.getValue().equals("Medium") && !tempPets.get(i).getGender().equals(PetSize.MEDIUM)) {
+			if(size.getValue().equals("Medium") && !tempPets.get(i).getPetSize().equals(PetSize.MEDIUM)) {
 				PetSearchLogic.petsSearch.remove(tempPets.get(i));
 				
 			}
-			if(size.getValue().equals("Large") && !tempPets.get(i).getGender().equals(PetSize.LARGE)) {
+			if(size.getValue().equals("Large") && !tempPets.get(i).getPetSize().equals(PetSize.LARGE)) {
 				PetSearchLogic.petsSearch.remove(tempPets.get(i));
 				
 			}
-			if(size.getValue().equals("XLarge") && !tempPets.get(i).getGender().equals(PetSize.XLARGE)) {
+			if(size.getValue().equals("XLarge") && !tempPets.get(i).getPetSize().equals(PetSize.XLARGE)) {
 				PetSearchLogic.petsSearch.remove(tempPets.get(i));
 				
 			}
@@ -197,7 +184,7 @@ public class PetSearchLogic implements RouterLayout{
 		return;
 		
 	}
-
+	
 	@Override
 	public Element getElement() {
 		// TODO Auto-generated method stub

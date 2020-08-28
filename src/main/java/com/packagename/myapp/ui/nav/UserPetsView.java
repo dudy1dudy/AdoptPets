@@ -7,6 +7,7 @@ import java.util.List;
 import com.logic.PetsList;
 import com.logic.UserPetsLogic;
 import com.packagename.myapp.ui.MainView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -25,17 +26,20 @@ import group.utilities.AdoptionStatus;
 import group.utilities.Gender;
 import group.utilities.PetSize;
 
-@Route(value="about",layout= MainView.class)
-@PageTitle("About")
-public class AboutView extends VerticalLayout {
-	
+@Route(value="userPetsView",layout= MainView.class)
+@PageTitle("UserPetsView")
 
-    H1 h1=new H1("Your Pets");
+public class UserPetsView extends VerticalLayout {
+
+
+
+	
+	
+    H1 h1=new H1("Your Pets, \nPleas doube click a pet to edit it");
     
-    UserPetsLogic userPetsLogic = new UserPetsLogic();
-    
-    public AboutView(){
+    public UserPetsView(){
     	
+    	UserPetsLogic.setUserPetsList();
     	if (MainView.getUser() == null) {
 			
 			Span details = new Span("Please register to view your pets");
@@ -44,9 +48,16 @@ public class AboutView extends VerticalLayout {
 			return;
 		}	
     	    	
+	    
+	    if(UserPetsLogic.getUserPetsList() == null) {
+	    	Span details = new Span("You don't have pets");
+			
+			add(details);
+			return;
+	    }
+	    
 	    add(h1);
-	    userPetsLogic.findUserPets();
-		
+	    
 	    PetsList petL;
         ArrayList<PetsList> userPets = new ArrayList<PetsList>();
 				
@@ -54,14 +65,20 @@ public class AboutView extends VerticalLayout {
         	petL = new PetsList(UserPetsLogic.getUserPetsList().get(i));
         	userPets.add(petL);
         }
-        
+       
 		Grid<PetsList> grid = new Grid<PetsList>(PetsList.class);
 		grid.setItems(userPets);
 		
-	
 		grid.setColumns("categoryC", "genderC", "ageC", "sizeC" ,"petNameC", "shortDescriptionC");
+	
+		grid.addItemDoubleClickListener(e -> {
+			MainView.setPet(e.getItem().getPet());			
+			UI.getCurrent().navigate("EditPet");
+		});
+		
 		add(grid);
 	   
 		
     }
 }
+

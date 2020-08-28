@@ -16,20 +16,40 @@ import group.models.PetModel;
 public class LikeLogic {
 
 	private LikeModel likeM = new LikeModel();
-	private PetModel petM = new PetModel();
-	private static List<Pet> petsL = new ArrayList<Pet>();
+	private List<Pet> petsL = new ArrayList<Pet>();
 
-	public static List<Pet> getLikePetsList() {
+	//get user likes list
+	public  List<Pet> getLikePetsList() {
+		likePetList();
 		return petsL;
 	}
+	
+	//check if user like specific pet
+	public boolean isRegUesrLikePet(Pet pet) {
+		
+		likePetList();
+		if(petsL == null) {
+			return false;
+		}
+		for(int i = 0 ; i < petsL.size() ; i++) {
+			if(petsL.get(i).getPetId() == pet.getPetId()) {
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
 
-	public void likePetList() {
+	//create likes list for registered user 
+	private void likePetList() {
 		petsL.clear();
 		int userId = MainView.getUser().getUserId();
 		try {
 			List<Pet> pets = likeM.getAllLikes(userId);
 			if (pets != null)
 				petsL.addAll(pets);
+			return;
 		} catch (ErrorInProcessUser e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -38,11 +58,12 @@ public class LikeLogic {
 		return;
 	}
 
-	public void like(int index) {
+	//add like
+	public void like(int petId) {
 			
 			try {
-				likeM.createNewLike(MainView.getUser().getUserId()
-							, HomeLogic.getPetsList().get(index).getPetId());
+				likeM.createNewLike(MainView.getUser().getUserId() , petId);
+				return;
 			} catch (ErrorInProcessUser e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -53,12 +74,15 @@ public class LikeLogic {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			return;
 	}
 
-	public void unLike(int index) {
+	//delete like
+	public void unLike(int petId) {
 		
 			try {
-				likeM.deleteLike(MainView.getUser().getUserId(), HomeLogic.getPetsList().get(index).getPetId());
+				likeM.deleteLike(MainView.getUser().getUserId(), petId);
+				return;
 			} catch (ErrorInProcessPetData e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -70,7 +94,7 @@ public class LikeLogic {
 				e.printStackTrace();
 			}
 		
-		
+		return;
 	}
 
 }

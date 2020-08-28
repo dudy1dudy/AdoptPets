@@ -15,18 +15,22 @@ import group.models.PetModel;
 
 public class UserPetsLogic {
 
-	private PetModel petM = new PetModel();
-	private static List<Pet> petsL = new ArrayList<Pet>(); 
+	private static PetModel petM = new PetModel();
+	
+	private static List<Pet> petsL; 
 	
 	public static List<Pet> getUserPetsList(){
 		return petsL;
 	}
 	
-	public void findUserPets() {
-		
+	public static void setUserPetsList() {
+		UserPetsLogic.petsL = new ArrayList<Pet>();
+		if( MainView.getUser() == null) {
+			return;
+		}
 		int ownerID = MainView.getUser().getUserId();
 		try {
-			petsL = petM.getAllPetsByUser(ownerID);
+			UserPetsLogic.petsL = UserPetsLogic.petM.getAllPetsByUser(ownerID);
 						
 		} catch (ErrorInProcessPetOwner e) {
 			// TODO Auto-generated catch block

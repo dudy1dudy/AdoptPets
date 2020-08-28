@@ -274,7 +274,7 @@ public class PetEditView extends VerticalLayout {
 		}
 
 		// Notification
-		Notification.show("Pet was updated")
+		Notification.show("Pet was updated")  
 				.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
 		UI.getCurrent().navigate("");
 	}

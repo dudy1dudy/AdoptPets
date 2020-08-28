@@ -57,12 +57,6 @@ public class PetAdding extends VerticalLayout {
 	private void isLogin() {
 		if (MainView.isUserRegistered()) {
 			addPetLogic = new AddPetLogic();
-			// Go back to home
-			UI.getCurrent().navigate("");
-
-			// Notification
-			Notification.show("Log in succsessful")
-					.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
 			return;
 		} else {
 			HorizontalLayout data = new HorizontalLayout();

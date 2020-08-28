@@ -17,13 +17,14 @@ public class UserPetsLogic {
 
 	private static PetModel petM = new PetModel();
 	
-	private static List<Pet> petsL = new ArrayList<Pet>(); 
+	private static List<Pet> petsL; 
 	
 	public static List<Pet> getUserPetsList(){
 		return petsL;
 	}
 	
 	public static void setUserPetsList() {
+		UserPetsLogic.petsL = new ArrayList<Pet>();
 		if( MainView.getUser() == null) {
 			return;
 		}

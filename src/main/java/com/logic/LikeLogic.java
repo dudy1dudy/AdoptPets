@@ -18,11 +18,13 @@ public class LikeLogic {
 	private LikeModel likeM = new LikeModel();
 	private List<Pet> petsL = new ArrayList<Pet>();
 
+	//get user likes list
 	public  List<Pet> getLikePetsList() {
 		likePetList();
 		return petsL;
 	}
 	
+	//check if user like specific pet
 	public boolean isRegUesrLikePet(Pet pet) {
 		
 		likePetList();
@@ -39,6 +41,7 @@ public class LikeLogic {
 		
 	}
 
+	//create likes list for registered user 
 	private void likePetList() {
 		petsL.clear();
 		int userId = MainView.getUser().getUserId();
@@ -55,6 +58,7 @@ public class LikeLogic {
 		return;
 	}
 
+	//add like
 	public void like(int petId) {
 			
 			try {
@@ -73,6 +77,7 @@ public class LikeLogic {
 			return;
 	}
 
+	//delete like
 	public void unLike(int petId) {
 		
 			try {

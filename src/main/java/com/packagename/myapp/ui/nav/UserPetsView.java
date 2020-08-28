@@ -50,7 +50,7 @@ public class UserPetsView extends VerticalLayout {
     	    	
 	    
 	    if(UserPetsLogic.getUserPetsList() == null) {
-	    	Span details = new Span("You didn't like any pet");
+	    	Span details = new Span("You don't have pets");
 			
 			add(details);
 			return;

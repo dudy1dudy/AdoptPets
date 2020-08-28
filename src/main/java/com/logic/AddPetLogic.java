@@ -23,11 +23,10 @@ import group.utilities.PetSize;
 
 public class AddPetLogic {
 
-	private UserModel userModel;
 	private PetModel pet;
 
 	public AddPetLogic() {
-		userModel = new UserModel();
+		new UserModel();
 		pet = new PetModel();
 	}
 
@@ -58,6 +57,58 @@ public class AddPetLogic {
 
 	}
 
+	
+	public void editPet(int petId, String petCategory, String petName, double petAge, String petSize, String petGender,
+			String shortDescription, String detailDescription, byte[] petPhoto, String firstName, String lastName,
+			int ownerPhoneNumber, String ownerCity, String ownerStreet, int ownerHouseNumber, String aduptStatus) {
+
+		Category petC = findPetCategory(petCategory);
+		PetSize petS = findPetSize(petSize);
+		Gender gen = findGender(petGender);
+		AdoptionStatus adupt = findAduptStatus(aduptStatus);
+		try {
+			pet.updatePet(petId, petC, petName, petAge, petS, gen, adupt, shortDescription, detailDescription, petPhoto,
+					firstName, lastName, ownerPhoneNumber, ownerCity, ownerStreet, ownerHouseNumber);
+		} catch (ErrorInProcessPetOwner e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ErrorInProcessPetData e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void deletePet(int petId) {
+
+		try {
+			pet.deletePet(petId);
+		} catch (ErrorInProcessPetOwner e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ErrorInProcessPetData e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ErrorInProcessUser e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+	}
+
+	private AdoptionStatus findAduptStatus(String aduptStatus) {
+		if (aduptStatus.equals("ADOPTABLE")) {
+			return AdoptionStatus.ADOPTABLE;
+		}
+		if (aduptStatus.equals("ADOPTED")) {
+			return AdoptionStatus.ADOPTED;
+		}
+		if (aduptStatus.equals("PENDING")) {
+			return AdoptionStatus.PENDING;
+		}
+		return null;
+	}
+	
 	private Gender findGender(String gender) {
 		if (gender.equals("Male")) {
 			return Gender.MALE;
@@ -81,7 +132,7 @@ public class AddPetLogic {
 		return null;
 	}
 
-	private Category findPetCategory(String petCategory) {
+	public Category findPetCategory(String petCategory) {
 		if (petCategory.equals("Bird")) {
 			return Category.BIRD;
 		}
@@ -101,57 +152,6 @@ public class AddPetLogic {
 			return Category.RODENT;
 		}
 		return null;
-	}
-
-	public void editPet(int petId, String petCategory, String petName, double petAge, String petSize, String petGender,
-			String shortDescription, String detailDescription, byte[] petPhoto, String firstName, String lastName,
-			int ownerPhoneNumber, String ownerCity, String ownerStreet, int ownerHouseNumber, String aduptStatus) {
-
-		Category petC = findPetCategory(petCategory);
-		PetSize petS = findPetSize(petSize);
-		Gender gen = findGender(petGender);
-		AdoptionStatus adupt = findAduptStatus(aduptStatus);
-		try {
-			pet.updatePet(petId, petC, petName, petAge, petS, gen, adupt, shortDescription, detailDescription, petPhoto,
-					firstName, lastName, ownerPhoneNumber, ownerCity, ownerStreet, ownerHouseNumber);
-		} catch (ErrorInProcessPetOwner e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ErrorInProcessPetData e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	private AdoptionStatus findAduptStatus(String aduptStatus) {
-		if (aduptStatus.equals("ADOPTABLE")) {
-			return AdoptionStatus.ADOPTABLE;
-		}
-		if (aduptStatus.equals("ADOPTED")) {
-			return AdoptionStatus.ADOPTED;
-		}
-		if (aduptStatus.equals("PENDING")) {
-			return AdoptionStatus.PENDING;
-		}
-		return null;
-	}
-
-	public void deletePet(int petId) {
-
-		try {
-			pet.deletePet(petId);
-		} catch (ErrorInProcessPetOwner e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ErrorInProcessPetData e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ErrorInProcessUser e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
 	}
 
 }

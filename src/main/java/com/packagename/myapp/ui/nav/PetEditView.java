@@ -208,14 +208,15 @@ public class PetEditView extends VerticalLayout {
 
 		if (pet != null) {
 			petName.setValue(pet.getPetName());
-			category.setValue(pet.getCategory().name());
-			size.setValue(pet.getPetSize().name());
+			category.setLabel(pet.getCategory().name());
+			size.setLabel(pet.getPetSize().name());
 			age.setValue(pet.getPetAge());
-			breed.setValue(pet.getGender().name());
+			breed.setLabel(pet.getGender().name());
 			description.setValue(pet.getShortDescription());
 			descriptionL.setValue(pet.getDetailDescription());
 			aduptStatus.setLabel(pet.getAdoptionStatus().name());
 			currPhoto = pet.getPetPhoto();
+			
 		}
 
 		addLayout.addFormItem(petName, petNameLabel);
@@ -234,19 +235,35 @@ public class PetEditView extends VerticalLayout {
 		Button add = new Button("Edit", click -> edit(pet.getPetId(), petName, category, size, age, breed, description,
 				descriptionL, upload, firstName, lastName, phone, city, street, house, aduptStatus));
 
+		Button delete = new Button("Delete pet", click -> delete(pet.getPetId(), petName, category, size, age, breed, description,
+				descriptionL, upload, firstName, lastName, phone, city, street, house, aduptStatus));
+		
 		form.add(addLayout);
 		form2.add(ownerLayout);
 
 		HorizontalLayout horizontal = new HorizontalLayout();
 		horizontal.add(form, form2);
 
-		vl.add(titlelayout, horizontal, add);
+		vl.add(titlelayout, horizontal, add, delete);
 
 		vl.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
 		add(vl);
 	}
 
+	private void delete(int petId, TextField petName, Select<String> category, Select<String> size, NumberField age,
+			Select<String> breed, TextField description, TextArea descriptionL, Upload upload, TextField firstName,
+			TextField lastName, NumberField phone, TextField city, TextField street, NumberField house,
+			Select<String> aduptStatus) {
+		isLogin();
+		addPetLogic.deletePet(petId);
+		
+		// Notification
+		Notification.show("Pet was deleted")  
+			.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
+		UI.getCurrent().navigate("");
+	}
+	
 	private void edit(int petId, TextField petName, Select<String> category, Select<String> size, NumberField age,
 			Select<String> breed, TextField description, TextArea descriptionL, Upload upload, TextField firstName,
 			TextField lastName, NumberField phone, TextField city, TextField street, NumberField house,

@@ -37,12 +37,12 @@ public class PetSearchLogic implements RouterLayout {
 		return PetSearchLogic.petsSearch;
 	}
 
-	public static void setPetsList(List<Pet> allPets) {
+	private static void setPetsList(List<Pet> allPets) {
 		PetSearchLogic.petsSearch.clear();
 		PetSearchLogic.petsSearch.addAll(allPets);
 	}
 	
-	
+	//Check search pet parameters added by user, and update petsSearch list accordingly.
 	public void parametersCheck(VerticalLayout vl, Button search, Checkbox dogs, Checkbox cats, Checkbox rodent, 
 			Checkbox birds, Checkbox fish, Checkbox other, Checkbox all, 
 			Select<String> gender, Select<String> age, Select<String> size) {
@@ -53,21 +53,7 @@ public class PetSearchLogic implements RouterLayout {
 		checkGender(gender);
 		checkAge(age);
 		checkSize(size);
-		
-		
-////		if(PetSearchLogic.petsSearch == null || PetSearchLogic.petsSearch.isEmpty()) {
-////			search.getUI().get().navigate("petSearch");
-////			
-////            Span details=new Span("No pets available");
-////            vl.add(details);
-////            return;
-////		}
-//		
-//		
-//		if(PetSearchLogic.petsSearch != null && !PetSearchLogic.petsSearch.isEmpty()) {
-//			search.getUI().get().navigate("petSearch");
-//			return;
-//		}
+
 		return;
 	}
 	

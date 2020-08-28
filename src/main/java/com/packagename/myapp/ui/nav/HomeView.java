@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.logic.HomeLogic;
+
 import com.logic.LikeLogic;
 import com.logic.PetSearchLogic;
 import com.logic.PetsList;
@@ -149,7 +149,7 @@ public class HomeView extends VerticalLayout {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			HomeLogic.setPetsList(allPets);
+			
 		}
 
 		FlexLayout workspace = new FlexLayout();

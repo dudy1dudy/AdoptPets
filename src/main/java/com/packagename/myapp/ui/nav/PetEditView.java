@@ -26,6 +26,7 @@ import com.vaadin.flow.server.VaadinSession;
 
 import group.entities.Pet;
 import group.entities.User;
+import group.exception.ErrorInProcessPetData;
 import group.exception.ErrorInProcessUser;
 import group.models.UserModel;
 import group.utilities.Category;
@@ -71,7 +72,7 @@ public class PetEditView extends VerticalLayout {
 	public PetEditView() {
 
 		isLogin();
-		H3 title = new H3("Add a new pet");
+		H3 title = new H3("Edit your pet");
 
 		HorizontalLayout titlelayout = new HorizontalLayout();
 		titlelayout.add(title);
@@ -215,7 +216,14 @@ public class PetEditView extends VerticalLayout {
 			description.setValue(pet.getShortDescription());
 			descriptionL.setValue(pet.getDetailDescription());
 			aduptStatus.setLabel(pet.getAdoptionStatus().name());
-			currPhoto = pet.getPetPhoto();
+			Image image = new Image();
+
+			image = ConvertPhoto.dbPhotoToImage(pet);
+
+			image.addClassName("image");
+			image.setWidth("200px");
+			image.setHeight("200px");
+			titlelayout.add(image);
 			
 		}
 

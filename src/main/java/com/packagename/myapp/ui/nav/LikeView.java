@@ -3,7 +3,6 @@ package com.packagename.myapp.ui.nav;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.logic.HomeLogic;
 import com.logic.LikeLogic;
 import com.logic.PetSearchLogic;
 import com.logic.PetsList;

@@ -23,7 +23,7 @@ import group.utilities.ConvertPhoto;
 public class PetDetailsView extends VerticalLayout {
 
 	private PetModel petM = new PetModel();
-	private HomeView homeV = new HomeView();
+	
 
 	public PetDetailsView() {
 

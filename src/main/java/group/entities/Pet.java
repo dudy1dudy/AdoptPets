@@ -67,6 +67,9 @@ public class Pet implements Serializable {
 		super();
 	}
 
+	public Pet(String name, int i, int i1, Gender male, AdoptionStatus pending, String short_desc, String long_desc, String dsad, String s) {
+	}
+
 	public int getPetId() {
 		return this.petId;
 	}

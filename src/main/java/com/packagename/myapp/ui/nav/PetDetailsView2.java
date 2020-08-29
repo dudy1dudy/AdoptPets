@@ -1,8 +1,5 @@
 package com.packagename.myapp.ui.nav;
 
-import java.util.Optional;
-
-import com.logic.AddPetLogic;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.*;
@@ -11,24 +8,21 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
-
-import group.entities.Pet;
 import group.exception.ErrorInProcessPetData;
 import group.models.PetModel;
 import group.utilities.ConvertPhoto;
 
-@Route(value = "detail2", layout = MainView.class)
+@Route(value = "detail", layout = MainView.class)
 @PageTitle("Pet details")
-public class PetDetailsView extends VerticalLayout {
+public class PetDetailsView2 extends VerticalLayout {
 
 	private PetModel petM = new PetModel();
 	private HomeView homeV = new HomeView();
 	private VerticalLayout petDetails = new VerticalLayout();
 	FormLayout petDetailsForm = new FormLayout();
 
-	public PetDetailsView() {
+	public PetDetailsView2() {
 
 		if (MainView.getUser() == null) {
 			HorizontalLayout data = new HorizontalLayout();
@@ -90,7 +84,7 @@ public class PetDetailsView extends VerticalLayout {
 
 		H4 petAgeLabel = new H4("Pet Age");
 		petAgeLabel.addClassName("titletext");
-		//29.8 add details for pet
+
 		ageLine.add(age, gender);
 
 		divLayout.add(name, detail, ageLine);
@@ -99,8 +93,17 @@ public class PetDetailsView extends VerticalLayout {
 
 		pet.add(image, div);
 
-		vl.add(title, pet);
+		HorizontalLayout ageLayout=new HorizontalLayout();
+		VerticalLayout ageV=new VerticalLayout();
+		VerticalLayout catagoryV=new VerticalLayout();
+		ageLayout.add(ageV,catagoryV);
 
+		NumberField ageNymb =new NumberField("Age");
+		TextField catagoryText=new TextField("Category");
+		ageV.add(ageNymb);
+		catagoryV.add(catagoryText);
+		vl.add(title, pet, ageLayout);
 		add(vl);
+
 	}
 }

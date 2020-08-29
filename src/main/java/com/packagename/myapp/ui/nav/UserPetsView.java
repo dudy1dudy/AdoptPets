@@ -6,13 +6,17 @@ import java.util.List;
 
 import com.logic.PetsList;
 import com.logic.UserPetsLogic;
+import com.packagename.myapp.notificationController.NotificationController;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
@@ -36,16 +40,27 @@ public class UserPetsView extends VerticalLayout {
 	
 	
     H1 h1=new H1("Your Pets, \nPleas doube click a pet to edit it");
+    VerticalLayout mainVerticalLayout=new VerticalLayout();
+    NotificationController controller=new NotificationController();
+
+	public void returnLogin(){
+		UI.getCurrent().navigate("login");
+	}
     
     public UserPetsView(){
-    	
+		mainVerticalLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+
     	UserPetsLogic.setUserPetsList();
     	if (MainView.getUser() == null) {
-			
-			Span details = new Span("Please register to view your pets");
-			
-			add(details);
-			return;
+
+    		Notification loginErr= controller.makeNotification();
+    		UI.getCurrent().navigate("login");
+    		loginErr.open();
+    		UI.getCurrent().getPage().reload();
+
+    		//returnLogin();
+
+
 		}	
     	   
 	    if(UserPetsLogic.getUserPetsList() == null) {
@@ -64,18 +79,36 @@ public class UserPetsView extends VerticalLayout {
         	petL = new PetsList(UserPetsLogic.getUserPetsList().get(i));
         	userPets.add(petL);
         }
+
+        VerticalLayout gridDiv=new VerticalLayout();
+        gridDiv.addClassName("grid-div");
        
 		Grid<PetsList> grid = new Grid<PetsList>(PetsList.class);
 		grid.setItems(userPets);
+		grid.removeAllColumns();
 		
-		grid.setColumns("categoryC", "genderC", "ageC", "sizeC" ,"petNameC", "shortDescriptionC");
-	
+		//grid.setColumns("categoryC", "genderC", "ageC", "sizeC" ,"petNameC", "shortDescriptionC");
+		grid.addColumn(PetsList::getPetId).setHeader("ID").setWidth("20px");
+		grid.addColumn(PetsList::getPetNameC).setHeader("Name").setAutoWidth(true);
+		grid.addColumn(PetsList::getCategoryC).setHeader("Category").setAutoWidth(true);
+		grid.addColumn(PetsList::getGenderC).setHeader("Gender").setWidth("20px");
+		grid.addColumn(PetsList::getCityC).setHeader("City").setAutoWidth(true);
+		grid.addColumn(PetsList::getShortDescriptionC).setHeader("Short Description").setAutoWidth(true);
 		grid.addItemDoubleClickListener(e -> {
 			MainView.setPet(e.getItem().getPet());			
 			UI.getCurrent().navigate("EditPet");
 		});
-		
-		add(grid);
+
+		grid.setMaxWidth("1600px");
+
+
+		gridDiv.add(grid);
+		gridDiv.setWidth("1600px");
+		gridDiv.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+
+		grid.addThemeVariants(GridVariant.LUMO_WRAP_CELL_CONTENT,GridVariant.LUMO_ROW_STRIPES,GridVariant.MATERIAL_COLUMN_DIVIDERS);
+		mainVerticalLayout.add(gridDiv);
+		add(mainVerticalLayout);
 	   
 		
     }

@@ -2,11 +2,7 @@ package com.packagename.myapp.ui.nav;
 
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.html.H4;
-import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.login.AbstractLogin;
 import com.vaadin.flow.component.login.AbstractLogin.ForgotPasswordEvent;
 import com.vaadin.flow.component.login.AbstractLogin.LoginEvent;
@@ -51,14 +47,21 @@ import java.util.*;
 public class LoginView extends VerticalLayout {
 
 	UserModel user = new UserModel();
+	//VerticalLayout loginLayout = new VerticalLayout();
 //	H1 h1 = new H1("Login");
 	H1 h1 = new H1();
+	Image logoImage = new Image("icons/logo.png", "dummyImage");
+
+
 
 	public LoginView() {
-
+		addClassName("login-view");
+		add(logoImage);
 		LoginForm component = new LoginForm();
-		setAlignItems(Alignment.CENTER);
 		setSizeFull();
+		setAlignItems(Alignment.CENTER);
+		setJustifyContentMode(JustifyContentMode.CENTER); //Makes LoginView full size and centers its content both horizontally and vertically, by calling setAlignItems(Alignment.CENTER) and setJustifyContentMode(JustifyContentMode.CENTER).
+
 
 		component.addLoginListener(e -> {
 			boolean isAuthenticated = authenticate(e);
@@ -67,7 +70,10 @@ public class LoginView extends VerticalLayout {
 				h1.add(data);
 
 				// Go back to home
+
 				UI.getCurrent().navigate("");
+				UI.getCurrent().getPage().reload();
+
 
 				// Notification
 				Notification.show("Log in succsessful")

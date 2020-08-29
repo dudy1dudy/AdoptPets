@@ -22,8 +22,10 @@ a[highlight] {
 }
 
 .header {
-	padding: 0 var(- -lumo-space-m);
-}
+	 padding: 0 var(- -lumo-space-m);
+ }
+
+
 
 .header h1.logo {
 	font-size: 1em;
@@ -34,6 +36,15 @@ a[highlight] {
 	color: blue;
 	margin: 0 auto;
 	max-width: 610px;
+}
+.disablednav{
+	color: gray;
+	cursor: not-allowed;
+
+}
+
+.enablednav{
+	color: var(--lumo-primary-text-color);
 }
 
 .workspace {
@@ -67,6 +78,29 @@ a[highlight] {
 	padding: 5px;
 }
 
+.disabledReg{
+	position: absolute;
+	right: 50px;
+	padding: 5px;
+	pointer-events: none;
+	cursor: default;
+	text-decoration: none;
+	color: gray;
+}
+
+.disabledHeart{
+
+	pointer-events: none;
+	cursor: default;
+	position: absolute;
+	color: gray;
+	right: 10px;
+	padding: 5px;
+	cursor: not-allowed;
+
+
+}
+
 .heartlike {
 	color: DodgerBlue;
 	right: 10px;
@@ -75,4 +109,17 @@ a[highlight] {
 
 .image {
 	padding: 5px, 5px, 5px, 5px;
+}
+
+.grid-div{
+	padding: 10px;
+
+}
+
+.login-view{
+	background-color: #93c1de;
+}
+
+.mainLayout{
+	border-style: solid;
 }

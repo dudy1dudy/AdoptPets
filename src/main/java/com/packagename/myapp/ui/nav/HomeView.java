@@ -69,6 +69,7 @@ public class HomeView extends VerticalLayout {
 		this.title = new H2("Find the pet for you");
 		findadopt.add(title);
 
+
 		
 		title.addClassName("titletext");
 
@@ -80,7 +81,7 @@ public class HomeView extends VerticalLayout {
 		HorizontalLayout formlayoutr2 = new HorizontalLayout();
 		HorizontalLayout formlayoutr3 = new HorizontalLayout();
 		HorizontalLayout formlayoutr4 = new HorizontalLayout();
-		
+
 		Checkbox dogs = new Checkbox("Dogs");
 		Checkbox cats = new Checkbox("Cats");
 		Checkbox rodent = new Checkbox("Rodent");
@@ -109,6 +110,7 @@ public class HomeView extends VerticalLayout {
 		formlayoutr3.add(gender, age, size);
 
 		formvert.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+
 
 		Button search = new Button("Search");
 
@@ -191,11 +193,16 @@ public class HomeView extends VerticalLayout {
 			details.setId(String.valueOf(pet.getPetId()));
 
 			details.addClickListener(e -> {
+				if(MainView.isUserRegistered())
+				{
+					MainView.setCurrDeatailPet(pet);
+					details.getUI().ifPresent(ui -> {
+						ui.navigate("detail");
+					});
+				}else{
+					Notification.show("Please register to view details").setPosition(Position.TOP_CENTER);
+				}
 
-				MainView.setCurrDeatailPet(pet);
-				details.getUI().ifPresent(ui -> {
-					ui.navigate("detail");
-				});
 			});
 
 			Image image = ConvertPhoto.dbPhotoToImage(pet);
@@ -207,10 +214,17 @@ public class HomeView extends VerticalLayout {
 			image.setId(String.valueOf(pet.getPetId()));
 
 			image.addClickListener(e -> {
-				MainView.setCurrDeatailPet(pet);
-				image.getUI().ifPresent(ui -> {
-					ui.navigate("detail");
-				});
+				if(MainView.isUserRegistered())
+				{
+					MainView.setCurrDeatailPet(pet);
+					image.getUI().ifPresent(ui -> {
+						ui.navigate("detail");
+					});
+				} else {
+					Notification.show("Please register to view details").setPosition(Position.TOP_CENTER);
+				}
+
+
 			});
 
 			// like button heart add to custom card

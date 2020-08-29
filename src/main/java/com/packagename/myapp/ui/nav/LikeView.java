@@ -25,6 +25,8 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout.FlexWrap;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 import group.entities.Pet;
 import group.exception.ErrorInProcessPetData;
 import group.utilities.ConvertPhoto;

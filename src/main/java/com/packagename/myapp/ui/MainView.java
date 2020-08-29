@@ -16,22 +16,23 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.*;
 
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 import group.entities.Pet;
 import group.entities.User;
 
 import org.junit.rules.ExternalResource;
-
+@Theme(value = Lumo.class)
 @CssImport("./styles/shared-styles.css")
 public class MainView extends AppLayout {
 	private static final long serialVersionUID = 1L;
 
 	// make link for route
-	RouterLink addNewPet = new RouterLink("Add Pet", PetAdding.class);
-	RouterLink home = new RouterLink("Home", HomeView.class);
-	RouterLink yourPets = new RouterLink("Your Pets", UserPetsView.class);
-	RouterLink editPet = new RouterLink("EditPet", PetEditView.class);
-//	RouterLink editPet = new RouterLink("EditPet", PetChange.class);
-	RouterLink login = new RouterLink("Login", LoginView.class);
+	public RouterLink addNewPet;
+	public RouterLink home;
+	public RouterLink yourPets;
+	public RouterLink editPet;
+	public RouterLink login;
 
 	/**
 	 * Static Login parameter
@@ -86,6 +87,25 @@ public class MainView extends AppLayout {
 		// nav bar side icon
 		// H1 logo = new H1("Pet");
 		// logo.addClassName("logo");
+			addNewPet = new RouterLink("Add Pet", PetAdding.class);
+
+			home = new RouterLink("Home", HomeView.class);
+			yourPets = new RouterLink("Your Pets", UserPetsView.class);
+			editPet = new RouterLink("EditPet", PetEditView.class);
+//	RouterLink editPet = new RouterLink("EditPet", PetChange.class);
+			login = new RouterLink("Login", LoginView.class);
+			if (!isUserRegistered()){
+				addNewPet.setClassName("disablednav");
+				addNewPet.getElement().removeAttribute("href");
+				yourPets.setClassName("disablednav");
+				yourPets.getElement().removeAttribute("href");
+			}
+			else {
+				login.setClassName("disablednav");
+				login.getElement().removeAttribute("href");
+			}
+
+
 
 		Icon ico = new Icon(VaadinIcon.CLIPBOARD_USER);
 
@@ -100,18 +120,26 @@ public class MainView extends AppLayout {
 		Icon logoV = new Icon(VaadinIcon.HEART_O);
 		logoV.getStyle().set("cursor", "pointer");
 		logoV.addClickListener(e -> logoV.getUI().ifPresent(ui -> ui.navigate("likeview")));
-		logoV.addClassName("heart");
+		//logoV.addClassName("heart");
 
 		Icon reg = new Icon(VaadinIcon.USER_STAR);
 		reg.getStyle().set("cursor", "pointer");
 		reg.addClickListener(e -> reg.getUI().ifPresent(ui -> ui.navigate("reg")));
-		reg.addClassName("reg");
+		//reg.addClassName("reg");
 
 		// icon add to header layout horizontaly
-		HorizontalLayout likelayout = new HorizontalLayout(reg, logoV);
+		if (!isUserRegistered()) {
+			logoV.setClassName("disabledHeart");
+			reg.addClassName("reg");
+		} else {
+			reg.setClassName("disabledReg");
+			logoV.addClassName("heart");
+		}
+		HorizontalLayout likelayout = new HorizontalLayout(reg,logoV);
 		likelayout.setSizeFull();
 		likelayout.setHeight("40px");
 		likelayout.setWidth("60px");
+
 
 		addNewPet.setText("Add Pet");
 
@@ -122,5 +150,7 @@ public class MainView extends AppLayout {
 		addToNavbar(true, header);
 
 	}
+
+
 
 }

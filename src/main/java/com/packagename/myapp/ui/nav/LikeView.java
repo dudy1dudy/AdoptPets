@@ -40,7 +40,8 @@ public class LikeView extends VerticalLayout {
 	private LikeLogic likeL = new LikeLogic();
 
 	public LikeView() {
-
+		setAlignItems(Alignment.CENTER);
+		setWidth("100%");
 		H1 h1 = new H1("Like");
 		add(h1);
 		if (MainView.getUser() == null) {
@@ -69,7 +70,7 @@ public class LikeView extends VerticalLayout {
 		FlexLayout workspace = new FlexLayout();
 		workspace.setAlignItems(Alignment.CENTER);
 		workspace.setFlexWrap(FlexWrap.WRAP);
-		workspace.setMaxWidth("72%");
+		workspace.setWidth("80%");
 		workspace.setAlignContent(FlexLayout.ContentAlignment.SPACE_AROUND);
 
 		for (int i = 0; i < likePetsList.size(); i++) {

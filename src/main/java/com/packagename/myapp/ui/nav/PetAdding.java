@@ -54,6 +54,7 @@ public class PetAdding extends VerticalLayout {
 	AddPetLogic addPetLogic;
 	VerticalLayout vl = new VerticalLayout();
 
+
 	private void isLogin() {
 		if (MainView.isUserRegistered()) {
 			addPetLogic = new AddPetLogic();
@@ -68,10 +69,11 @@ public class PetAdding extends VerticalLayout {
 	}
 
 	public PetAdding() {
-
-
+			setClassName("petAdding");
 			isLogin();
 			H3 title = new H3("Add a new pet");
+			vl.setHorizontalComponentAlignment(Alignment.CENTER);
+			vl.setClassName("petAddingForm");
 
 			HorizontalLayout titlelayout = new HorizontalLayout();
 			titlelayout.add(title);
@@ -229,7 +231,13 @@ public class PetAdding extends VerticalLayout {
 
 			vl.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-			add(vl);
+			HorizontalLayout horizontalWrapper = new HorizontalLayout();
+			horizontalWrapper.setWidth("50%");
+			horizontalWrapper.add(vl);
+			setAlignItems(Alignment.CENTER);
+			setHeight("100%");
+
+			add(horizontalWrapper);
 
 	}
 

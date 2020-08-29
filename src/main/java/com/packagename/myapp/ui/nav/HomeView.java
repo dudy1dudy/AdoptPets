@@ -63,7 +63,8 @@ public class HomeView extends VerticalLayout {
 	private VerticalLayout formvert;
 
 	public HomeView() {
-
+		setClassName("homeView");
+		setAlignItems(Alignment.CENTER);
 		// layout for title "find adoptable pets near"
 		HorizontalLayout findadopt = new HorizontalLayout();
 		this.title = new H2("Find the pet for you");
@@ -157,7 +158,7 @@ public class HomeView extends VerticalLayout {
 		FlexLayout workspace = new FlexLayout();
 		workspace.setAlignItems(Alignment.CENTER);
 		workspace.setFlexWrap(FlexWrap.WRAP);
-		workspace.setMaxWidth("72%");
+		//workspace.setMaxWidth("72%");
 		workspace.setAlignContent(FlexLayout.ContentAlignment.SPACE_AROUND);
 
 		for (int i = 0; i < allPets.size(); i++) {
@@ -166,13 +167,24 @@ public class HomeView extends VerticalLayout {
 		}
 		workspace.addClassName("workspace");
 
-		vl.removeAll();
+		removeAll();
+		VerticalLayout upperLayout = new VerticalLayout();
+		VerticalLayout lowerLayout = new VerticalLayout();
 
+		upperLayout.addClassName("petAddingUpperLayout");
+		lowerLayout.addClassName("petAddingLowerLayout");
+		lowerLayout.setAlignItems(Alignment.CENTER);
 		// add to main layout
-		vl.add(title, formvert, workspace);
+		upperLayout.add(title, formvert);
+		lowerLayout.add(workspace);
+
+		upperLayout.setWidth("60%");
+		lowerLayout.setWidth("60%");
+		////vl.add(title, formvert, workspace);
 
 		// layout add to page - main vertical unit layout
-		add(vl);
+		///add(vl);
+		add(upperLayout, lowerLayout);
 	}
 
 	// create cards
@@ -230,7 +242,7 @@ public class HomeView extends VerticalLayout {
 			// like button heart add to custom card
 			Icon logoV = new Icon(VaadinIcon.HEART_O);
 			logoV.getStyle().set("cursor", "pointer");
-			logoV.setColor("White");
+			logoV.setColor("Gray");
 			
 			//Check if user like pet, then like == red
 			if (MainView.isUserRegistered()) {
@@ -239,7 +251,7 @@ public class HomeView extends VerticalLayout {
 						logoV.setColor("Red");
 					}
 			} else {
-				logoV.setColor("White");
+				logoV.setColor("Gray");
 			}
 			logoV.addClickListener(event -> like(pet.getPetId(), logoV));
 			logoV.addClassName("heartlike");
@@ -261,6 +273,7 @@ public class HomeView extends VerticalLayout {
 			card.setWidth("300px");
 			card.setHeight("300px");
 
+
 			return card;
 		}
 		return null;
@@ -275,14 +288,14 @@ public class HomeView extends VerticalLayout {
 			return;
 		}
 
-		if (logoV.getColor().equals("White")) {
+		if (logoV.getColor().equals("Gray")) {
 			likeL.like(petId);
 			logoV.setColor("Red");
 			like("Thank you for like me!");
 		}else {		
 			if (logoV.getColor().equals("Red")) {
 				likeL.unLike(petId);
-				logoV.setColor("White");
+				logoV.setColor("Gray");
 				like("OK, Bye Bye");
 			}
 		}

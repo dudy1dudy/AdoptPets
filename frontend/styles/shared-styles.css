@@ -180,6 +180,11 @@ a[highlight] {
 	font-family: cursive;
 }
 
+.detailsData {
+	font-family: cursive;
+	font-size: large;
+}
+
 :host[part~="header-cell"] ::slotted(vaadin-grid-cell-content) {
 	font-weight: bold !important;
 	color: blue !important;

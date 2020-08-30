@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.logic.PetsList;
 import com.logic.UserPetsLogic;
-import com.packagename.myapp.notificationController.NotificationController;
 import com.packagename.myapp.ui.MainView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -35,13 +34,8 @@ import group.utilities.PetSize;
 
 public class UserPetsView extends VerticalLayout {
 
-
-
-	
-	
     H1 h1=new H1("Your Pets, \nPleas doube click a pet to edit it");
     VerticalLayout mainVerticalLayout=new VerticalLayout();
-    NotificationController controller=new NotificationController();
 
 	public void returnLogin(){
 		UI.getCurrent().navigate("login");
@@ -52,15 +46,8 @@ public class UserPetsView extends VerticalLayout {
 
     	UserPetsLogic.setUserPetsList();
     	if (MainView.getUser() == null) {
-
-    		Notification loginErr= controller.makeNotification();
     		UI.getCurrent().navigate("login");
-    		loginErr.open();
     		UI.getCurrent().getPage().reload();
-
-    		//returnLogin();
-
-
 		}	
     	   
 	    if(UserPetsLogic.getUserPetsList() == null) {
@@ -98,9 +85,9 @@ public class UserPetsView extends VerticalLayout {
 			MainView.setPet(e.getItem().getPet());			
 			UI.getCurrent().navigate("EditPet");
 		});
-
+		
+		grid.setThemeName("column-borders");
 		grid.setMaxWidth("1600px");
-
 
 		gridDiv.add(grid);
 		gridDiv.setWidth("1600px");

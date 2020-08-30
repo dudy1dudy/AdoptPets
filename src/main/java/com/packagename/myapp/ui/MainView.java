@@ -116,7 +116,7 @@ public class MainView extends AppLayout {
 
 
 
-		Icon ico = new Icon(VaadinIcon.CLIPBOARD_USER);
+		Icon ico = new Icon(VaadinIcon.SMILEY_O);
 
 		// nav bar item layout
 		HorizontalLayout header = new HorizontalLayout(ico);

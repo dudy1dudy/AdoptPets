@@ -5,7 +5,6 @@
 */
 
 /* Example: CSS class name to center align the content . */
-
 .centered-content {
 	margin: 0 auto;
 	max-width: 250px;
@@ -15,7 +14,6 @@
 a[highlight] {
 	font-weight: bold;
 	text-decoration: underline;
-	
 }
 
 .a {
@@ -23,10 +21,8 @@ a[highlight] {
 }
 
 .header {
-	 padding: 0 var(- -lumo-space-m);
- }
-
-
+	padding: 0 var(- -lumo-space-m);
+}
 
 .header h1.logo {
 	font-size: 1em;
@@ -38,14 +34,14 @@ a[highlight] {
 	margin: 0 auto;
 	max-width: 610px;
 }
-.disablednav{
+
+.disablednav {
 	color: gray;
 	cursor: not-allowed;
-
 }
 
-.enablednav{
-	color: var(--lumo-primary-text-color);
+.enablednav {
+	color: var(- -lumo-primary-text-color);
 }
 
 .workspace {
@@ -79,15 +75,15 @@ a[highlight] {
 	right: 50px;
 	padding: 5px;
 }
-.logOut{
+
+.logOut {
 	position: absolute;
 	color: DodgerBlue;
 	right: 80px;
 	padding: 5px;
-
 }
 
-.disabledReg{
+.disabledReg {
 	position: absolute;
 	right: 50px;
 	padding: 5px;
@@ -97,7 +93,7 @@ a[highlight] {
 	color: gray;
 }
 
-.disabledLogOut{
+.disabledLogOut {
 	position: absolute;
 	right: 80px;
 	padding: 5px;
@@ -107,8 +103,7 @@ a[highlight] {
 	color: gray;
 }
 
-.disabledHeart{
-
+.disabledHeart {
 	pointer-events: none;
 	cursor: default;
 	position: absolute;
@@ -116,8 +111,6 @@ a[highlight] {
 	right: 10px;
 	padding: 5px;
 	cursor: not-allowed;
-
-
 }
 
 .heartlike {
@@ -130,48 +123,60 @@ a[highlight] {
 	padding: 5px, 5px, 5px, 5px;
 }
 
-.grid-div{
+.grid-div {
 	padding: 10px;
-
 }
 
-.login-view{
+.login-view {
 	background-color: #93c1de;
 }
 
-.homeView{
+.homeView {
 	background-image: url(/icons/background.png);
 	background-repeat: repeat;
 	min-height: 100%;
 }
 
-.mainLayout{
+.mainLayout {
 	border-style: solid;
 }
 
-.detailField{
+.detailField {
 	margin: 3px;
 }
 
-.petAddingForm{
+.petAddingForm {
 	background: aliceblue;
-	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+	box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0
+		rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 	padding-left: 80px;
 	padding-right: 80px;
 }
-.petAddingLowerLayout{
+
+.petAddingLowerLayout {
 	background: white;
-	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+	box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0
+		rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 	padding-left: 80px;
 	padding-right: 80px;
 	border-style: solid;
 	border-color: gray;
+	width: 70% !important;
 }
-.petAddingUpperLayout{
+
+.petAddingUpperLayout {
 	background: white;
-	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+	box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0
+		rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 	padding-left: 80px;
 	padding-right: 80px;
 	border-style: solid;
 	border-color: gray;
+	width: 70% !important;
+}
+
+:host[part~="header-cell"] ::slotted(vaadin-grid-cell-content) {
+	font-weight: bold !important;
+    color: blue !important;
+    font-size: 19px !important;
 }

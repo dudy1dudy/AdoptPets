@@ -79,10 +79,27 @@ a[highlight] {
 	right: 50px;
 	padding: 5px;
 }
+.logOut{
+	position: absolute;
+	color: DodgerBlue;
+	right: 80px;
+	padding: 5px;
+
+}
 
 .disabledReg{
 	position: absolute;
 	right: 50px;
+	padding: 5px;
+	pointer-events: none;
+	cursor: default;
+	text-decoration: none;
+	color: gray;
+}
+
+.disabledLogOut{
+	position: absolute;
+	right: 80px;
 	padding: 5px;
 	pointer-events: none;
 	cursor: default;

@@ -2,11 +2,13 @@ package com.packagename.myapp.ui;
 
 import com.logic.UserPetsLogic;
 import com.packagename.myapp.ui.nav.*;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.model.Navigator;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H5;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -14,6 +16,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 
 import com.vaadin.flow.theme.Theme;
@@ -63,6 +66,12 @@ public class MainView extends AppLayout {
 	public static void setPet(Pet pet) {
 		MainView.CurrEditPet = new Pet();
 		MainView.CurrEditPet = pet;
+	}
+
+	public static void logOut(){
+		MainView.user=null;
+		UI.getCurrent().navigate("");
+		UI.getCurrent().getPage().reload();
 	}
 
 	public static User getUser() {
@@ -122,6 +131,30 @@ public class MainView extends AppLayout {
 		logoV.addClickListener(e -> logoV.getUI().ifPresent(ui -> ui.navigate("likeview")));
 		//logoV.addClassName("heart");
 
+
+		Icon signOutIcon = new Icon(VaadinIcon.SIGN_OUT);
+		//signOutIcon.setSize("20px");
+		H5 signOut = new H5("Sign Out");
+		signOutIcon.addClassName("color-blue");
+		signOut.addClassName("color-blue");
+		//HorizontalLayout navBarRow1=new HorizontalLayout(signOutIcon);
+		//HorizontalLayout navBarRow2=new HorizontalLayout(signOut);
+		//VerticalLayout navBarIcon=new VerticalLayout(navBarRow1,navBarRow2);
+		//signOutIcon.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
+		signOutIcon.getStyle().set("cursor", "pointer");
+		signOutIcon.addClickListener(click->
+				MainView.logOut()
+		);
+		//navBarRow1.setHeight("20px");
+		//navBarRow2.setHeight("20px");
+		signOutIcon.addClassName("logOut");
+		//navBarIcon.setWidth("100px");
+
+
+
+
+
+
 		Icon reg = new Icon(VaadinIcon.USER_STAR);
 		reg.getStyle().set("cursor", "pointer");
 		reg.addClickListener(e -> reg.getUI().ifPresent(ui -> ui.navigate("reg")));
@@ -131,14 +164,16 @@ public class MainView extends AppLayout {
 		if (!isUserRegistered()) {
 			logoV.setClassName("disabledHeart");
 			reg.addClassName("reg");
+			signOutIcon.addClassName("disabledLogOut");
 		} else {
 			reg.setClassName("disabledReg");
 			logoV.addClassName("heart");
+
 		}
-		HorizontalLayout likelayout = new HorizontalLayout(reg,logoV);
+		HorizontalLayout likelayout = new HorizontalLayout(signOutIcon,reg,logoV);
 		likelayout.setSizeFull();
 		likelayout.setHeight("40px");
-		likelayout.setWidth("60px");
+		likelayout.setWidth("110px");
 
 
 		addNewPet.setText("Add Pet");

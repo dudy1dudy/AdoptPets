@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 import com.logic.LikeLogic;
 import com.logic.PetSearchLogic;
 import com.logic.PetsList;
@@ -70,8 +69,6 @@ public class HomeView extends VerticalLayout {
 		this.title = new H2("Find the pet for you");
 		findadopt.add(title);
 
-
-		
 		title.addClassName("titletext");
 
 		// form layout as formvert
@@ -112,7 +109,6 @@ public class HomeView extends VerticalLayout {
 
 		formvert.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-
 		Button search = new Button("Search");
 
 		search.addClickListener(new ComponentEventListener() {
@@ -152,13 +148,13 @@ public class HomeView extends VerticalLayout {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 
 		FlexLayout workspace = new FlexLayout();
 		workspace.setAlignItems(Alignment.CENTER);
 		workspace.setFlexWrap(FlexWrap.WRAP);
-		//workspace.setMaxWidth("72%");
+		// workspace.setMaxWidth("72%");
 		workspace.setAlignContent(FlexLayout.ContentAlignment.SPACE_AROUND);
 
 		for (int i = 0; i < allPets.size(); i++) {
@@ -180,38 +176,47 @@ public class HomeView extends VerticalLayout {
 
 		upperLayout.setWidth("60%");
 		lowerLayout.setWidth("60%");
-		////vl.add(title, formvert, workspace);
+		//// vl.add(title, formvert, workspace);
 
 		// layout add to page - main vertical unit layout
-		///add(vl);
+		/// add(vl);
 		add(upperLayout, lowerLayout);
 	}
 
 	// create cards
 	private Component createCard(Pet pet) {
 
-		
 		// card title
 		if (pet != null) {
 			H4 category = new H4(pet.getCategory().toString());
 			H4 name = new H4(pet.getPetName());
 
 			// card details
+			Span age = new Span("Age: " + pet.getPetAge());
+			age.setClassName("cardText");
+			Span size = new Span("Size: " + pet.getPetSize());
+			size.setClassName("cardText");
+			Span city = new Span("City: " + pet.getPetOwner().getCity());
+			city.setClassName("cardText");
+			Span desc = new Span("Description: " + pet.getShortDescription());
+			desc.setClassName("cardText");
+//			Span details = new Span("Age: " + pet.getPetAge() + " Size: " + pet.getPetSize() + "\nCity: "
+//					+ pet.getPetOwner().getCity());
 
-			Span details = new Span("Age: " + pet.getPetAge() + " Size: " + pet.getPetSize() + "\nCity: "
-					+ pet.getPetOwner().getCity());
-			details.setWidth("210px");
+			VerticalLayout details = new VerticalLayout();
+			details.setWidth("100%");
 			details.getStyle().set("cursor", "pointer");
 			details.setId(String.valueOf(pet.getPetId()));
+			details.add(age, size, city, desc);
+			details.setClassName("cardText");
 
 			details.addClickListener(e -> {
-				if(MainView.isUserRegistered())
-				{
+				if (MainView.isUserRegistered()) {
 					MainView.setCurrDeatailPet(pet);
 					details.getUI().ifPresent(ui -> {
 						ui.navigate("detail");
 					});
-				}else{
+				} else {
 					Notification.show("Please register to view details").setPosition(Position.TOP_CENTER);
 				}
 
@@ -220,14 +225,13 @@ public class HomeView extends VerticalLayout {
 			Image image = ConvertPhoto.dbPhotoToImage(pet);
 
 			image.addClassName("image");
-			image.setWidth("160px");
-			image.setHeight("140px");
+			image.setWidth("200px");
+			image.setHeight("180px");
 			image.getStyle().set("cursor", "pointer");
 			image.setId(String.valueOf(pet.getPetId()));
 
 			image.addClickListener(e -> {
-				if(MainView.isUserRegistered())
-				{
+				if (MainView.isUserRegistered()) {
 					MainView.setCurrDeatailPet(pet);
 					image.getUI().ifPresent(ui -> {
 						ui.navigate("detail");
@@ -236,20 +240,19 @@ public class HomeView extends VerticalLayout {
 					Notification.show("Please register to view details").setPosition(Position.TOP_CENTER);
 				}
 
-
 			});
 
 			// like button heart add to custom card
 			Icon logoV = new Icon(VaadinIcon.HEART_O);
 			logoV.getStyle().set("cursor", "pointer");
 			logoV.setColor("Gray");
-			
-			//Check if user like pet, then like == red
+
+			// Check if user like pet, then like == red
 			if (MainView.isUserRegistered()) {
-				
-					if (likeL.isRegUesrLikePet(pet)) {
-						logoV.setColor("Red");
-					}
+
+				if (likeL.isRegUesrLikePet(pet)) {
+					logoV.setColor("Red");
+				}
 			} else {
 				logoV.setColor("Gray");
 			}
@@ -271,8 +274,7 @@ public class HomeView extends VerticalLayout {
 			card.setAlignItems(Alignment.CENTER);
 			card.setJustifyContentMode(JustifyContentMode.CENTER);
 			card.setWidth("300px");
-			card.setHeight("300px");
-
+			card.setHeight("500px");
 
 			return card;
 		}
@@ -292,7 +294,7 @@ public class HomeView extends VerticalLayout {
 			likeL.like(petId);
 			logoV.setColor("Red");
 			like("Thank you for like me!");
-		}else {		
+		} else {
 			if (logoV.getColor().equals("Red")) {
 				likeL.unLike(petId);
 				logoV.setColor("Gray");

@@ -175,8 +175,13 @@ a[highlight] {
 	width: 70% !important;
 }
 
+.cardText {
+	margin-top: auto !important;
+	font-family: cursive;
+}
+
 :host[part~="header-cell"] ::slotted(vaadin-grid-cell-content) {
 	font-weight: bold !important;
-    color: blue !important;
-    font-size: 19px !important;
+	color: blue !important;
+	font-size: 19px !important;
 }

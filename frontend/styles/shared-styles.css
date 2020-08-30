@@ -83,6 +83,9 @@ a[highlight] {
 	padding: 5px;
 }
 
+.userPetsViewHeader{
+	color: DodgerBlue;
+}
 .disabledReg {
 	position: absolute;
 	right: 50px;

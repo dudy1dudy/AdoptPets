@@ -34,7 +34,8 @@ import group.utilities.PetSize;
 
 public class UserPetsView extends VerticalLayout {
 
-    H1 h1=new H1("Your Pets, \nPleas doube click a pet to edit it");
+    H1 h1=new H1("Your Pets, \nPleas double click a pet to edit it");
+
     VerticalLayout mainVerticalLayout=new VerticalLayout();
 
 	public void returnLogin(){
@@ -42,8 +43,10 @@ public class UserPetsView extends VerticalLayout {
 	}
     
     public UserPetsView(){
-		mainVerticalLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
+		mainVerticalLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+		h1.setClassName("userPetsViewHeader");
+		setDefaultHorizontalComponentAlignment(Alignment.CENTER);
     	UserPetsLogic.setUserPetsList();
     	if (MainView.getUser() == null) {
     		UI.getCurrent().navigate("login");

@@ -28,7 +28,7 @@ public class PetDetailsView extends VerticalLayout {
 	FormLayout petDetailsForm = new FormLayout();
 
 	public PetDetailsView() {
-
+		setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 		if (MainView.getUser() == null) {
 			HorizontalLayout data = new HorizontalLayout();
 			Span details = new Span("Please register to view details");

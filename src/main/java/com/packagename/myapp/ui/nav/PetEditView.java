@@ -216,6 +216,7 @@ public class PetEditView extends VerticalLayout {
 			description.setValue(pet.getShortDescription());
 			descriptionL.setValue(pet.getDetailDescription());
 			aduptStatus.setLabel(pet.getAdoptionStatus().name());
+			currPhoto = pet.getPetPhoto();
 			Image image = new Image();
 
 			image = ConvertPhoto.dbPhotoToImage(pet);

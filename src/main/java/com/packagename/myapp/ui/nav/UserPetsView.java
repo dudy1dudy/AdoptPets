@@ -34,7 +34,7 @@ import group.utilities.PetSize;
 
 public class UserPetsView extends VerticalLayout {
 
-    H1 h1=new H1("Your Pets, \nPleas double click a pet to edit it");
+    H1 h1=new H1("Your Pets, \nPlease double click a pet to edit it");
 
     VerticalLayout mainVerticalLayout=new VerticalLayout();
 

@@ -102,7 +102,7 @@ public class PetEditView extends VerticalLayout {
 
 		NumberField age = new NumberField(); // miles
 		age.setHasControls(true);
-
+		age.setMin(0);
 		H4 ageLabel = new H4("Age");
 		ageLabel.addClassName("titletext");
 

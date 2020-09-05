@@ -114,12 +114,15 @@ public class PetEditView extends VerticalLayout {
 		breedLabel.addClassName("titletext");
 
 		TextField description = new TextField();
+		description.setMaxLength(50);
 		description.setPlaceholder("Description");
 
 		H4 descriptionLabel = new H4("Description");
+		
 		descriptionLabel.addClassName("titletext");
 
 		TextArea descriptionL = new TextArea();
+		descriptionL.setMaxLength(255);
 		descriptionL.setPlaceholder("Description more ...");
 
 		H4 descriptionLLabel = new H4("Detailed description");

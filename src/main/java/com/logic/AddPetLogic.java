@@ -46,7 +46,7 @@ public class AddPetLogic {
 				vl.add(data);
 				return;
 			}
-
+			
 			pet.createNewPet(MainView.getUser().getUserId(), petC, petName, petAge, petS, gen, AdoptionStatus.ADOPTABLE,
 					shortDescription, detailDescription, petPhoto, firstName, lastName, phone, city, street, house);
 

@@ -120,13 +120,14 @@ public class PetAdding extends VerticalLayout {
 
 		TextField description = new TextField();
 		description.setPlaceholder("Description");
+		description.setMaxLength(50);
 
 		H4 descriptionLabel = new H4("Description");
 		descriptionLabel.addClassName("titletext");
 
 		TextArea descriptionL = new TextArea();
 		descriptionL.setPlaceholder("Description more ...");
-
+		descriptionL.setMaxLength(250);
 		H4 descriptionLLabel = new H4("Detailed description");
 		descriptionLLabel.addClassName("titletext");
 

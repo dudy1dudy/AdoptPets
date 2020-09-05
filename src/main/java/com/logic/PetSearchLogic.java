@@ -92,12 +92,12 @@ private void checkSize(Select<String> size) {
 		}
 		for(int i = 0; i < tempPets.size() ; i++) {
 			if(age.getValue().equals("0 - 1") && 
-					!(tempPets.get(i).getPetAge() >= 0.0 || tempPets.get(i).getPetAge() <= 1.0)) {
+					!(tempPets.get(i).getPetAge() == 0.0 || tempPets.get(i).getPetAge() == 1.0)) {
 				PetSearchLogic.petsSearch.remove(tempPets.get(i));
 				
 			}
 			if(age.getValue().equals("2 - 3") && 
-					!(tempPets.get(i).getPetAge() >= 2.0 || tempPets.get(i).getPetAge() <= 3.0)) {
+					!(tempPets.get(i).getPetAge() == 2.0 || tempPets.get(i).getPetAge() == 3.0)) {
 				PetSearchLogic.petsSearch.remove(tempPets.get(i));
 				
 			}

@@ -15,6 +15,7 @@ import com.vaadin.flow.component.page.Page;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -106,6 +107,7 @@ public class LoginView extends VerticalLayout {
 			User userID = user.findUser(e.getUsername(), e.getPassword());
 			if (userID != null) {
 				MainView.setUser(userID);
+				VaadinSession.getCurrent().setAttribute( User.class , userID );
 				return true;
 			} else {
 				return false;

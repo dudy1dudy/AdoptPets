@@ -91,8 +91,7 @@ public class MainView extends AppLayout {
 
 	public static boolean isUserRegistered() {
 		user = VaadinSession.getCurrent().getAttribute(User.class);
-		
-		System.out.println(user);
+
 		if (user == null) {
 			return false;
 		} else {

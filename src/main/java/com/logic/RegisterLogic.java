@@ -30,24 +30,15 @@ public class RegisterLogic {
 		if (userName.isEmpty() || password.isEmpty() || repeatePassword.isEmpty() || firstName.isEmpty()
 				|| lastName.isEmpty() || email.isEmpty() || city.isEmpty() || street.isEmpty()) {
 
-			HorizontalLayout data = new HorizontalLayout();
-			Span details = new Span("details are missing, please fill all of the fields");
-			data.add(details);
-			vl.add(data);
+			// Notification
+			Notification.show("details are missing, please fill all of the fields")
+					.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
 			return;
 
 		} else {
 			createUser(vl, userName.getValue(), password.getValue(), repeatePassword.getValue(), firstName.getValue(),
 					lastName.getValue(), email.getValue(), phone.getValue(), city.getValue(), street.getValue(),
 					house.getValue());
-
-			// Go back to home
-			UI.getCurrent().navigate("");
-
-			// Notification
-			Notification.show("User created succsessfully")
-					.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
-			return;
 
 		}
 	}
@@ -59,20 +50,18 @@ public class RegisterLogic {
 
 			boolean a = logic.checkUsernameExists(username);
 			if (a) {
-				HorizontalLayout data = new HorizontalLayout();
-				vl.removeAll();
-				Span details = new Span("The User name already exists, please try again");
-				data.add(details);
-				vl.add(data);
+
+				// Notification
+				Notification.show("The User name already exists, please try again")
+						.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
 				return;
 			}
 
 			if (!password.equals(repeatePassword)) {
 
-				HorizontalLayout data = new HorizontalLayout();
-				Span details = new Span("The passwords don't match, Please try again");
-				data.add(details);
-				vl.add(data);
+				// Notification
+				Notification.show("The passwords don't match, Please try again")
+						.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
 				return;
 
 			}
@@ -81,13 +70,20 @@ public class RegisterLogic {
 
 			logic.createNewUser(username, password, firstName, lastName, UserType.REGULAR, email, phoneInt, userCity,
 					userStreet, userHouseNumber);
+			
+			// Go back to home
+			UI.getCurrent().navigate("");
+
+			// Notification
+			Notification.show("User created succsessfully")
+					.setPosition(com.vaadin.flow.component.notification.Notification.Position.TOP_CENTER);
 			return;
 
 		} catch (ErrorInProcessUser e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		UI.getCurrent().navigate("");
+		return;
 	}
 
 }
